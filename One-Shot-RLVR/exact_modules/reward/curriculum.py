@@ -1,0 +1,64 @@
+from exact_modules.config import EXACT_CONFIG
+
+_CALL_COUNTER = 0
+
+
+def get_curriculum_stage():
+    global _CALL_COUNTER
+    _CALL_COUNTER += 1
+
+    manual_stage = EXACT_CONFIG.get("reward_stage", "auto")
+    if manual_stage != "auto":
+        return manual_stage
+
+    if not EXACT_CONFIG.get("use_curriculum_rl", True):
+        return "phase3_correctness_symbolic"
+
+    if _CALL_COUNTER < EXACT_CONFIG.get("curriculum_phase1_calls", 800):
+        return "phase1_format"
+
+    if _CALL_COUNTER < EXACT_CONFIG.get("curriculum_phase2_calls", 2200):
+        return "phase2_reasoning"
+
+    return "phase3_correctness_symbolic"
+
+
+def get_reward_weights(task_type):
+    stage = get_curriculum_stage()
+    task_type = str(task_type).lower()
+
+    if stage == "phase1_format":
+        return {
+            "answer": 0.15,
+            "sol": 0.10 if task_type == "physics" else 0.00,
+            "format": 0.30,
+            "explanation": 0.20,
+            "reasoning": 0.20,
+            "symbolic": 0.10 if task_type == "logic" else 0.00,
+            "revision": 0.00,
+            "floor": 0.05,
+        }
+
+    if stage == "phase2_reasoning":
+        return {
+            "answer": 0.25,
+            "sol": 0.15 if task_type == "physics" else 0.00,
+            "format": 0.15,
+            "explanation": 0.15,
+            "reasoning": 0.20,
+            "symbolic": 0.15 if task_type == "logic" else 0.00,
+            "revision": 0.05,
+            "floor": 0.05,
+        }
+
+    return {
+        "answer": 0.40,
+        "sol": 0.20 if task_type == "physics" else 0.00,
+        "format": 0.05,
+        "explanation": 0.10,
+        "reasoning": 0.15,
+        "symbolic": 0.20 if task_type == "logic" else 0.00,
+        "revision": 0.05,
+        "floor": 0.05,
+    }
+    
