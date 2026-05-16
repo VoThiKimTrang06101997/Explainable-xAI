@@ -1,484 +1,848 @@
+# %%writefile /content/Explainable-xAI/One-Shot-RLVR/exact_modules/sol/physics_solver.py
 import math
 import re
-from typing import Any, Dict, Optional
-
-from exact_modules.common import normalize_superscript
-from exact_modules.sol.unit_converter import convert_capacitance, convert_length, mps_to_kmh
+from typing import Dict, Any, Optional, Tuple, List
 
 
-def _extract(pattern, text, flags=re.I):
-    return re.search(pattern, text, flags)
+# ============================================================
+# 0. Constants
+# ============================================================
+
+K_COULOMB = 9.0e9
+EPS0 = 8.854e-12
+PI = math.pi
 
 
-def solve_lc_resonance(question: str) -> Optional[Dict[str, Any]]:
-    q = question.lower()
-    if "resonance frequency" not in q and "resonant frequency" not in q:
+# ============================================================
+# 1. Text / number utilities
+# ============================================================
+
+def normalize_text(x: str) -> str:
+    x = str(x or "")
+    x = x.replace("−", "-")
+    x = x.replace("μ", "u").replace("µ", "u")
+    x = x.replace("×", "x")
+    x = re.sub(r"\s+", " ", x)
+    return x.strip()
+
+
+def normalize_superscript(s: str) -> str:
+    table = str.maketrans({
+        "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4",
+        "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9",
+        "⁻": "-", "⁺": "+",
+    })
+    return str(s).translate(table)
+
+
+def to_float(num_str: str) -> Optional[float]:
+    if num_str is None:
         return None
 
-    m_l = _extract(r"L\s*=\s*([0-9.]+)\s*H", question)
-    m_c = _extract(r"C\s*=\s*([0-9.]+)\s*(μF|uF|microF|nF|pF|F)", question)
+    s = normalize_superscript(str(num_str))
+    s = s.strip()
+    s = s.replace(",", "")
+    s = s.replace("×", "x").replace("\\times", "x")
+    s = s.replace("{", "").replace("}", "")
 
-    if not (m_l and m_c):
+    # 5.10^-16 means 5 * 10^-16 in some dataset lines
+    m = re.match(r"^(-?\d+(?:\.\d+)?)\.10\^?(-?\d+)$", s)
+    if m:
+        return float(m.group(1)) * (10 ** int(m.group(2)))
+
+    # 5 x 10^-16
+    m = re.match(r"^(-?\d+(?:\.\d+)?)\s*(?:x|\*)\s*10\s*(?:\^|\*\*)?\s*(-?\d+)$", s, flags=re.I)
+    if m:
+        return float(m.group(1)) * (10 ** int(m.group(2)))
+
+    try:
+        return float(s)
+    except Exception:
         return None
 
-    L = float(m_l.group(1))
-    C_raw = float(m_c.group(1))
-    C_unit = m_c.group(2)
-    C = convert_capacitance(C_raw, C_unit)
 
-    f = 1.0 / (2.0 * math.pi * math.sqrt(L * C))
+def fmt(x, decimals: int = 4) -> str:
+    try:
+        x = float(x)
 
+        if abs(x) >= 1e5 or (abs(x) > 0 and abs(x) < 1e-3):
+            return f"{x:.6g}"
+
+        return f"{x:.{decimals}f}".rstrip("0").rstrip(".")
+    except Exception:
+        return str(x)
+
+
+def make_result(answer, unit, formula, explanation, cot, premises, confidence=0.90, source="physics_solver") -> Dict[str, Any]:
     return {
-        "answer": f"{f:.2f}",
-        "unit": "Hz",
-        "fol": "f = 1 / (2π√(LC))",
-        "explanation": (
-            f"The resonance frequency is calculated using f = 1 / (2π√(LC)). "
-            f"Given L = {L} H and C = {C_raw} {C_unit}, C = {C} F. "
-            f"Substituting these values gives f = {f:.2f} Hz."
-        ),
-        "cot": [
-            "Step 1: Identify the problem as an LC resonance frequency problem.",
-            "Step 2: Use the formula f = 1 / (2π√(LC)).",
-            f"Step 3: Convert capacitance: C = {C_raw} {C_unit} = {C} F.",
-            f"Step 4: Substitute L = {L} H and C = {C} F.",
-            f"Step 5: Compute f = {f:.2f} Hz.",
-        ],
-        "premises": [
-            "LC resonance formula: f = 1 / (2π√(LC)).",
-            f"Given inductance: L = {L} H.",
-            f"Given capacitance: C = {C_raw} {C_unit}.",
-        ],
-        "confidence": 0.92,
-        "source": "sol_lc_resonance",
+        "answer": str(answer),
+        "unit": unit or "",
+        "explanation": explanation,
+        "fol": formula,
+        "cot": cot,
+        "premises": premises,
+        "confidence": float(confidence),
+        "source": source,
     }
 
 
-def solve_train_relative_speed(question: str) -> Optional[Dict[str, Any]]:
-    q = question.lower()
-    if not ("car" in q and "train" in q and "opposite direction" in q):
-        return None
+def find_value(question: str, symbol: str, units: Optional[List[str]] = None) -> Optional[Tuple[float, str]]:
+    """
+    Finds patterns like:
+    U = 100 V
+    C=30 μF
+    q1 = q2 = 5.10^-16 C
+    """
+    q = normalize_text(question)
+    units = units or []
 
-    m_car = _extract(r"car.*?speed of\s*([0-9.]+)\s*km/h", question)
-    m_len = _extract(r"([0-9.]+)\s*m\s*long train", question)
-    m_time = _extract(r"passes it in\s*([0-9.]+)\s*seconds", question)
+    unit_pattern = "|".join([re.escape(u) for u in units]) if units else r"[a-zA-ZΩ%]+"
 
-    if not (m_car and m_len and m_time):
-        return None
+    patterns = [
+        rf"\b{re.escape(symbol)}\s*=\s*([+\-]?\d+(?:\.\d+)?(?:\s*(?:x|\*)\s*10\s*\^?\s*[+\-]?\d+|\.10\^?[+\-]?\d+|e[+\-]?\d+)?)\s*({unit_pattern})?",
+        rf"\b{re.escape(symbol)}\s*is\s*([+\-]?\d+(?:\.\d+)?(?:\s*(?:x|\*)\s*10\s*\^?\s*[+\-]?\d+|\.10\^?[+\-]?\d+|e[+\-]?\d+)?)\s*({unit_pattern})?",
+    ]
 
-    car_kmh = float(m_car.group(1))
-    train_len_m = float(m_len.group(1))
-    time_s = float(m_time.group(1))
+    for p in patterns:
+        m = re.search(p, q, flags=re.I)
+        if m:
+            val = to_float(m.group(1))
+            unit = m.group(2) or ""
+            if val is not None:
+                return val, unit
 
-    relative_mps = train_len_m / time_s
-    relative_kmh = mps_to_kmh(relative_mps)
-    train_kmh = relative_kmh - car_kmh
+    return None
 
-    return {
-        "answer": f"{train_kmh:.2f}",
-        "unit": "km/h",
-        "fol": "v_relative = d / t ∧ v_train = v_relative - v_car",
-        "explanation": (
-            f"The train passes the car over a distance equal to the train length. "
-            f"The relative speed is {train_len_m}/{time_s} = {relative_mps:.2f} m/s "
-            f"= {relative_kmh:.2f} km/h. Since they move in opposite directions, "
-            f"v_train = {relative_kmh:.2f} - {car_kmh} = {train_kmh:.2f} km/h."
-        ),
-        "cot": [
-            "Step 1: Treat the passing event as a relative motion problem.",
-            f"Step 2: Compute relative speed = {train_len_m} m / {time_s} s.",
-            f"Step 3: Convert relative speed to {relative_kmh:.2f} km/h.",
-            "Step 4: Since directions are opposite, v_train = v_relative - v_car.",
-            f"Step 5: Compute v_train = {train_kmh:.2f} km/h.",
-        ],
-        "premises": [
-            "Relative speed = distance / time.",
-            "For opposite directions: v_relative = v_train + v_car.",
-            f"Car speed = {car_kmh} km/h.",
-            f"Train length = {train_len_m} m.",
-            f"Passing time = {time_s} s.",
-        ],
-        "confidence": 0.91,
-        "source": "sol_train_relative_speed",
+
+def find_first_number_with_unit(question: str, units: List[str]) -> Optional[Tuple[float, str]]:
+    q = normalize_text(question)
+    unit_pattern = "|".join([re.escape(u) for u in units])
+
+    p = rf"([+\-]?\d+(?:\.\d+)?(?:\s*(?:x|\*)\s*10\s*\^?\s*[+\-]?\d+|\.10\^?[+\-]?\d+|e[+\-]?\d+)?)\s*({unit_pattern})"
+    m = re.search(p, q, flags=re.I)
+
+    if m:
+        val = to_float(m.group(1))
+        unit = m.group(2)
+        if val is not None:
+            return val, unit
+
+    return None
+
+
+def unit_scale(unit: str) -> float:
+    u = str(unit or "").lower().strip()
+    u = u.replace("μ", "u").replace("µ", "u")
+
+    scales = {
+        "pf": 1e-12,
+        "nf": 1e-9,
+        "uf": 1e-6,
+        "microf": 1e-6,
+        "mf": 1e-3,
+        "f": 1.0,
+        "mh": 1e-3,
+        "uh": 1e-6,
+        "h": 1.0,
+        "cm": 1e-2,
+        "mm": 1e-3,
+        "m": 1.0,
+        "km": 1e3,
+        "ma": 1e-3,
+        "a": 1.0,
+        "mv": 1e-3,
+        "v": 1.0,
+        "kv": 1e3,
+        "uc": 1e-6,
+        "microc": 1e-6,
+        "nc": 1e-9,
+        "pc": 1e-12,
+        "c": 1.0,
+        "kj": 1e3,
+        "j": 1.0,
+        "hz": 1.0,
+        "khz": 1e3,
+        "mhz": 1e6,
+        "n": 1.0,
+        "ohm": 1.0,
+        "ω": 1.0,
+        "Ω": 1.0,
+        "%": 1.0,
     }
 
+    return scales.get(u, 1.0)
 
-def solve_equal_charges_equilateral(question: str) -> Optional[Dict[str, Any]]:
-    q = normalize_superscript(question)
-    q_low = q.lower()
 
-    if "equilateral triangle" not in q_low or "electric field at vertex a" not in q_low:
+def convert_value(value: float, unit: str) -> float:
+    return value * unit_scale(unit)
+
+
+def extract_all_numbers(question: str) -> List[float]:
+    q = normalize_text(normalize_superscript(question))
+    nums = []
+
+    sci_pattern = r"([+\-]?\d+(?:\.\d+)?)\s*(?:x|\*)\s*10\s*\^?\s*([+\-]?\d+)"
+    for m in re.finditer(sci_pattern, q, flags=re.I):
+        nums.append(float(m.group(1)) * (10 ** int(m.group(2))))
+
+    for m in re.finditer(r"[+\-]?\d+(?:\.\d+)?(?:e[+\-]?\d+)?", q, flags=re.I):
+        val = to_float(m.group(0))
+        if val is not None:
+            nums.append(val)
+
+    return nums
+
+
+# ============================================================
+# 2. Solver templates
+# ============================================================
+
+def solve_impedance_ohm(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "impedance" not in q and " z" not in q and " z." not in q:
         return None
 
-    m_q = re.search(
-        r"q1\s*=\s*q2\s*=\s*([0-9.]+)\s*(?:[x×.]?\s*10\^?\{?(-?[0-9]+)\}?)?\s*C",
-        q,
-        flags=re.I,
+    U = find_value(question, "U", ["V", "mV", "kV"])
+    I = find_value(question, "I", ["A", "mA"])
+
+    if U is None:
+        U = find_first_number_with_unit(question, ["V", "mV", "kV"])
+    if I is None:
+        I = find_first_number_with_unit(question, ["A", "mA"])
+
+    if U is None or I is None:
+        return None
+
+    u = convert_value(U[0], U[1])
+    i = convert_value(I[0], I[1])
+    if i == 0:
+        return None
+
+    z = u / i
+
+    return make_result(
+        answer=fmt(z, 4),
+        unit="Ω",
+        formula="Z = U / I",
+        explanation=f"The total impedance is given by Z = U/I. With U = {u} V and I = {i} A, Z = {u}/{i} = {fmt(z, 4)} Ω.",
+        cot=[
+            "Problem formalization: The target quantity is total impedance Z.",
+            f"Evidence generation: Extract U = {u} V and I = {i} A.",
+            "Evidence evaluation: For an AC circuit, impedance is voltage divided by current.",
+            f"Calculation: Z = U/I = {u}/{i} = {fmt(z, 4)}.",
+            f"Conclusion: The total impedance is {fmt(z, 4)} Ω."
+        ],
+        premises=["Impedance formula: Z = U/I.", f"U = {u} V.", f"I = {i} A."],
+        confidence=0.96,
+        source="sol_impedance_ohm",
     )
-    m_side = re.search(r"side length of\s*([0-9.]+)\s*(cm|m)", q, flags=re.I)
 
-    if not (m_q and m_side):
+
+def solve_ohm_resistance(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "resistance" not in q and "resistor" not in q:
         return None
 
-    charge = float(m_q.group(1))
-    if m_q.group(2):
-        charge *= 10 ** int(m_q.group(2))
+    V = find_value(question, "V", ["V", "mV", "kV"]) or find_value(question, "U", ["V", "mV", "kV"])
+    I = find_value(question, "I", ["A", "mA"])
 
-    side = convert_length(float(m_side.group(1)), m_side.group(2))
+    if V is None or I is None:
+        return None
 
-    k = 8.99e9
-    e_each = k * charge / (side ** 2)
-    e_total = math.sqrt(3) * e_each
+    v = convert_value(V[0], V[1])
+    i = convert_value(I[0], I[1])
 
-    return {
-        "answer": f"{e_total:.3g}",
-        "unit": "N/C",
-        "fol": "E_total = √3 · kq / a²",
-        "explanation": (
-            f"Each charge produces an electric field E = kq/a² at vertex A. "
-            f"Because the triangle is equilateral and the charges are equal, the two "
-            f"field vectors combine symmetrically, giving E_total = √3·kq/a² = {e_total:.3g} N/C."
-        ),
-        "cot": [
-            "Step 1: Identify that two equal charges are placed symmetrically at B and C.",
-            "Step 2: Use the point-charge electric field formula E = kq/r².",
-            "Step 3: Apply symmetry for an equilateral triangle.",
-            "Step 4: Combine the two equal field vectors: E_total = √3·kq/a².",
-            f"Step 5: Compute E_total = {e_total:.3g} N/C.",
+    if i == 0:
+        return None
+
+    r = v / i
+
+    return make_result(
+        answer=fmt(r, 4),
+        unit="Ω",
+        formula="R = V / I",
+        explanation=f"Using Ohm's law, R = V/I. With V = {v} V and I = {i} A, R = {fmt(r, 4)} Ω.",
+        cot=[
+            "Problem formalization: The target quantity is resistance R.",
+            f"Evidence generation: Extract V = {v} V and I = {i} A.",
+            "Evidence evaluation: Ohm's law applies.",
+            f"Calculation: R = V/I = {v}/{i} = {fmt(r, 4)}.",
+            f"Conclusion: The resistance is {fmt(r, 4)} Ω."
         ],
-        "premises": [
-            "Electric field of a point charge: E = kq/r².",
-            "The two charges are equal.",
-            "The triangle is equilateral, so the resultant field follows from symmetry.",
-            f"q = {charge} C.",
-            f"a = {side} m.",
-        ],
-        "confidence": 0.90,
-        "source": "sol_equal_charges_equilateral",
-    }
+        premises=["Ohm's law: R = V/I.", f"V = {v} V.", f"I = {i} A."],
+        confidence=0.93,
+        source="sol_ohm_resistance",
+    )
 
 
 def solve_capacitor_energy(question: str) -> Optional[Dict[str, Any]]:
     q = question.lower()
-    if "energy stored" not in q or "capacitor" not in q:
+
+    if "energy" not in q or ("capacitor" not in q and "capacitance" not in q):
         return None
 
-    m_c = re.search(r"C\s*=\s*([0-9.]+)\s*(μF|uF|microF|nF|pF|F)", question, re.I)
-    m_u = re.search(r"(?:U|V)\s*=\s*([0-9.]+)\s*V", question, re.I)
+    C = find_value(question, "C", ["F", "uF", "µF", "μF", "microF", "mF", "nF", "pF"])
+    U = find_value(question, "U", ["V", "mV", "kV"]) or find_value(question, "V", ["V", "mV", "kV"])
 
-    if not (m_c and m_u):
+    if C is None or U is None:
         return None
 
-    C_raw = float(m_c.group(1))
-    C = convert_capacitance(C_raw, m_c.group(2))
-    U = float(m_u.group(1))
-    energy = 0.5 * C * U * U
+    c = convert_value(C[0], C[1])
+    u = convert_value(U[0], U[1])
+    e = 0.5 * c * (u ** 2)
 
-    return {
-        "answer": f"{energy:g}",
-        "unit": "J",
-        "fol": "E = 1/2 · C · U²",
-        "explanation": (
-            f"The energy stored in a capacitor is E = 1/2·C·U². "
-            f"With C = {C_raw} {m_c.group(2)} = {C} F and U = {U} V, "
-            f"E = {energy:g} J."
-        ),
-        "cot": [
-            "Step 1: Identify the problem as capacitor energy calculation.",
-            "Step 2: Use the formula E = 1/2·C·U².",
-            f"Step 3: Convert capacitance to farads: C = {C} F.",
-            f"Step 4: Substitute U = {U} V.",
-            f"Step 5: Compute E = {energy:g} J.",
+    return make_result(
+        answer=fmt(e, 6),
+        unit="J",
+        formula="E = 1/2 C U^2",
+        explanation=f"Energy stored in a capacitor is E = 1/2 C U². With C = {c} F and U = {u} V, E = {fmt(e, 6)} J.",
+        cot=[
+            "Problem formalization: The target quantity is capacitor energy.",
+            f"Evidence generation: Extract C = {c} F and U = {u} V.",
+            "Evidence evaluation: Use capacitor energy formula E = 1/2 C U².",
+            f"Calculation: E = 0.5 × {c} × {u}² = {fmt(e, 6)}.",
+            f"Conclusion: The energy is {fmt(e, 6)} J."
         ],
-        "premises": [
-            "Capacitor energy formula: E = 1/2·C·U².",
-            f"C = {C_raw} {m_c.group(2)}.",
-            f"U = {U} V.",
-        ],
-        "confidence": 0.92,
-        "source": "sol_capacitor_energy",
-    }
+        premises=["Capacitor energy formula: E = 1/2 C U².", f"C = {c} F.", f"U = {u} V."],
+        confidence=0.96,
+        source="sol_capacitor_energy",
+    )
 
 
-def solve_ohm_law(question: str) -> Optional[Dict[str, Any]]:
+def solve_capacitor_charge(question: str) -> Optional[Dict[str, Any]]:
     q = question.lower()
 
-    if not any(k in q for k in ["ohm", "resistor", "voltage", "current", "resistance"]):
+    if "charge" not in q or ("capacitor" not in q and "capacitance" not in q):
         return None
 
-    m_i = re.search(r"I\s*=\s*([0-9.]+)\s*A", question, re.I)
-    m_r = re.search(r"R\s*=\s*([0-9.]+)\s*(ohm|Ω)", question, re.I)
+    C = find_value(question, "C", ["F", "uF", "µF", "μF", "microF", "mF", "nF", "pF"])
+    U = find_value(question, "U", ["V", "mV", "kV"]) or find_value(question, "V", ["V", "mV", "kV"])
 
-    if m_i and m_r and ("voltage" in q or "potential difference" in q):
-        current = float(m_i.group(1))
-        resistance = float(m_r.group(1))
-        voltage = current * resistance
+    if C is None or U is None:
+        return None
 
-        return {
-            "answer": f"{voltage:g}",
-            "unit": "V",
-            "fol": "V = I · R",
-            "explanation": (
-                f"Using Ohm's law V = IR, with I = {current} A and R = {resistance} Ω, "
-                f"V = {voltage:g} V."
-            ),
-            "cot": [
-                "Step 1: Identify the problem as an Ohm's law problem.",
-                "Step 2: Use V = IR.",
-                f"Step 3: Substitute I = {current} A and R = {resistance} Ω.",
-                f"Step 4: Compute V = {voltage:g} V.",
+    c = convert_value(C[0], C[1])
+    u = convert_value(U[0], U[1])
+    q_charge = c * u
+
+    return make_result(
+        answer=fmt(q_charge, 6),
+        unit="C",
+        formula="Q = C U",
+        explanation=f"The charge on a capacitor is Q = CU. With C = {c} F and U = {u} V, Q = {fmt(q_charge, 6)} C.",
+        cot=[
+            "Problem formalization: The target quantity is capacitor charge.",
+            f"Evidence generation: Extract C = {c} F and U = {u} V.",
+            "Evidence evaluation: Use Q = CU.",
+            f"Calculation: Q = {c} × {u} = {fmt(q_charge, 6)}.",
+            f"Conclusion: The charge is {fmt(q_charge, 6)} C."
+        ],
+        premises=["Capacitor charge formula: Q = CU.", f"C = {c} F.", f"U = {u} V."],
+        confidence=0.94,
+        source="sol_capacitor_charge",
+    )
+
+
+def solve_lc_resonance(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "resonance" not in q and "resonant" not in q:
+        return None
+
+    L = find_value(question, "L", ["H", "mH", "uH", "µH", "μH"])
+    C = find_value(question, "C", ["F", "uF", "µF", "μF", "microF", "mF", "nF", "pF"])
+
+    if L is None or C is None:
+        return None
+
+    l = convert_value(L[0], L[1])
+    c = convert_value(C[0], C[1])
+
+    if l <= 0 or c <= 0:
+        return None
+
+    f = 1.0 / (2.0 * PI * math.sqrt(l * c))
+
+    return make_result(
+        answer=fmt(f, 3),
+        unit="Hz",
+        formula="f = 1 / (2π√(LC))",
+        explanation=f"The resonance frequency is f = 1/(2π√LC). With L = {l} H and C = {c} F, f = {fmt(f, 3)} Hz.",
+        cot=[
+            "Problem formalization: The target quantity is resonance frequency f.",
+            f"Evidence generation: Extract L = {l} H and C = {c} F.",
+            "Evidence evaluation: Convert capacitance/inductance to SI units and use f = 1/(2π√LC).",
+            f"Calculation: f = 1/(2π√({l}×{c})) = {fmt(f, 3)}.",
+            f"Conclusion: The resonance frequency is {fmt(f, 3)} Hz."
+        ],
+        premises=["LC resonance formula: f = 1/(2π√LC).", f"L = {l} H.", f"C = {c} F."],
+        confidence=0.96,
+        source="sol_lc_resonance",
+    )
+
+
+def solve_resultant_two_forces(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "resultant" not in q and "net force" not in q:
+        return None
+
+    if "force" not in q:
+        return None
+
+    # captures "magnitudes of 2 N and 12 N" or "F1 = 6 N and F2 = 5 N"
+    nums_n = []
+    for m in re.finditer(r"([+\-]?\d+(?:\.\d+)?)\s*N\b", normalize_text(question), flags=re.I):
+        nums_n.append(float(m.group(1)))
+
+    angle_match = re.search(r"angle(?:\s+of)?\s*([+\-]?\d+(?:\.\d+)?)\s*(?:degree|degrees|°)", question, flags=re.I)
+    if angle_match is None:
+        angle_match = re.search(r"([+\-]?\d+(?:\.\d+)?)\s*(?:degree|degrees|°)\s*(?:to each other|between)", question, flags=re.I)
+
+    if len(nums_n) < 2 or angle_match is None:
+        return None
+
+    f1, f2 = nums_n[0], nums_n[1]
+    theta = float(angle_match.group(1))
+    r = math.sqrt(f1 ** 2 + f2 ** 2 + 2 * f1 * f2 * math.cos(math.radians(theta)))
+
+    return make_result(
+        answer=fmt(r, 4),
+        unit="N",
+        formula="R^2 = F1^2 + F2^2 + 2F1F2cosθ",
+        explanation=f"The resultant of two forces is R = sqrt(F1² + F2² + 2F1F2cosθ). With F1 = {f1} N, F2 = {f2} N, θ = {theta}°, R = {fmt(r, 4)} N.",
+        cot=[
+            "Problem formalization: The target quantity is the resultant force magnitude.",
+            f"Evidence generation: Extract F1 = {f1} N, F2 = {f2} N, and θ = {theta}°.",
+            "Evidence evaluation: Use the law of cosines for two force vectors.",
+            f"Calculation: R = sqrt({f1}² + {f2}² + 2×{f1}×{f2}×cos({theta}°)) = {fmt(r, 4)}.",
+            f"Conclusion: The resultant force is {fmt(r, 4)} N."
+        ],
+        premises=["Resultant force formula: R² = F1² + F2² + 2F1F2cosθ."],
+        confidence=0.95,
+        source="sol_resultant_two_forces",
+    )
+
+
+def solve_coulomb_force(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "coulomb" not in q and "electric force" not in q:
+        return None
+
+    if "resultant" in q or "net" in q:
+        # let vector solvers handle it
+        return None
+
+    # q1, q2
+    q_values = []
+    for m in re.finditer(r"q\d?\s*=?\s*([+\-]?\d+(?:\.\d+)?(?:\s*(?:x|\*)\s*10\s*\^?\s*[+\-]?\d+|\.10\^?[+\-]?\d+|e[+\-]?\d+)?)\s*C", normalize_text(question), flags=re.I):
+        val = to_float(m.group(1))
+        if val is not None:
+            q_values.append(abs(val))
+
+    if len(q_values) == 1 and re.search(r"q1\s*=\s*q2", question, flags=re.I):
+        q_values = [q_values[0], q_values[0]]
+
+    # distance
+    d = find_first_number_with_unit(question, ["m", "cm", "mm", "km"])
+    if len(q_values) < 2 or d is None:
+        return None
+
+    q1, q2 = q_values[0], q_values[1]
+    r = convert_value(d[0], d[1])
+
+    if r <= 0:
+        return None
+
+    f = K_COULOMB * q1 * q2 / (r ** 2)
+
+    return make_result(
+        answer=fmt(f, 6),
+        unit="N",
+        formula="F = k |q1 q2| / r^2",
+        explanation=f"By Coulomb's law, F = k|q1q2|/r². With q1 = {q1} C, q2 = {q2} C, r = {r} m, F = {fmt(f, 6)} N.",
+        cot=[
+            "Problem formalization: The target quantity is the electrostatic force magnitude.",
+            f"Evidence generation: Extract q1 = {q1} C, q2 = {q2} C, and r = {r} m.",
+            "Evidence evaluation: Coulomb's law applies to point charges.",
+            f"Calculation: F = 9e9×{q1}×{q2}/{r}² = {fmt(f, 6)}.",
+            f"Conclusion: The electric force is {fmt(f, 6)} N."
+        ],
+        premises=["Coulomb's law: F = k|q1q2|/r².", "k = 9×10⁹ N·m²/C²."],
+        confidence=0.92,
+        source="sol_coulomb_force",
+    )
+
+
+def solve_right_angle_three_charges(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "right-angle" not in q and "right angle" not in q:
+        return None
+
+    if "charge" not in q or "force" not in q:
+        return None
+
+    # charge q = +5 × 10^-6 C, side length a = 10 cm
+    q_match = re.search(r"q\s*=\s*([+\-]?\d+(?:\.\d+)?(?:\s*(?:x|\*)\s*10\s*\^?\s*[+\-]?\d+|\.10\^?[+\-]?\d+|e[+\-]?\d+)?)\s*C", normalize_text(question), flags=re.I)
+    d = find_value(question, "a", ["m", "cm", "mm"]) or find_first_number_with_unit(question, ["cm", "m", "mm"])
+
+    if q_match is None or d is None:
+        return None
+
+    qval = abs(to_float(q_match.group(1)))
+    a = convert_value(d[0], d[1])
+
+    if qval is None or a <= 0:
+        return None
+
+    f_one = K_COULOMB * qval * qval / (a ** 2)
+    net = math.sqrt(2) * f_one
+
+    return make_result(
+        answer=fmt(net, 3),
+        unit="N",
+        formula="F_net = √2 · kq²/a²",
+        explanation=f"At the right-angle vertex, the two equal repulsive forces are perpendicular. Each force is F = kq²/a². Thus F_net = √2F = {fmt(net, 3)} N.",
+        cot=[
+            "Problem formalization: The target quantity is the net force on the charge at the right-angle vertex.",
+            f"Evidence generation: Extract q = {qval} C and a = {a} m.",
+            "Evidence evaluation: The two equal forces are perpendicular, so vector addition gives √2 times one force.",
+            f"Calculation: F_net = √2 × 9e9 × {qval}² / {a}² = {fmt(net, 3)}.",
+            f"Conclusion: The net force is {fmt(net, 3)} N."
+        ],
+        premises=["Coulomb's law: F = kq²/a².", "Perpendicular equal vectors combine as F_net = √2F."],
+        confidence=0.93,
+        source="sol_right_angle_three_charges",
+    )
+
+
+def solve_equilateral_electric_field(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "equilateral triangle" not in q:
+        return None
+
+    if "electric field" not in q:
+        return None
+
+    q_match = re.search(r"q1\s*=\s*q2\s*=\s*([+\-]?\d+(?:\.\d+)?(?:\s*(?:x|\*)\s*10\s*\^?\s*[+\-]?\d+|\.10\^?[+\-]?\d+|e[+\-]?\d+)?)\s*C", normalize_text(question), flags=re.I)
+    d = find_first_number_with_unit(question, ["cm", "m", "mm"])
+
+    if q_match is None or d is None:
+        return None
+
+    qval = abs(to_float(q_match.group(1)))
+    a = convert_value(d[0], d[1])
+
+    if qval is None or a <= 0:
+        return None
+
+    e_single = K_COULOMB * qval / (a ** 2)
+    # two equal field vectors at 60 degrees -> resultant = sqrt(3) E
+    e_net = math.sqrt(3) * e_single
+
+    return make_result(
+        answer=fmt(e_net, 6),
+        unit="V/m",
+        formula="E_net = √3 · kq/a²",
+        explanation=f"At the third vertex of an equilateral triangle, two equal electric fields form a 60° angle. Therefore E_net = √3·kq/a² = {fmt(e_net, 6)} V/m.",
+        cot=[
+            "Problem formalization: The target quantity is the electric field magnitude at the third vertex.",
+            f"Evidence generation: Extract q = {qval} C and side length a = {a} m.",
+            "Evidence evaluation: The two field vectors have equal magnitude and angle 60°.",
+            f"Calculation: E_net = √3 × 9e9 × {qval}/{a}² = {fmt(e_net, 6)}.",
+            f"Conclusion: The electric field magnitude is {fmt(e_net, 6)} V/m."
+        ],
+        premises=["Electric field of point charge: E = kq/r².", "Two equal vectors separated by 60° combine to √3 times one vector."],
+        confidence=0.92,
+        source="sol_equilateral_electric_field",
+    )
+
+
+def solve_relative_error(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "relative error" not in q:
+        return None
+
+    lc = re.search(r"least count(?:\s+of)?\s*([0-9.]+)\s*([a-zA-Z%]+)?", question, flags=re.I)
+    read = re.search(r"(?:reads?|reading|measurement|measured value)\s*(?:is|=)?\s*([0-9.]+)\s*([a-zA-Z%]+)?", question, flags=re.I)
+
+    if lc is None or read is None:
+        nums = extract_all_numbers(question)
+        if len(nums) >= 2:
+            abs_err, measured = nums[0], nums[1]
+        else:
+            return None
+    else:
+        abs_err = float(lc.group(1))
+        measured = float(read.group(1))
+
+    if measured == 0:
+        return None
+
+    rel = abs_err / measured
+
+    return make_result(
+        answer=fmt(rel, 6),
+        unit="",
+        formula="relative error = absolute error / measured value",
+        explanation=f"Relative error is Δx/x. With absolute error {abs_err} and measured value {measured}, relative error = {fmt(rel, 6)}.",
+        cot=[
+            "Problem formalization: The target quantity is relative error.",
+            f"Evidence generation: Extract absolute error = {abs_err} and measured value = {measured}.",
+            "Evidence evaluation: Relative error is the ratio of absolute error to measured value.",
+            f"Calculation: relative error = {abs_err}/{measured} = {fmt(rel, 6)}.",
+            f"Conclusion: The relative error is {fmt(rel, 6)}."
+        ],
+        premises=["Relative error formula: Δx/x."],
+        confidence=0.88,
+        source="sol_relative_error",
+    )
+
+
+def solve_percentage_uncertainty(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "percentage uncertainty" not in q and "percentage relative uncertainty" not in q:
+        return None
+
+    m = re.search(r"([0-9.]+)\s*±\s*([0-9.]+)", question)
+
+    if m:
+        measured = float(m.group(1))
+        uncertainty = float(m.group(2))
+    else:
+        nums = extract_all_numbers(question)
+        if len(nums) < 2:
+            return None
+        measured, uncertainty = nums[0], nums[1]
+
+    if measured == 0:
+        return None
+
+    pct = uncertainty / measured * 100.0
+
+    return make_result(
+        answer=fmt(pct, 4),
+        unit="%",
+        formula="percentage uncertainty = Δx / x × 100%",
+        explanation=f"Percentage uncertainty is Δx/x × 100%. With x = {measured} and Δx = {uncertainty}, it is {fmt(pct, 4)}%.",
+        cot=[
+            "Problem formalization: The target quantity is percentage uncertainty.",
+            f"Evidence generation: Extract x = {measured} and Δx = {uncertainty}.",
+            "Evidence evaluation: Use percentage uncertainty = Δx/x × 100%.",
+            f"Calculation: {uncertainty}/{measured} × 100% = {fmt(pct, 4)}%.",
+            f"Conclusion: The percentage uncertainty is {fmt(pct, 4)}%."
+        ],
+        premises=["Percentage uncertainty formula: Δx/x × 100%."],
+        confidence=0.90,
+        source="sol_percentage_uncertainty",
+    )
+
+
+def solve_inductor_energy(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "energy" not in q:
+        return None
+
+    if "inductor" not in q and "magnetic field energy" not in q and "magnetic energy" not in q:
+        return None
+
+    if "halved" in q and "current" in q:
+        return make_result(
+            answer="0.25",
+            unit="of original",
+            formula="W ∝ I²",
+            explanation="Magnetic energy in an inductor is W = 1/2 LI². If current is halved, energy becomes (1/2)² = 1/4 = 0.25 of the original.",
+            cot=[
+                "Problem formalization: The target is the change in magnetic energy.",
+                "Evidence generation: Current is halved.",
+                "Evidence evaluation: Magnetic energy is proportional to I².",
+                "Calculation: (1/2)² = 1/4 = 0.25.",
+                "Conclusion: The energy becomes 0.25 of the original."
             ],
-            "premises": [
-                "Ohm's law: V = IR.",
-                f"Current I = {current} A.",
-                f"Resistance R = {resistance} Ω.",
+            premises=["Inductor energy: W = 1/2 LI²."],
+            confidence=0.94,
+            source="sol_inductor_energy_ratio",
+        )
+
+    L = find_value(question, "L", ["H", "mH", "uH", "µH", "μH"])
+    I = find_value(question, "I", ["A", "mA"])
+
+    if L is None or I is None:
+        return None
+
+    l = convert_value(L[0], L[1])
+    i = convert_value(I[0], I[1])
+    w = 0.5 * l * i * i
+
+    return make_result(
+        answer=fmt(w, 6),
+        unit="J",
+        formula="W = 1/2 L I²",
+        explanation=f"Magnetic energy stored in an inductor is W = 1/2 LI². With L = {l} H and I = {i} A, W = {fmt(w, 6)} J.",
+        cot=[
+            "Problem formalization: The target quantity is magnetic energy.",
+            f"Evidence generation: Extract L = {l} H and I = {i} A.",
+            "Evidence evaluation: Use inductor energy formula W = 1/2 LI².",
+            f"Calculation: W = 0.5 × {l} × {i}² = {fmt(w, 6)}.",
+            f"Conclusion: The magnetic energy is {fmt(w, 6)} J."
+        ],
+        premises=["Inductor energy formula: W = 1/2 LI²."],
+        confidence=0.94,
+        source="sol_inductor_energy",
+    )
+
+
+def solve_train_relative_speed(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    if "train" not in q or "opposite direction" not in q:
+        return None
+
+    car = re.search(r"car.*?speed\s*of\s*([0-9.]+)\s*km/h", question, flags=re.I)
+    length = re.search(r"([0-9.]+)\s*m\s*long\s*train", question, flags=re.I)
+    time = re.search(r"passes\s*it\s*in\s*([0-9.]+)\s*seconds", question, flags=re.I)
+
+    if car is None or length is None or time is None:
+        return None
+
+    v_car_kmh = float(car.group(1))
+    d = float(length.group(1))
+    t = float(time.group(1))
+
+    rel_ms = d / t
+    rel_kmh = rel_ms * 3.6
+    v_train = rel_kmh - v_car_kmh
+
+    return make_result(
+        answer=fmt(v_train, 3),
+        unit="km/h",
+        formula="v_train = (L/t)·3.6 - v_car",
+        explanation=f"In opposite directions, relative speed is v_train + v_car. The train covers its length in time t, so relative speed = L/t = {rel_ms} m/s = {fmt(rel_kmh,3)} km/h. Thus v_train = {fmt(v_train,3)} km/h.",
+        cot=[
+            "Problem formalization: The target quantity is train speed.",
+            f"Evidence generation: Extract car speed = {v_car_kmh} km/h, train length = {d} m, time = {t} s.",
+            "Evidence evaluation: Opposite-direction passing uses relative speed v_train + v_car.",
+            f"Calculation: relative speed = {d}/{t}×3.6 = {fmt(rel_kmh,3)} km/h, so train speed = {fmt(rel_kmh,3)} - {v_car_kmh} = {fmt(v_train,3)}.",
+            f"Conclusion: The train speed is {fmt(v_train,3)} km/h."
+        ],
+        premises=["Opposite direction relative speed: v_rel = v_train + v_car."],
+        confidence=0.90,
+        source="sol_train_relative_speed",
+    )
+
+
+def solve_reactance(question: str) -> Optional[Dict[str, Any]]:
+    q = question.lower()
+
+    f_val = find_value(question, "f", ["Hz", "kHz", "MHz"])
+    L = find_value(question, "L", ["H", "mH", "uH", "µH", "μH"])
+    C = find_value(question, "C", ["F", "uF", "µF", "μF", "mF", "nF", "pF"])
+
+    if f_val is None:
+        return None
+
+    f = convert_value(f_val[0], f_val[1])
+
+    if ("inductive reactance" in q or "xl" in q) and L is not None:
+        l = convert_value(L[0], L[1])
+        xl = 2 * PI * f * l
+
+        return make_result(
+            answer=fmt(xl, 4),
+            unit="Ω",
+            formula="X_L = 2πfL",
+            explanation=f"Inductive reactance is X_L = 2πfL. With f = {f} Hz and L = {l} H, X_L = {fmt(xl, 4)} Ω.",
+            cot=[
+                "Problem formalization: The target quantity is inductive reactance.",
+                f"Evidence generation: Extract f = {f} Hz and L = {l} H.",
+                "Evidence evaluation: Use X_L = 2πfL.",
+                f"Calculation: X_L = 2π×{f}×{l} = {fmt(xl, 4)}.",
+                f"Conclusion: The inductive reactance is {fmt(xl, 4)} Ω."
             ],
-            "confidence": 0.90,
-            "source": "sol_ohm_law",
-        }
+            premises=["Inductive reactance formula: X_L = 2πfL."],
+            confidence=0.92,
+            source="sol_inductive_reactance",
+        )
+
+    if ("capacitive reactance" in q or "xc" in q) and C is not None:
+        c = convert_value(C[0], C[1])
+        if f <= 0 or c <= 0:
+            return None
+
+        xc = 1 / (2 * PI * f * c)
+
+        return make_result(
+            answer=fmt(xc, 4),
+            unit="Ω",
+            formula="X_C = 1/(2πfC)",
+            explanation=f"Capacitive reactance is X_C = 1/(2πfC). With f = {f} Hz and C = {c} F, X_C = {fmt(xc, 4)} Ω.",
+            cot=[
+                "Problem formalization: The target quantity is capacitive reactance.",
+                f"Evidence generation: Extract f = {f} Hz and C = {c} F.",
+                "Evidence evaluation: Use X_C = 1/(2πfC).",
+                f"Calculation: X_C = 1/(2π×{f}×{c}) = {fmt(xc, 4)}.",
+                f"Conclusion: The capacitive reactance is {fmt(xc, 4)} Ω."
+            ],
+            premises=["Capacitive reactance formula: X_C = 1/(2πfC)."],
+            confidence=0.92,
+            source="sol_capacitive_reactance",
+        )
 
     return None
 
 
-def solve_capacitance_from_charge_voltage(question: str):
-    q = question.lower()
-    if "capacitance" not in q and "calculate the capacitance" not in q:
+# ============================================================
+# 3. Main router
+# ============================================================
+
+SOLVERS = [
+    solve_impedance_ohm,
+    solve_lc_resonance,
+    solve_capacitor_energy,
+    solve_capacitor_charge,
+    solve_resultant_two_forces,
+    solve_right_angle_three_charges,
+    solve_equilateral_electric_field,
+    solve_coulomb_force,
+    solve_relative_error,
+    solve_percentage_uncertainty,
+    solve_inductor_energy,
+    solve_train_relative_speed,
+    solve_reactance,
+    solve_ohm_resistance,
+]
+
+
+def solve_physics(question: str, extra_info: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+    """
+    Main physics SOL solver used by:
+    - SFT distillation
+    - RL reward
+    - inference/evaluation/API override
+
+    It returns None if no reliable formula template matches.
+    """
+    question = normalize_text(question)
+
+    if not question:
         return None
 
-    m_q = re.search(r"Q\s*=\s*([0-9.]+)\s*(mC|μC|uC|nC|C)", question, re.I)
-    m_u = re.search(r"U\s*=\s*([0-9.]+)\s*V", question, re.I)
-
-    if not (m_q and m_u):
-        return None
-
-    charge = float(m_q.group(1))
-    unit = m_q.group(2).lower()
-
-    if unit == "mc":
-        charge *= 1e-3
-    elif unit in ["μc", "uc"]:
-        charge *= 1e-6
-    elif unit == "nc":
-        charge *= 1e-9
-
-    voltage = float(m_u.group(1))
-    cap_f = charge / voltage
-    cap_uf = cap_f * 1e6
-
-    return {
-        "answer": f"{cap_uf:g}",
-        "unit": "μF",
-        "fol": "C = Q / U",
-        "explanation": f"Capacitance is C = Q/U. With Q = {charge} C and U = {voltage} V, C = {cap_f} F = {cap_uf:g} μF.",
-        "cot": [
-            "Step 1: Identify Q and U.",
-            "Step 2: Use C = Q/U.",
-            "Step 3: Convert charge to coulombs.",
-            f"Step 4: Compute C = {cap_uf:g} μF.",
-        ],
-        "premises": ["Capacitance formula: C = Q/U."],
-        "confidence": 0.90,
-        "source": "sol_capacitance_from_charge_voltage",
-    }
-
-
-def solve_inductor_energy(question: str):
-    q = question.lower()
-    if "inductor" not in q and "magnetic field energy" not in q:
-        return None
-
-    m_l = re.search(r"L\s*=\s*([0-9.]+)\s*(H|mH)", question, re.I)
-    m_i = re.search(r"(?:I|current).*?([0-9.]+)\s*A", question, re.I)
-
-    if not (m_l and m_i):
-        return None
-
-    L = float(m_l.group(1))
-    if m_l.group(2).lower() == "mh":
-        L *= 1e-3
-
-    I = float(m_i.group(1))
-    W = 0.5 * L * I * I
-    W_mj = W * 1000
-
-    # Many NL rows expect mJ.
-    unit = "mJ" if "mj" in q else "J"
-    ans = W_mj if unit == "mJ" else W
-
-    return {
-        "answer": f"{ans:.2f}" if unit == "mJ" else f"{ans:g}",
-        "unit": unit,
-        "fol": "W = 1/2 · L · I²",
-        "explanation": f"Magnetic energy in an inductor is W = 1/2·L·I². With L = {L} H and I = {I} A, W = {W:g} J.",
-        "cot": [
-            "Step 1: Identify inductance and current.",
-            "Step 2: Use W = 1/2·L·I².",
-            f"Step 3: Substitute L = {L} H and I = {I} A.",
-            f"Step 4: Compute W = {ans:g} {unit}.",
-        ],
-        "premises": ["Inductor energy formula: W = 1/2·L·I²."],
-        "confidence": 0.90,
-        "source": "sol_inductor_energy",
-    }
-
-
-def solve_rlc_resonance_yesno(question: str):
-    q = question.lower()
-    if "resonance" not in q or "frequency" not in q:
-        return None
-    if not any(x in q for x in ["does", "will", "determine if"]):
-        return None
-
-    m_l = re.search(r"L\s*=\s*([0-9.]+)\s*H", question, re.I)
-    m_c = re.search(r"C\s*=\s*([0-9.]+)\s*(μF|uF|microF|F)", question, re.I)
-    m_f = re.search(r"(?:frequency|f)\s*=\s*([0-9.]+)\s*Hz", question, re.I)
-
-    if not (m_l and m_c and m_f):
-        return None
-
-    L = float(m_l.group(1))
-    C = float(m_c.group(1))
-    if m_c.group(2).lower() in ["μf", "uf", "microf"]:
-        C *= 1e-6
-
-    f = float(m_f.group(1))
-    f0 = 1.0 / (2.0 * math.pi * math.sqrt(L * C))
-
-    ok = abs(f - f0) / max(1.0, abs(f0)) <= 0.02
-    ans = "Yes" if ok else "No"
-
-    return {
-        "answer": ans,
-        "unit": "-",
-        "fol": "f0 = 1 / (2π√(LC)); resonance iff f ≈ f0",
-        "explanation": f"The resonant frequency is f0 = 1/(2π√LC) = {f0:.2f} Hz. The operating frequency is {f} Hz, so the answer is {ans}.",
-        "cot": [
-            "Step 1: Identify L, C, and operating frequency.",
-            "Step 2: Compute f0 = 1/(2π√LC).",
-            "Step 3: Compare f with f0.",
-            f"Step 4: Return {ans}.",
-        ],
-        "premises": ["RLC resonance condition: f = 1/(2π√LC)."],
-        "confidence": 0.90,
-        "source": "sol_rlc_resonance_yesno",
-    }
-
-
-def solve_resistance_at_resonance(question: str):
-    q = question.lower()
-    if "resonance" not in q and "resonant" not in q:
-        return None
-    if "impedance" not in q:
-        return None
-
-    m_z = re.search(r"Z\s*=?\s*([0-9.]+)\s*Ω", question, re.I)
-    if not m_z:
-        m_z = re.search(r"impedance\s*(?:is|=)?\s*([0-9.]+)\s*Ω", question, re.I)
-
-    if not m_z:
-        return None
-
-    R = float(m_z.group(1))
-
-    return {
-        "answer": f"{R:g}",
-        "unit": "Ω",
-        "fol": "At resonance in series RLC, Z = R",
-        "explanation": f"At resonance in a series RLC circuit, the inductive and capacitive reactances cancel, so the impedance equals the resistance: R = Z = {R:g} Ω.",
-        "cot": [
-            "Step 1: Identify the circuit is at resonance.",
-            "Step 2: Use the resonance property Z = R.",
-            f"Step 3: Therefore R = {R:g} Ω.",
-        ],
-        "premises": ["At resonance in a series RLC circuit, Z = R."],
-        "confidence": 0.92,
-        "source": "sol_resistance_at_resonance",
-    }
-
-
-def solve_solenoid_turn_density(question: str):
-    q = question.lower()
-    if "turns per meter" not in q and "turns/m" not in q:
-        return None
-
-    m_n = re.search(r"([0-9.]+)\s*turns", question, re.I)
-    m_l = re.search(r"length\s*(?:of)?\s*([0-9.]+)\s*m", question, re.I)
-    if not (m_n and m_l):
-        m_l = re.search(r"is\s*([0-9.]+)\s*m\s*long", question, re.I)
-
-    if not (m_n and m_l):
-        return None
-
-    N = float(m_n.group(1))
-    L = float(m_l.group(1))
-    n = N / L
-
-    return {
-        "answer": f"{n:g}",
-        "unit": "turns/m",
-        "fol": "n = N / l",
-        "explanation": f"The turn density is n = N/l. With N = {N} turns and l = {L} m, n = {n:g} turns/m.",
-        "cot": [
-            "Step 1: Identify number of turns and solenoid length.",
-            "Step 2: Use n = N/l.",
-            f"Step 3: Compute n = {n:g} turns/m.",
-        ],
-        "premises": ["Solenoid turn density: n = N/l."],
-        "confidence": 0.90,
-        "source": "sol_solenoid_turn_density",
-    }
-
-
-def solve_absolute_error_least_count(question: str):
-    q = question.lower()
-    if "absolute error" not in q and "least count" not in q:
-        return None
-
-    m_lc = re.search(r"least count of\s*([0-9.]+)\s*([A-Za-z%Ω]+)", question, re.I)
-    if not m_lc:
-        return None
-
-    err = float(m_lc.group(1))
-    unit = m_lc.group(2)
-
-    return {
-        "answer": f"{err:g}",
-        "unit": unit,
-        "fol": "absolute error = least count",
-        "explanation": f"For a direct instrument reading, the absolute error is taken as the least count, so Δ = {err:g} {unit}.",
-        "cot": [
-            "Step 1: Identify the instrument least count.",
-            "Step 2: Use absolute error equal to least count.",
-            f"Step 3: Return {err:g} {unit}.",
-        ],
-        "premises": ["Absolute error of a direct reading is approximated by the least count."],
-        "confidence": 0.88,
-        "source": "sol_absolute_error_least_count",
-    }
-    
-
-def solve_physics(question: str):
-    solvers = [
-        solve_resistance_at_resonance,
-        solve_rlc_resonance_yesno,
-        solve_lc_resonance,
-        solve_capacitance_from_charge_voltage,
-        solve_capacitor_energy,
-        solve_inductor_energy,
-        solve_solenoid_turn_density,
-        solve_absolute_error_least_count,
-        solve_train_relative_speed,
-        solve_equal_charges_equilateral,
-        solve_ohm_law,
-    ]
-
-    for solver in solvers:
+    for solver in SOLVERS:
         try:
-            result = solver(question)
-            if result is not None:
-                return result
-        except Exception:
+            out = solver(question)
+            if out is not None and out.get("answer") not in [None, ""]:
+                out["question"] = question
+                return out
+        except Exception as e:
+            # Keep solver robust; never crash pipeline.
             continue
 
     return None
-

@@ -56,40 +56,56 @@ def prompt_to_text(prompt):
     return str(prompt)
 
 
-def build_physics_gold_target(question, gold):
+def get_gold_explanation(extra):
+    gold_exp = str(extra.get("gold_explanation", "") or "").strip()
+    gold_cot = str(extra.get("gold_cot", "") or "").strip()
+
+    if gold_exp:
+        return gold_exp
+
+    if gold_cot:
+        return gold_cot
+
+    return (
+        "The answer is derived by formalizing the problem, extracting the relevant evidence, "
+        "evaluating the evidence, performing the calculation or inference, and drawing the final conclusion."
+    )
+    
+
+
+def build_physics_gold_target(question, gold, extra=None):
+    extra = extra or {}
+    gold_explanation = get_gold_explanation(extra)
+    gold_unit = str(extra.get("gold_unit", "") or "")
+
     return {
         "answer": str(gold),
-        "unit": "",
-        "explanation": (
-            "The answer is obtained by formalizing the physics problem, "
-            "extracting the given quantities, selecting the relevant formula, "
-            "checking units, and computing the final result."
-        ),
+        "unit": gold_unit,
+        "explanation": gold_explanation,
         "fol": "Known quantities + relevant physics formula -> final answer",
         "cot": [
             "Problem formalization: Identify the target physical quantity.",
             "Evidence generation: Extract the known values and units from the problem.",
             "Evidence evaluation: Select the relevant formula and check unit consistency.",
             "Calculation: Substitute the values carefully into the formula.",
-            f"Conclusion: The final answer is {gold}."
+            f"Conclusion: The final answer is {gold} {gold_unit}."
         ],
         "premises": [
             "The known quantities are extracted from the question.",
             "The relevant physics formula is selected according to the target quantity."
         ],
-        "confidence": 0.75,
+        "confidence": 0.85,
         "source": "gold_guided_physics_fallback"
     }
 
 
-def build_logic_gold_target(question, gold, premises):
+def build_logic_gold_target(question, gold, premises, extra=None):
+    extra = extra or {}
+    gold_explanation = get_gold_explanation(extra)
+
     return {
         "answer": str(gold),
-        "explanation": (
-            "The answer is derived by formalizing the logical query, "
-            "extracting the relevant premises, evaluating whether the candidate answer "
-            "is supported, contradicted, or undetermined, and then drawing the conclusion."
-        ),
+        "explanation": gold_explanation,
         "fol": "Premises -> supported/contradicted/unknown answer",
         "cot": [
             "Problem formalization: Identify the claim or answer options in the question.",
@@ -99,9 +115,10 @@ def build_logic_gold_target(question, gold, premises):
             f"Conclusion: The final answer is {gold}."
         ],
         "premises": premises or [],
-        "confidence": 0.75,
+        "confidence": 0.85,
         "source": "gold_guided_logic_fallback"
     }
+
 
 
 def build_training_prompt(question, task_type, premises=None):
@@ -184,7 +201,7 @@ def main():
                 teacher_obj = None
 
             if teacher_obj is None and args.keep_fallback:
-                teacher_obj = build_physics_gold_target(question, gold)
+                teacher_obj = build_physics_gold_target(question, gold, extra)
                 kept_by_fallback += 1
             elif teacher_obj is not None:
                 kept_by_teacher += 1
@@ -200,7 +217,7 @@ def main():
                 teacher_obj = None
 
             if teacher_obj is None and args.keep_fallback:
-                teacher_obj = build_logic_gold_target(question, gold, premises)
+                teacher_obj = build_logic_gold_target(question, gold, premises, extra)
                 kept_by_fallback += 1
             elif teacher_obj is not None:
                 kept_by_teacher += 1

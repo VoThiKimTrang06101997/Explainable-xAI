@@ -9,6 +9,15 @@
         "documentation": {}
     },
     {
+        "label": "ast",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ast",
+        "description": "ast",
+        "detail": "ast",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -18,29 +27,37 @@
         "documentation": {}
     },
     {
-        "label": "math",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "math",
-        "description": "math",
-        "detail": "math",
-        "documentation": {}
-    },
-    {
-        "label": "isclose",
-        "importPath": "math",
-        "description": "math",
-        "isExtraImport": true,
-        "detail": "math",
-        "documentation": {}
-    },
-    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "re",
         "description": "re",
         "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
         "documentation": {}
     },
     {
@@ -106,6 +123,63 @@
         "importPath": "pandas",
         "description": "pandas",
         "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "solve_logic",
+        "importPath": "exact_modules.logic_solver",
+        "description": "exact_modules.logic_solver",
+        "isExtraImport": true,
+        "detail": "exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_physics",
+        "importPath": "exact_modules.sol.physics_solver",
+        "description": "exact_modules.sol.physics_solver",
+        "isExtraImport": true,
+        "detail": "exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_physics",
+        "importPath": "exact_modules.sol.physics_solver",
+        "description": "exact_modules.sol.physics_solver",
+        "isExtraImport": true,
+        "detail": "exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_physics",
+        "importPath": "exact_modules.sol.physics_solver",
+        "description": "exact_modules.sol.physics_solver",
+        "isExtraImport": true,
+        "detail": "exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "p1_correctness_continuous",
+        "importPath": "exact_modules.logicality_metrics",
+        "description": "exact_modules.logicality_metrics",
+        "isExtraImport": true,
+        "detail": "exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "isclose",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
         "documentation": {}
     },
     {
@@ -189,7 +263,47 @@
         "documentation": {}
     },
     {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -205,7 +319,23 @@
         "documentation": {}
     },
     {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -2701,6 +2831,38 @@
         "documentation": {}
     },
     {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "And",
         "importPath": "z3",
         "description": "z3",
@@ -2846,14 +3008,6 @@
     },
     {
         "label": "clamp01",
-        "importPath": "exact_modules.common",
-        "description": "exact_modules.common",
-        "isExtraImport": true,
-        "detail": "exact_modules.common",
-        "documentation": {}
-    },
-    {
-        "label": "normalize_superscript",
         "importPath": "exact_modules.common",
         "description": "exact_modules.common",
         "isExtraImport": true,
@@ -2894,38 +3048,6 @@
     },
     {
         "label": "text_quality_score",
-        "importPath": "exact_modules.common",
-        "description": "exact_modules.common",
-        "isExtraImport": true,
-        "detail": "exact_modules.common",
-        "documentation": {}
-    },
-    {
-        "label": "answer_score",
-        "importPath": "exact_modules.common",
-        "description": "exact_modules.common",
-        "isExtraImport": true,
-        "detail": "exact_modules.common",
-        "documentation": {}
-    },
-    {
-        "label": "extract_json",
-        "importPath": "exact_modules.common",
-        "description": "exact_modules.common",
-        "isExtraImport": true,
-        "detail": "exact_modules.common",
-        "documentation": {}
-    },
-    {
-        "label": "is_nan_like",
-        "importPath": "exact_modules.common",
-        "description": "exact_modules.common",
-        "isExtraImport": true,
-        "detail": "exact_modules.common",
-        "documentation": {}
-    },
-    {
-        "label": "parse_obj",
         "importPath": "exact_modules.common",
         "description": "exact_modules.common",
         "isExtraImport": true,
@@ -2981,38 +3103,6 @@
         "documentation": {}
     },
     {
-        "label": "explanation_score",
-        "importPath": "exact_modules.verifier",
-        "description": "exact_modules.verifier",
-        "isExtraImport": true,
-        "detail": "exact_modules.verifier",
-        "documentation": {}
-    },
-    {
-        "label": "format_score",
-        "importPath": "exact_modules.verifier",
-        "description": "exact_modules.verifier",
-        "isExtraImport": true,
-        "detail": "exact_modules.verifier",
-        "documentation": {}
-    },
-    {
-        "label": "reasoning_score",
-        "importPath": "exact_modules.verifier",
-        "description": "exact_modules.verifier",
-        "isExtraImport": true,
-        "detail": "exact_modules.verifier",
-        "documentation": {}
-    },
-    {
-        "label": "EXACT_CONFIG",
-        "importPath": "exact_modules.config",
-        "description": "exact_modules.config",
-        "isExtraImport": true,
-        "detail": "exact_modules.config",
-        "documentation": {}
-    },
-    {
         "label": "EXACT_CONFIG",
         "importPath": "exact_modules.config",
         "description": "exact_modules.config",
@@ -3051,15 +3141,6 @@
         "importPath": "os",
         "description": "os",
         "detail": "os",
-        "documentation": {}
-    },
-    {
-        "label": "sys",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "sys",
-        "description": "sys",
-        "detail": "sys",
         "documentation": {}
     },
     {
@@ -3336,47 +3417,6 @@
         "documentation": {}
     },
     {
-        "label": "build_final_output",
-        "importPath": "exact_modules.organizer",
-        "description": "exact_modules.organizer",
-        "isExtraImport": true,
-        "detail": "exact_modules.organizer",
-        "documentation": {}
-    },
-    {
-        "label": "convert_capacitance",
-        "importPath": "exact_modules.sol.unit_converter",
-        "description": "exact_modules.sol.unit_converter",
-        "isExtraImport": true,
-        "detail": "exact_modules.sol.unit_converter",
-        "documentation": {}
-    },
-    {
-        "label": "convert_length",
-        "importPath": "exact_modules.sol.unit_converter",
-        "description": "exact_modules.sol.unit_converter",
-        "isExtraImport": true,
-        "detail": "exact_modules.sol.unit_converter",
-        "documentation": {}
-    },
-    {
-        "label": "mps_to_kmh",
-        "importPath": "exact_modules.sol.unit_converter",
-        "description": "exact_modules.sol.unit_converter",
-        "isExtraImport": true,
-        "detail": "exact_modules.sol.unit_converter",
-        "documentation": {}
-    },
-    {
-        "label": "ast",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "ast",
-        "description": "ast",
-        "detail": "ast",
-        "documentation": {}
-    },
-    {
         "label": "build_fol_template",
         "importPath": "exact_modules.fol.templates",
         "description": "exact_modules.fol.templates",
@@ -3417,27 +3457,115 @@
         "documentation": {}
     },
     {
-        "label": "solve_physics",
-        "importPath": "exact_modules.sol.physics_solver",
-        "description": "exact_modules.sol.physics_solver",
-        "isExtraImport": true,
-        "detail": "exact_modules.sol.physics_solver",
-        "documentation": {}
-    },
-    {
-        "label": "solve_physics",
-        "importPath": "exact_modules.sol.physics_solver",
-        "description": "exact_modules.sol.physics_solver",
-        "isExtraImport": true,
-        "detail": "exact_modules.sol.physics_solver",
-        "documentation": {}
-    },
-    {
         "label": "light_z3_verify",
         "importPath": "exact_modules.fol.z3_light",
         "description": "exact_modules.fol.z3_light",
         "isExtraImport": true,
         "detail": "exact_modules.fol.z3_light",
+        "documentation": {}
+    },
+    {
+        "label": "Dataset",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "DataLoader",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "DistributedSampler",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "Dataset",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "DataLoader",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "Dataset",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "Dataset",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "DataLoader",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "Dataset",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "AutoTokenizer",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "AutoModelForCausalLM",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "Trainer",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "TrainingArguments",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
         "documentation": {}
     },
     {
@@ -3993,14 +4121,6 @@
         "documentation": {}
     },
     {
-        "label": "MistralForSequenceClassification",
-        "importPath": "transformers",
-        "description": "transformers",
-        "isExtraImport": true,
-        "detail": "transformers",
-        "documentation": {}
-    },
-    {
         "label": "GenerationConfig",
         "importPath": "transformers",
         "description": "transformers",
@@ -4038,6 +4158,54 @@
         "description": "transformers",
         "isExtraImport": true,
         "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "LoraConfig",
+        "importPath": "peft",
+        "description": "peft",
+        "isExtraImport": true,
+        "detail": "peft",
+        "documentation": {}
+    },
+    {
+        "label": "get_peft_model",
+        "importPath": "peft",
+        "description": "peft",
+        "isExtraImport": true,
+        "detail": "peft",
+        "documentation": {}
+    },
+    {
+        "label": "TaskType",
+        "importPath": "peft",
+        "description": "peft",
+        "isExtraImport": true,
+        "detail": "peft",
+        "documentation": {}
+    },
+    {
+        "label": "LoraConfig",
+        "importPath": "peft",
+        "description": "peft",
+        "isExtraImport": true,
+        "detail": "peft",
+        "documentation": {}
+    },
+    {
+        "label": "TaskType",
+        "importPath": "peft",
+        "description": "peft",
+        "isExtraImport": true,
+        "detail": "peft",
+        "documentation": {}
+    },
+    {
+        "label": "get_peft_model",
+        "importPath": "peft",
+        "description": "peft",
+        "isExtraImport": true,
+        "detail": "peft",
         "documentation": {}
     },
     {
@@ -4961,38 +5129,6 @@
     },
     {
         "label": "unpad_input",
-        "importPath": "flash_attn.bert_padding",
-        "description": "flash_attn.bert_padding",
-        "isExtraImport": true,
-        "detail": "flash_attn.bert_padding",
-        "documentation": {}
-    },
-    {
-        "label": "pad_input",
-        "importPath": "flash_attn.bert_padding",
-        "description": "flash_attn.bert_padding",
-        "isExtraImport": true,
-        "detail": "flash_attn.bert_padding",
-        "documentation": {}
-    },
-    {
-        "label": "unpad_input",
-        "importPath": "flash_attn.bert_padding",
-        "description": "flash_attn.bert_padding",
-        "isExtraImport": true,
-        "detail": "flash_attn.bert_padding",
-        "documentation": {}
-    },
-    {
-        "label": "rearrange",
-        "importPath": "flash_attn.bert_padding",
-        "description": "flash_attn.bert_padding",
-        "isExtraImport": true,
-        "detail": "flash_attn.bert_padding",
-        "documentation": {}
-    },
-    {
-        "label": "index_first_axis",
         "importPath": "flash_attn.bert_padding",
         "description": "flash_attn.bert_padding",
         "isExtraImport": true,
@@ -11587,70 +11723,6 @@
         "documentation": {}
     },
     {
-        "label": "DataLoader",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
-        "documentation": {}
-    },
-    {
-        "label": "DistributedSampler",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
-        "documentation": {}
-    },
-    {
-        "label": "Dataset",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
-        "documentation": {}
-    },
-    {
-        "label": "DataLoader",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
-        "documentation": {}
-    },
-    {
-        "label": "Dataset",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
-        "documentation": {}
-    },
-    {
-        "label": "Dataset",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
-        "documentation": {}
-    },
-    {
-        "label": "DataLoader",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
-        "documentation": {}
-    },
-    {
-        "label": "Dataset",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
-        "documentation": {}
-    },
-    {
         "label": "get_fsdp_wrap_policy",
         "importPath": "verl.utils.fsdp_utils",
         "description": "verl.utils.fsdp_utils",
@@ -11897,30 +11969,6 @@
         "description": "verl.utils.debug",
         "isExtraImport": true,
         "detail": "verl.utils.debug",
-        "documentation": {}
-    },
-    {
-        "label": "LoraConfig",
-        "importPath": "peft",
-        "description": "peft",
-        "isExtraImport": true,
-        "detail": "peft",
-        "documentation": {}
-    },
-    {
-        "label": "TaskType",
-        "importPath": "peft",
-        "description": "peft",
-        "isExtraImport": true,
-        "detail": "peft",
-        "documentation": {}
-    },
-    {
-        "label": "get_peft_model",
-        "importPath": "peft",
-        "description": "peft",
-        "isExtraImport": true,
-        "detail": "peft",
         "documentation": {}
     },
     {
@@ -13221,6 +13269,78 @@
         "documentation": {}
     },
     {
+        "label": "parse_obj",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_logicality_sft",
+        "peekOfCode": "def parse_obj(x):\n    if isinstance(x, dict):\n        return x\n    if isinstance(x, str):\n        try:\n            return json.loads(x)\n        except Exception:\n            try:\n                return ast.literal_eval(x)\n            except Exception:",
+        "detail": "One-Shot-RLVR.data.build_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "prompt_to_text",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_logicality_sft",
+        "peekOfCode": "def prompt_to_text(prompt):\n    if hasattr(prompt, \"tolist\"):\n        prompt = prompt.tolist()\n    if isinstance(prompt, str):\n        try:\n            prompt = ast.literal_eval(prompt)\n        except Exception:\n            return prompt\n    if isinstance(prompt, list) and len(prompt) > 0:\n        first = prompt[0]",
+        "detail": "One-Shot-RLVR.data.build_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "get_gold_explanation",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_logicality_sft",
+        "peekOfCode": "def get_gold_explanation(extra):\n    gold_exp = str(extra.get(\"gold_explanation\", \"\") or \"\").strip()\n    gold_cot = str(extra.get(\"gold_cot\", \"\") or \"\").strip()\n    if gold_exp:\n        return gold_exp\n    if gold_cot:\n        return gold_cot\n    return (\n        \"The answer is derived by formalizing the problem, extracting the relevant evidence, \"\n        \"evaluating the evidence, performing the calculation or inference, and drawing the final conclusion.\"",
+        "detail": "One-Shot-RLVR.data.build_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "build_physics_gold_target",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_logicality_sft",
+        "peekOfCode": "def build_physics_gold_target(question, gold, extra=None):\n    extra = extra or {}\n    gold_explanation = get_gold_explanation(extra)\n    gold_unit = str(extra.get(\"gold_unit\", \"\") or \"\")\n    return {\n        \"answer\": str(gold),\n        \"unit\": gold_unit,\n        \"explanation\": gold_explanation,\n        \"fol\": \"Known quantities + relevant physics formula -> final answer\",\n        \"cot\": [",
+        "detail": "One-Shot-RLVR.data.build_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "build_logic_gold_target",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_logicality_sft",
+        "peekOfCode": "def build_logic_gold_target(question, gold, premises, extra=None):\n    extra = extra or {}\n    gold_explanation = get_gold_explanation(extra)\n    return {\n        \"answer\": str(gold),\n        \"explanation\": gold_explanation,\n        \"fol\": \"Premises -> supported/contradicted/unknown answer\",\n        \"cot\": [\n            \"Problem formalization: Identify the claim or answer options in the question.\",\n            \"Evidence generation: Extract the relevant premises.\",",
+        "detail": "One-Shot-RLVR.data.build_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "build_training_prompt",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_logicality_sft",
+        "peekOfCode": "def build_training_prompt(question, task_type, premises=None):\n    if task_type == \"physics\":\n        return f\"\"\"You are an explainable physics QA system.\nSolve the problem using this scientific-logicality pipeline:\n1. Problem formalization\n2. Evidence generation\n3. Evidence evaluation\n4. Calculation\n5. Conclusion\nReturn valid JSON only with:",
+        "detail": "One-Shot-RLVR.data.build_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_logicality_sft",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--input_parquet\", type=str, required=True)\n    parser.add_argument(\"--output_jsonl\", type=str, required=True)\n    parser.add_argument(\"--output_parquet\", type=str, default=None)\n    parser.add_argument(\"--keep_fallback\", action=\"store_true\")\n    args = parser.parse_args()\n    df = pd.read_parquet(args.input_parquet)\n    rows = []\n    kept_by_teacher = 0",
+        "detail": "One-Shot-RLVR.data.build_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "ROOT",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.data.build_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_logicality_sft",
+        "peekOfCode": "ROOT = Path(__file__).resolve().parents[1]\nif str(ROOT) not in sys.path:\n    sys.path.append(str(ROOT))\nfrom exact_modules.logic_solver import solve_logic\nfrom exact_modules.sol.physics_solver import solve_physics\nfrom exact_modules.logicality_metrics import p1_correctness_continuous\ndef parse_obj(x):\n    if isinstance(x, dict):\n        return x\n    if isinstance(x, str):",
+        "detail": "One-Shot-RLVR.data.build_logicality_sft",
+        "documentation": {}
+    },
+    {
         "label": "find_existing_path",
         "kind": 2,
         "importPath": "One-Shot-RLVR.data.prepare_exact_dataset",
@@ -13324,7 +13444,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.data.prepare_exact_dataset",
         "description": "One-Shot-RLVR.data.prepare_exact_dataset",
-        "peekOfCode": "DEFAULT_LOGIC_PATHS = [\n    \"Logic_Based_Educational_Queries(1).json\",\n    \"Logic_Based_Educational_Queries.json\",\n    \"/content/Logic_Based_Educational_Queries(1).json\",\n    \"/content/drive/MyDrive/Explainable_AI/Dataset/Logic_Based_Educational_Queries(1).json\",\n]\nDEFAULT_PHYSICS_PATHS = [\n    \"Physics_Problems_Text_Only(1).csv\",\n    \"Physics_Problems_Text_Only.csv\",\n    \"/content/Physics_Problems_Text_Only(1).csv\",",
+        "peekOfCode": "DEFAULT_LOGIC_PATHS = [\n    \"Logic_Based_Educational_Queries.json\",\n    \"/content/Explainable-xAI/One-Shot-RLVR/data/exact/raw/Logic_Based_Educational_Queries.json\",\n    \"/content/drive/MyDrive/Explainable_AI/Dataset/Logic_Based_Educational_Queries_Text_Only/Logic_Based_Educational_Queries.json\",\n]\nDEFAULT_PHYSICS_PATHS = [\n    \"Physics_Problems_Text_Only.csv\",\n    \"/content/Explainable-xAI/One-Shot-RLVR/data/exact/raw/Physics_Problems_Text_Only.csv\",\n    \"/content/drive/MyDrive/Explainable_AI/Dataset/Physics_Problems_Text_Only/Physics_Problems_Text_Only.csv\",\n]",
         "detail": "One-Shot-RLVR.data.prepare_exact_dataset",
         "documentation": {}
     },
@@ -13333,7 +13453,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.data.prepare_exact_dataset",
         "description": "One-Shot-RLVR.data.prepare_exact_dataset",
-        "peekOfCode": "DEFAULT_PHYSICS_PATHS = [\n    \"Physics_Problems_Text_Only(1).csv\",\n    \"Physics_Problems_Text_Only.csv\",\n    \"/content/Physics_Problems_Text_Only(1).csv\",\n    \"/content/drive/MyDrive/Explainable_AI/Dataset/Physics_Problems_Text_Only(1).csv\",\n]\nOUT_TRAIN = Path(\"data/train/exact_rlvr\")\nOUT_VAL = Path(\"data/val/exact_rlvr\")\ndef find_existing_path(candidates):\n    for p in candidates:",
+        "peekOfCode": "DEFAULT_PHYSICS_PATHS = [\n    \"Physics_Problems_Text_Only.csv\",\n    \"/content/Explainable-xAI/One-Shot-RLVR/data/exact/raw/Physics_Problems_Text_Only.csv\",\n    \"/content/drive/MyDrive/Explainable_AI/Dataset/Physics_Problems_Text_Only/Physics_Problems_Text_Only.csv\",\n]\nOUT_TRAIN = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr\")\nOUT_VAL = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr\")\ndef find_existing_path(candidates):\n    for p in candidates:\n        path = Path(p)",
         "detail": "One-Shot-RLVR.data.prepare_exact_dataset",
         "documentation": {}
     },
@@ -13342,7 +13462,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.data.prepare_exact_dataset",
         "description": "One-Shot-RLVR.data.prepare_exact_dataset",
-        "peekOfCode": "OUT_TRAIN = Path(\"data/train/exact_rlvr\")\nOUT_VAL = Path(\"data/val/exact_rlvr\")\ndef find_existing_path(candidates):\n    for p in candidates:\n        path = Path(p)\n        if path.exists():\n            return path\n    raise FileNotFoundError(f\"Cannot find any file from: {candidates}\")\ndef is_nan_like(x):\n    if x is None:",
+        "peekOfCode": "OUT_TRAIN = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr\")\nOUT_VAL = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr\")\ndef find_existing_path(candidates):\n    for p in candidates:\n        path = Path(p)\n        if path.exists():\n            return path\n    raise FileNotFoundError(f\"Cannot find any file from: {candidates}\")\ndef is_nan_like(x):\n    if x is None:",
         "detail": "One-Shot-RLVR.data.prepare_exact_dataset",
         "documentation": {}
     },
@@ -13351,7 +13471,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.data.prepare_exact_dataset",
         "description": "One-Shot-RLVR.data.prepare_exact_dataset",
-        "peekOfCode": "OUT_VAL = Path(\"data/val/exact_rlvr\")\ndef find_existing_path(candidates):\n    for p in candidates:\n        path = Path(p)\n        if path.exists():\n            return path\n    raise FileNotFoundError(f\"Cannot find any file from: {candidates}\")\ndef is_nan_like(x):\n    if x is None:\n        return True",
+        "peekOfCode": "OUT_VAL = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr\")\ndef find_existing_path(candidates):\n    for p in candidates:\n        path = Path(p)\n        if path.exists():\n            return path\n    raise FileNotFoundError(f\"Cannot find any file from: {candidates}\")\ndef is_nan_like(x):\n    if x is None:\n        return True",
         "detail": "One-Shot-RLVR.data.prepare_exact_dataset",
         "documentation": {}
     },
@@ -13405,7 +13525,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.data.rebuild_exact_prompts",
         "description": "One-Shot-RLVR.data.rebuild_exact_prompts",
-        "peekOfCode": "TRAIN_IN = Path(\"data/train/exact_rlvr/exact_train.parquet\")\nVAL_IN = Path(\"data/val/exact_rlvr/exact_val.parquet\")\nTRAIN_OUT = Path(\"data/train/exact_rlvr/exact_train_router.parquet\")\nVAL_OUT = Path(\"data/val/exact_rlvr/exact_val_router.parquet\")\ndef parse_extra(x):\n    if isinstance(x, dict):\n        return x\n    try:\n        return json.loads(x)\n    except Exception:",
+        "peekOfCode": "TRAIN_IN = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr/exact_train.parquet\")\nVAL_IN = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr/exact_val.parquet\")\nTRAIN_OUT = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr/exact_train_router.parquet\")\nVAL_OUT = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr/exact_val_router.parquet\")\ndef parse_extra(x):\n    if isinstance(x, dict):\n        return x\n    try:\n        return json.loads(x)\n    except Exception:",
         "detail": "One-Shot-RLVR.data.rebuild_exact_prompts",
         "documentation": {}
     },
@@ -13414,7 +13534,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.data.rebuild_exact_prompts",
         "description": "One-Shot-RLVR.data.rebuild_exact_prompts",
-        "peekOfCode": "VAL_IN = Path(\"data/val/exact_rlvr/exact_val.parquet\")\nTRAIN_OUT = Path(\"data/train/exact_rlvr/exact_train_router.parquet\")\nVAL_OUT = Path(\"data/val/exact_rlvr/exact_val_router.parquet\")\ndef parse_extra(x):\n    if isinstance(x, dict):\n        return x\n    try:\n        return json.loads(x)\n    except Exception:\n        return {}",
+        "peekOfCode": "VAL_IN = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr/exact_val.parquet\")\nTRAIN_OUT = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr/exact_train_router.parquet\")\nVAL_OUT = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr/exact_val_router.parquet\")\ndef parse_extra(x):\n    if isinstance(x, dict):\n        return x\n    try:\n        return json.loads(x)\n    except Exception:\n        return {}",
         "detail": "One-Shot-RLVR.data.rebuild_exact_prompts",
         "documentation": {}
     },
@@ -13423,7 +13543,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.data.rebuild_exact_prompts",
         "description": "One-Shot-RLVR.data.rebuild_exact_prompts",
-        "peekOfCode": "TRAIN_OUT = Path(\"data/train/exact_rlvr/exact_train_router.parquet\")\nVAL_OUT = Path(\"data/val/exact_rlvr/exact_val_router.parquet\")\ndef parse_extra(x):\n    if isinstance(x, dict):\n        return x\n    try:\n        return json.loads(x)\n    except Exception:\n        return {}\ndef get_content(prompt):",
+        "peekOfCode": "TRAIN_OUT = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr/exact_train_router.parquet\")\nVAL_OUT = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr/exact_val_router.parquet\")\ndef parse_extra(x):\n    if isinstance(x, dict):\n        return x\n    try:\n        return json.loads(x)\n    except Exception:\n        return {}\ndef get_content(prompt):",
         "detail": "One-Shot-RLVR.data.rebuild_exact_prompts",
         "documentation": {}
     },
@@ -13432,7 +13552,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.data.rebuild_exact_prompts",
         "description": "One-Shot-RLVR.data.rebuild_exact_prompts",
-        "peekOfCode": "VAL_OUT = Path(\"data/val/exact_rlvr/exact_val_router.parquet\")\ndef parse_extra(x):\n    if isinstance(x, dict):\n        return x\n    try:\n        return json.loads(x)\n    except Exception:\n        return {}\ndef get_content(prompt):\n    if isinstance(prompt, list) and len(prompt) > 0:",
+        "peekOfCode": "VAL_OUT = Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr/exact_val_router.parquet\")\ndef parse_extra(x):\n    if isinstance(x, dict):\n        return x\n    try:\n        return json.loads(x)\n    except Exception:\n        return {}\ndef get_content(prompt):\n    if isinstance(prompt, list) and len(prompt) > 0:",
         "detail": "One-Shot-RLVR.data.rebuild_exact_prompts",
         "documentation": {}
     },
@@ -13594,7 +13714,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.reward.curriculum",
         "description": "One-Shot-RLVR.exact_modules.reward.curriculum",
-        "peekOfCode": "def get_reward_weights(task_type):\n    stage = get_curriculum_stage()\n    task_type = str(task_type).lower()\n    if stage == \"phase1_format\":\n        return {\n            \"answer\": 0.15,\n            \"sol\": 0.10 if task_type == \"physics\" else 0.00,\n            \"format\": 0.30,\n            \"explanation\": 0.20,\n            \"reasoning\": 0.20,",
+        "peekOfCode": "def get_reward_weights(task_type):\n    stage = get_curriculum_stage()\n    task_type = str(task_type).lower()\n    if stage == \"phase1_format\":\n        return {\n            \"answer\": 0.25,\n            \"sol\": 0.10 if task_type == \"physics\" else 0.00,\n            \"format\": 0.20,\n            \"explanation\": 0.15,\n            \"reasoning\": 0.15,",
         "detail": "One-Shot-RLVR.exact_modules.reward.curriculum",
         "documentation": {}
     },
@@ -13612,7 +13732,7 @@
         "kind": 6,
         "importPath": "One-Shot-RLVR.exact_modules.reward.rank_bonus_manager",
         "description": "One-Shot-RLVR.exact_modules.reward.rank_bonus_manager",
-        "peekOfCode": "class ExactRankBonusRewardManager(NaiveRewardManager):\n    \"\"\"\n    Adds verifier-ranked GRPO bonus after normal reward computation.\n    For candidates in the same prompt group:\n        best candidate gets +alpha reward bonus.\n    This strengthens contrastive learning signal.\n    \"\"\"\n    def __call__(self, data):\n        reward_tensor = super().__call__(data)\n        if not EXACT_CONFIG.get(\"use_contrastive_rank_bonus\", True):",
+        "peekOfCode": "class ExactRankBonusRewardManager(NaiveRewardManager):\n    \"\"\"\n    Adds verifier-ranked GRPO bonus after normal reward computation.\n    For candidates in the same prompt group:\n        best candidate gets +alpha reward bonus.\n    This class is robust to both:\n        reward_tensor\n    and:\n        (reward_tensor, extra_info, ...)\n    returned by the parent reward manager.",
         "detail": "One-Shot-RLVR.exact_modules.reward.rank_bonus_manager",
         "documentation": {}
     },
@@ -13653,29 +13773,110 @@
         "documentation": {}
     },
     {
-        "label": "solve_lc_resonance",
+        "label": "normalize_text",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_lc_resonance(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"resonance frequency\" not in q and \"resonant frequency\" not in q:\n        return None\n    m_l = _extract(r\"L\\s*=\\s*([0-9.]+)\\s*H\", question)\n    m_c = _extract(r\"C\\s*=\\s*([0-9.]+)\\s*(μF|uF|microF|nF|pF|F)\", question)\n    if not (m_l and m_c):\n        return None\n    L = float(m_l.group(1))\n    C_raw = float(m_c.group(1))",
+        "peekOfCode": "def normalize_text(x: str) -> str:\n    x = str(x or \"\")\n    x = x.replace(\"−\", \"-\")\n    x = x.replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    x = x.replace(\"×\", \"x\")\n    x = re.sub(r\"\\s+\", \" \", x)\n    return x.strip()\ndef normalize_superscript(s: str) -> str:\n    table = str.maketrans({\n        \"⁰\": \"0\", \"¹\": \"1\", \"²\": \"2\", \"³\": \"3\", \"⁴\": \"4\",",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
     {
-        "label": "solve_train_relative_speed",
+        "label": "normalize_superscript",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_train_relative_speed(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if not (\"car\" in q and \"train\" in q and \"opposite direction\" in q):\n        return None\n    m_car = _extract(r\"car.*?speed of\\s*([0-9.]+)\\s*km/h\", question)\n    m_len = _extract(r\"([0-9.]+)\\s*m\\s*long train\", question)\n    m_time = _extract(r\"passes it in\\s*([0-9.]+)\\s*seconds\", question)\n    if not (m_car and m_len and m_time):\n        return None\n    car_kmh = float(m_car.group(1))",
+        "peekOfCode": "def normalize_superscript(s: str) -> str:\n    table = str.maketrans({\n        \"⁰\": \"0\", \"¹\": \"1\", \"²\": \"2\", \"³\": \"3\", \"⁴\": \"4\",\n        \"⁵\": \"5\", \"⁶\": \"6\", \"⁷\": \"7\", \"⁸\": \"8\", \"⁹\": \"9\",\n        \"⁻\": \"-\", \"⁺\": \"+\",\n    })\n    return str(s).translate(table)\ndef to_float(num_str: str) -> Optional[float]:\n    if num_str is None:\n        return None",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
     {
-        "label": "solve_equal_charges_equilateral",
+        "label": "to_float",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_equal_charges_equilateral(question: str) -> Optional[Dict[str, Any]]:\n    q = normalize_superscript(question)\n    q_low = q.lower()\n    if \"equilateral triangle\" not in q_low or \"electric field at vertex a\" not in q_low:\n        return None\n    m_q = re.search(\n        r\"q1\\s*=\\s*q2\\s*=\\s*([0-9.]+)\\s*(?:[x×.]?\\s*10\\^?\\{?(-?[0-9]+)\\}?)?\\s*C\",\n        q,\n        flags=re.I,\n    )",
+        "peekOfCode": "def to_float(num_str: str) -> Optional[float]:\n    if num_str is None:\n        return None\n    s = normalize_superscript(str(num_str))\n    s = s.strip()\n    s = s.replace(\",\", \"\")\n    s = s.replace(\"×\", \"x\").replace(\"\\\\times\", \"x\")\n    s = s.replace(\"{\", \"\").replace(\"}\", \"\")\n    # 5.10^-16 means 5 * 10^-16 in some dataset lines\n    m = re.match(r\"^(-?\\d+(?:\\.\\d+)?)\\.10\\^?(-?\\d+)$\", s)",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "fmt",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def fmt(x, decimals: int = 4) -> str:\n    try:\n        x = float(x)\n        if abs(x) >= 1e5 or (abs(x) > 0 and abs(x) < 1e-3):\n            return f\"{x:.6g}\"\n        return f\"{x:.{decimals}f}\".rstrip(\"0\").rstrip(\".\")\n    except Exception:\n        return str(x)\ndef make_result(answer, unit, formula, explanation, cot, premises, confidence=0.90, source=\"physics_solver\") -> Dict[str, Any]:\n    return {",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "make_result",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def make_result(answer, unit, formula, explanation, cot, premises, confidence=0.90, source=\"physics_solver\") -> Dict[str, Any]:\n    return {\n        \"answer\": str(answer),\n        \"unit\": unit or \"\",\n        \"explanation\": explanation,\n        \"fol\": formula,\n        \"cot\": cot,\n        \"premises\": premises,\n        \"confidence\": float(confidence),\n        \"source\": source,",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "find_value",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def find_value(question: str, symbol: str, units: Optional[List[str]] = None) -> Optional[Tuple[float, str]]:\n    \"\"\"\n    Finds patterns like:\n    U = 100 V\n    C=30 μF\n    q1 = q2 = 5.10^-16 C\n    \"\"\"\n    q = normalize_text(question)\n    units = units or []\n    unit_pattern = \"|\".join([re.escape(u) for u in units]) if units else r\"[a-zA-ZΩ%]+\"",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "find_first_number_with_unit",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def find_first_number_with_unit(question: str, units: List[str]) -> Optional[Tuple[float, str]]:\n    q = normalize_text(question)\n    unit_pattern = \"|\".join([re.escape(u) for u in units])\n    p = rf\"([+\\-]?\\d+(?:\\.\\d+)?(?:\\s*(?:x|\\*)\\s*10\\s*\\^?\\s*[+\\-]?\\d+|\\.10\\^?[+\\-]?\\d+|e[+\\-]?\\d+)?)\\s*({unit_pattern})\"\n    m = re.search(p, q, flags=re.I)\n    if m:\n        val = to_float(m.group(1))\n        unit = m.group(2)\n        if val is not None:\n            return val, unit",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "unit_scale",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def unit_scale(unit: str) -> float:\n    u = str(unit or \"\").lower().strip()\n    u = u.replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    scales = {\n        \"pf\": 1e-12,\n        \"nf\": 1e-9,\n        \"uf\": 1e-6,\n        \"microf\": 1e-6,\n        \"mf\": 1e-3,\n        \"f\": 1.0,",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "convert_value",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def convert_value(value: float, unit: str) -> float:\n    return value * unit_scale(unit)\ndef extract_all_numbers(question: str) -> List[float]:\n    q = normalize_text(normalize_superscript(question))\n    nums = []\n    sci_pattern = r\"([+\\-]?\\d+(?:\\.\\d+)?)\\s*(?:x|\\*)\\s*10\\s*\\^?\\s*([+\\-]?\\d+)\"\n    for m in re.finditer(sci_pattern, q, flags=re.I):\n        nums.append(float(m.group(1)) * (10 ** int(m.group(2))))\n    for m in re.finditer(r\"[+\\-]?\\d+(?:\\.\\d+)?(?:e[+\\-]?\\d+)?\", q, flags=re.I):\n        val = to_float(m.group(0))",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "extract_all_numbers",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def extract_all_numbers(question: str) -> List[float]:\n    q = normalize_text(normalize_superscript(question))\n    nums = []\n    sci_pattern = r\"([+\\-]?\\d+(?:\\.\\d+)?)\\s*(?:x|\\*)\\s*10\\s*\\^?\\s*([+\\-]?\\d+)\"\n    for m in re.finditer(sci_pattern, q, flags=re.I):\n        nums.append(float(m.group(1)) * (10 ** int(m.group(2))))\n    for m in re.finditer(r\"[+\\-]?\\d+(?:\\.\\d+)?(?:e[+\\-]?\\d+)?\", q, flags=re.I):\n        val = to_float(m.group(0))\n        if val is not None:\n            nums.append(val)",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_impedance_ohm",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_impedance_ohm(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"impedance\" not in q and \" z\" not in q and \" z.\" not in q:\n        return None\n    U = find_value(question, \"U\", [\"V\", \"mV\", \"kV\"])\n    I = find_value(question, \"I\", [\"A\", \"mA\"])\n    if U is None:\n        U = find_first_number_with_unit(question, [\"V\", \"mV\", \"kV\"])\n    if I is None:\n        I = find_first_number_with_unit(question, [\"A\", \"mA\"])",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_ohm_resistance",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_ohm_resistance(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"resistance\" not in q and \"resistor\" not in q:\n        return None\n    V = find_value(question, \"V\", [\"V\", \"mV\", \"kV\"]) or find_value(question, \"U\", [\"V\", \"mV\", \"kV\"])\n    I = find_value(question, \"I\", [\"A\", \"mA\"])\n    if V is None or I is None:\n        return None\n    v = convert_value(V[0], V[1])\n    i = convert_value(I[0], I[1])",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
@@ -13684,25 +13885,79 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_capacitor_energy(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"energy stored\" not in q or \"capacitor\" not in q:\n        return None\n    m_c = re.search(r\"C\\s*=\\s*([0-9.]+)\\s*(μF|uF|microF|nF|pF|F)\", question, re.I)\n    m_u = re.search(r\"(?:U|V)\\s*=\\s*([0-9.]+)\\s*V\", question, re.I)\n    if not (m_c and m_u):\n        return None\n    C_raw = float(m_c.group(1))\n    C = convert_capacitance(C_raw, m_c.group(2))",
+        "peekOfCode": "def solve_capacitor_energy(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"energy\" not in q or (\"capacitor\" not in q and \"capacitance\" not in q):\n        return None\n    C = find_value(question, \"C\", [\"F\", \"uF\", \"µF\", \"μF\", \"microF\", \"mF\", \"nF\", \"pF\"])\n    U = find_value(question, \"U\", [\"V\", \"mV\", \"kV\"]) or find_value(question, \"V\", [\"V\", \"mV\", \"kV\"])\n    if C is None or U is None:\n        return None\n    c = convert_value(C[0], C[1])\n    u = convert_value(U[0], U[1])",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
     {
-        "label": "solve_ohm_law",
+        "label": "solve_capacitor_charge",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_ohm_law(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if not any(k in q for k in [\"ohm\", \"resistor\", \"voltage\", \"current\", \"resistance\"]):\n        return None\n    m_i = re.search(r\"I\\s*=\\s*([0-9.]+)\\s*A\", question, re.I)\n    m_r = re.search(r\"R\\s*=\\s*([0-9.]+)\\s*(ohm|Ω)\", question, re.I)\n    if m_i and m_r and (\"voltage\" in q or \"potential difference\" in q):\n        current = float(m_i.group(1))\n        resistance = float(m_r.group(1))\n        voltage = current * resistance",
+        "peekOfCode": "def solve_capacitor_charge(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"charge\" not in q or (\"capacitor\" not in q and \"capacitance\" not in q):\n        return None\n    C = find_value(question, \"C\", [\"F\", \"uF\", \"µF\", \"μF\", \"microF\", \"mF\", \"nF\", \"pF\"])\n    U = find_value(question, \"U\", [\"V\", \"mV\", \"kV\"]) or find_value(question, \"V\", [\"V\", \"mV\", \"kV\"])\n    if C is None or U is None:\n        return None\n    c = convert_value(C[0], C[1])\n    u = convert_value(U[0], U[1])",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
     {
-        "label": "solve_capacitance_from_charge_voltage",
+        "label": "solve_lc_resonance",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_capacitance_from_charge_voltage(question: str):\n    q = question.lower()\n    if \"capacitance\" not in q and \"calculate the capacitance\" not in q:\n        return None\n    m_q = re.search(r\"Q\\s*=\\s*([0-9.]+)\\s*(mC|μC|uC|nC|C)\", question, re.I)\n    m_u = re.search(r\"U\\s*=\\s*([0-9.]+)\\s*V\", question, re.I)\n    if not (m_q and m_u):\n        return None\n    charge = float(m_q.group(1))\n    unit = m_q.group(2).lower()",
+        "peekOfCode": "def solve_lc_resonance(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"resonance\" not in q and \"resonant\" not in q:\n        return None\n    L = find_value(question, \"L\", [\"H\", \"mH\", \"uH\", \"µH\", \"μH\"])\n    C = find_value(question, \"C\", [\"F\", \"uF\", \"µF\", \"μF\", \"microF\", \"mF\", \"nF\", \"pF\"])\n    if L is None or C is None:\n        return None\n    l = convert_value(L[0], L[1])\n    c = convert_value(C[0], C[1])",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_resultant_two_forces",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_resultant_two_forces(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"resultant\" not in q and \"net force\" not in q:\n        return None\n    if \"force\" not in q:\n        return None\n    # captures \"magnitudes of 2 N and 12 N\" or \"F1 = 6 N and F2 = 5 N\"\n    nums_n = []\n    for m in re.finditer(r\"([+\\-]?\\d+(?:\\.\\d+)?)\\s*N\\b\", normalize_text(question), flags=re.I):\n        nums_n.append(float(m.group(1)))",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_coulomb_force",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_coulomb_force(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"coulomb\" not in q and \"electric force\" not in q:\n        return None\n    if \"resultant\" in q or \"net\" in q:\n        # let vector solvers handle it\n        return None\n    # q1, q2\n    q_values = []\n    for m in re.finditer(r\"q\\d?\\s*=?\\s*([+\\-]?\\d+(?:\\.\\d+)?(?:\\s*(?:x|\\*)\\s*10\\s*\\^?\\s*[+\\-]?\\d+|\\.10\\^?[+\\-]?\\d+|e[+\\-]?\\d+)?)\\s*C\", normalize_text(question), flags=re.I):",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_right_angle_three_charges",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_right_angle_three_charges(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"right-angle\" not in q and \"right angle\" not in q:\n        return None\n    if \"charge\" not in q or \"force\" not in q:\n        return None\n    # charge q = +5 × 10^-6 C, side length a = 10 cm\n    q_match = re.search(r\"q\\s*=\\s*([+\\-]?\\d+(?:\\.\\d+)?(?:\\s*(?:x|\\*)\\s*10\\s*\\^?\\s*[+\\-]?\\d+|\\.10\\^?[+\\-]?\\d+|e[+\\-]?\\d+)?)\\s*C\", normalize_text(question), flags=re.I)\n    d = find_value(question, \"a\", [\"m\", \"cm\", \"mm\"]) or find_first_number_with_unit(question, [\"cm\", \"m\", \"mm\"])\n    if q_match is None or d is None:",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_equilateral_electric_field",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_equilateral_electric_field(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"equilateral triangle\" not in q:\n        return None\n    if \"electric field\" not in q:\n        return None\n    q_match = re.search(r\"q1\\s*=\\s*q2\\s*=\\s*([+\\-]?\\d+(?:\\.\\d+)?(?:\\s*(?:x|\\*)\\s*10\\s*\\^?\\s*[+\\-]?\\d+|\\.10\\^?[+\\-]?\\d+|e[+\\-]?\\d+)?)\\s*C\", normalize_text(question), flags=re.I)\n    d = find_first_number_with_unit(question, [\"cm\", \"m\", \"mm\"])\n    if q_match is None or d is None:\n        return None",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_relative_error",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_relative_error(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"relative error\" not in q:\n        return None\n    lc = re.search(r\"least count(?:\\s+of)?\\s*([0-9.]+)\\s*([a-zA-Z%]+)?\", question, flags=re.I)\n    read = re.search(r\"(?:reads?|reading|measurement|measured value)\\s*(?:is|=)?\\s*([0-9.]+)\\s*([a-zA-Z%]+)?\", question, flags=re.I)\n    if lc is None or read is None:\n        nums = extract_all_numbers(question)\n        if len(nums) >= 2:\n            abs_err, measured = nums[0], nums[1]",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_percentage_uncertainty",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_percentage_uncertainty(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"percentage uncertainty\" not in q and \"percentage relative uncertainty\" not in q:\n        return None\n    m = re.search(r\"([0-9.]+)\\s*±\\s*([0-9.]+)\", question)\n    if m:\n        measured = float(m.group(1))\n        uncertainty = float(m.group(2))\n    else:\n        nums = extract_all_numbers(question)",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
@@ -13711,43 +13966,25 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_inductor_energy(question: str):\n    q = question.lower()\n    if \"inductor\" not in q and \"magnetic field energy\" not in q:\n        return None\n    m_l = re.search(r\"L\\s*=\\s*([0-9.]+)\\s*(H|mH)\", question, re.I)\n    m_i = re.search(r\"(?:I|current).*?([0-9.]+)\\s*A\", question, re.I)\n    if not (m_l and m_i):\n        return None\n    L = float(m_l.group(1))\n    if m_l.group(2).lower() == \"mh\":",
+        "peekOfCode": "def solve_inductor_energy(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"energy\" not in q:\n        return None\n    if \"inductor\" not in q and \"magnetic field energy\" not in q and \"magnetic energy\" not in q:\n        return None\n    if \"halved\" in q and \"current\" in q:\n        return make_result(\n            answer=\"0.25\",\n            unit=\"of original\",",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
     {
-        "label": "solve_rlc_resonance_yesno",
+        "label": "solve_train_relative_speed",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_rlc_resonance_yesno(question: str):\n    q = question.lower()\n    if \"resonance\" not in q or \"frequency\" not in q:\n        return None\n    if not any(x in q for x in [\"does\", \"will\", \"determine if\"]):\n        return None\n    m_l = re.search(r\"L\\s*=\\s*([0-9.]+)\\s*H\", question, re.I)\n    m_c = re.search(r\"C\\s*=\\s*([0-9.]+)\\s*(μF|uF|microF|F)\", question, re.I)\n    m_f = re.search(r\"(?:frequency|f)\\s*=\\s*([0-9.]+)\\s*Hz\", question, re.I)\n    if not (m_l and m_c and m_f):",
+        "peekOfCode": "def solve_train_relative_speed(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    if \"train\" not in q or \"opposite direction\" not in q:\n        return None\n    car = re.search(r\"car.*?speed\\s*of\\s*([0-9.]+)\\s*km/h\", question, flags=re.I)\n    length = re.search(r\"([0-9.]+)\\s*m\\s*long\\s*train\", question, flags=re.I)\n    time = re.search(r\"passes\\s*it\\s*in\\s*([0-9.]+)\\s*seconds\", question, flags=re.I)\n    if car is None or length is None or time is None:\n        return None\n    v_car_kmh = float(car.group(1))",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
     {
-        "label": "solve_resistance_at_resonance",
+        "label": "solve_reactance",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_resistance_at_resonance(question: str):\n    q = question.lower()\n    if \"resonance\" not in q and \"resonant\" not in q:\n        return None\n    if \"impedance\" not in q:\n        return None\n    m_z = re.search(r\"Z\\s*=?\\s*([0-9.]+)\\s*Ω\", question, re.I)\n    if not m_z:\n        m_z = re.search(r\"impedance\\s*(?:is|=)?\\s*([0-9.]+)\\s*Ω\", question, re.I)\n    if not m_z:",
-        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "documentation": {}
-    },
-    {
-        "label": "solve_solenoid_turn_density",
-        "kind": 2,
-        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_solenoid_turn_density(question: str):\n    q = question.lower()\n    if \"turns per meter\" not in q and \"turns/m\" not in q:\n        return None\n    m_n = re.search(r\"([0-9.]+)\\s*turns\", question, re.I)\n    m_l = re.search(r\"length\\s*(?:of)?\\s*([0-9.]+)\\s*m\", question, re.I)\n    if not (m_n and m_l):\n        m_l = re.search(r\"is\\s*([0-9.]+)\\s*m\\s*long\", question, re.I)\n    if not (m_n and m_l):\n        return None",
-        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "documentation": {}
-    },
-    {
-        "label": "solve_absolute_error_least_count",
-        "kind": 2,
-        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_absolute_error_least_count(question: str):\n    q = question.lower()\n    if \"absolute error\" not in q and \"least count\" not in q:\n        return None\n    m_lc = re.search(r\"least count of\\s*([0-9.]+)\\s*([A-Za-z%Ω]+)\", question, re.I)\n    if not m_lc:\n        return None\n    err = float(m_lc.group(1))\n    unit = m_lc.group(2)\n    return {",
+        "peekOfCode": "def solve_reactance(question: str) -> Optional[Dict[str, Any]]:\n    q = question.lower()\n    f_val = find_value(question, \"f\", [\"Hz\", \"kHz\", \"MHz\"])\n    L = find_value(question, \"L\", [\"H\", \"mH\", \"uH\", \"µH\", \"μH\"])\n    C = find_value(question, \"C\", [\"F\", \"uF\", \"µF\", \"μF\", \"mF\", \"nF\", \"pF\"])\n    if f_val is None:\n        return None\n    f = convert_value(f_val[0], f_val[1])\n    if (\"inductive reactance\" in q or \"xl\" in q) and L is not None:\n        l = convert_value(L[0], L[1])",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
@@ -13756,7 +13993,43 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def solve_physics(question: str):\n    solvers = [\n        solve_resistance_at_resonance,\n        solve_rlc_resonance_yesno,\n        solve_lc_resonance,\n        solve_capacitance_from_charge_voltage,\n        solve_capacitor_energy,\n        solve_inductor_energy,\n        solve_solenoid_turn_density,\n        solve_absolute_error_least_count,",
+        "peekOfCode": "def solve_physics(question: str, extra_info: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:\n    \"\"\"\n    Main physics SOL solver used by:\n    - SFT distillation\n    - RL reward\n    - inference/evaluation/API override\n    It returns None if no reliable formula template matches.\n    \"\"\"\n    question = normalize_text(question)\n    if not question:",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "K_COULOMB",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "K_COULOMB = 9.0e9\nEPS0 = 8.854e-12\nPI = math.pi\n# ============================================================\n# 1. Text / number utilities\n# ============================================================\ndef normalize_text(x: str) -> str:\n    x = str(x or \"\")\n    x = x.replace(\"−\", \"-\")\n    x = x.replace(\"μ\", \"u\").replace(\"µ\", \"u\")",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "EPS0",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "EPS0 = 8.854e-12\nPI = math.pi\n# ============================================================\n# 1. Text / number utilities\n# ============================================================\ndef normalize_text(x: str) -> str:\n    x = str(x or \"\")\n    x = x.replace(\"−\", \"-\")\n    x = x.replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    x = x.replace(\"×\", \"x\")",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "PI",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "PI = math.pi\n# ============================================================\n# 1. Text / number utilities\n# ============================================================\ndef normalize_text(x: str) -> str:\n    x = str(x or \"\")\n    x = x.replace(\"−\", \"-\")\n    x = x.replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    x = x.replace(\"×\", \"x\")\n    x = re.sub(r\"\\s+\", \" \", x)",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "SOLVERS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "SOLVERS = [\n    solve_impedance_ohm,\n    solve_lc_resonance,\n    solve_capacitor_energy,\n    solve_capacitor_charge,\n    solve_resultant_two_forces,\n    solve_right_angle_three_charges,\n    solve_equilateral_electric_field,\n    solve_coulomb_force,\n    solve_relative_error,",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
@@ -13914,6 +14187,258 @@
         "documentation": {}
     },
     {
+        "label": "normalize_text",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "description": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "peekOfCode": "def normalize_text(x):\n    if x is None:\n        return \"\"\n    x = str(x).strip().lower()\n    x = x.replace(\"−\", \"-\").replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    x = re.sub(r\"\\s+\", \" \", x)\n    return x\ndef is_nan_like(x):\n    if x is None:\n        return True",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "is_nan_like",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "description": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "peekOfCode": "def is_nan_like(x):\n    if x is None:\n        return True\n    return str(x).strip().lower() in [\"\", \"nan\", \"none\", \"null\", \"na\"]\ndef normalize_superscript(s):\n    table = str.maketrans({\n        \"⁰\": \"0\", \"¹\": \"1\", \"²\": \"2\", \"³\": \"3\", \"⁴\": \"4\",\n        \"⁵\": \"5\", \"⁶\": \"6\", \"⁷\": \"7\", \"⁸\": \"8\", \"⁹\": \"9\",\n        \"⁻\": \"-\", \"⁺\": \"+\",\n    })",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_superscript",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "description": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "peekOfCode": "def normalize_superscript(s):\n    table = str.maketrans({\n        \"⁰\": \"0\", \"¹\": \"1\", \"²\": \"2\", \"³\": \"3\", \"⁴\": \"4\",\n        \"⁵\": \"5\", \"⁶\": \"6\", \"⁷\": \"7\", \"⁸\": \"8\", \"⁹\": \"9\",\n        \"⁻\": \"-\", \"⁺\": \"+\",\n    })\n    return str(s).translate(table)\ndef extract_first_number(x):\n    if x is None:\n        return None",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "extract_first_number",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "description": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "peekOfCode": "def extract_first_number(x):\n    if x is None:\n        return None\n    s = normalize_superscript(str(x))\n    s = s.replace(\"\\\\times\", \"x\").replace(\"×\", \"x\")\n    s = s.replace(\"−\", \"-\").replace(\"{\", \"\").replace(\"}\", \"\")\n    sci = re.search(\n        r\"(-?\\d+(?:\\.\\d+)?)\\s*(?:x|×|\\*|\\.)\\s*10\\s*(?:\\^|\\*\\*)?\\s*(-?\\d+)\",\n        s,\n        flags=re.I,",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "p1_correctness_continuous",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "description": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "peekOfCode": "def p1_correctness_continuous(pred, gold, task_type):\n    if is_nan_like(gold):\n        return 0.0\n    task_type = str(task_type).lower()\n    if task_type == \"physics\":\n        p = extract_first_number(pred)\n        g = extract_first_number(gold)\n        if p is None or g is None:\n            return 1.0 if normalize_text(pred) == normalize_text(gold) else 0.0\n        rel_err = abs(p - g) / max(1.0, abs(g))",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "p2_explanation_logicality",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "description": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "peekOfCode": "def p2_explanation_logicality(obj, p1, json_valid_original):\n    if obj is None:\n        return 0.0\n    exp = str(obj.get(\"explanation\", \"\") or \"\")\n    fol = str(obj.get(\"fol\", \"\") or \"\")\n    cot = obj.get(\"cot\", [])\n    premises = obj.get(\"premises\", [])\n    score = 0.0\n    if len(exp.split()) >= 8:\n        score += 0.15",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "p3_reasoning_depth_logicality",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "description": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "peekOfCode": "def p3_reasoning_depth_logicality(obj, p1, json_valid_original):\n    if obj is None:\n        return 0.0\n    cot = obj.get(\"cot\", [])\n    premises = obj.get(\"premises\", [])\n    fol = str(obj.get(\"fol\", \"\") or \"\")\n    if not isinstance(cot, list):\n        cot = []\n    cot_text = \" \".join([str(x).lower() for x in cot])\n    score = 0.0",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "final_proxy_score",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "description": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "peekOfCode": "def final_proxy_score(p1, p2, p3):\n    return round(0.60 * p1 + 0.20 * p2 + 0.20 * p3, 4)",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_metrics",
+        "documentation": {}
+    },
+    {
+        "label": "safe_parse_obj",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def safe_parse_obj(x):\n    if isinstance(x, dict):\n        return x\n    if isinstance(x, list):\n        return x\n    if hasattr(x, \"tolist\"):\n        return x.tolist()\n    if isinstance(x, str):\n        s = x.strip()\n        try:",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_text",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def normalize_text(x: str) -> str:\n    x = str(x or \"\").lower()\n    x = x.replace(\"–\", \"-\").replace(\"—\", \"-\")\n    x = re.sub(r\"[^a-z0-9\\s\\-\\_]\", \" \", x)\n    x = re.sub(r\"\\s+\", \" \", x)\n    return x.strip()\ndef content_words(x: str) -> List[str]:\n    toks = normalize_text(x).split()\n    return [t for t in toks if len(t) > 2 and t not in STOPWORDS]\ndef token_set(x: str) -> set:",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "content_words",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def content_words(x: str) -> List[str]:\n    toks = normalize_text(x).split()\n    return [t for t in toks if len(t) > 2 and t not in STOPWORDS]\ndef token_set(x: str) -> set:\n    return set(content_words(x))\ndef get_premises_from_extra(extra_info: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra_info, dict):\n        return []\n    for key in [\"premises_nl\", \"premises\", \"premise\", \"context\", \"rules\"]:\n        val = extra_info.get(key)",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "token_set",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def token_set(x: str) -> set:\n    return set(content_words(x))\ndef get_premises_from_extra(extra_info: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra_info, dict):\n        return []\n    for key in [\"premises_nl\", \"premises\", \"premise\", \"context\", \"rules\"]:\n        val = extra_info.get(key)\n        if isinstance(val, list):\n            return [str(v) for v in val if str(v).strip()]\n        if isinstance(val, str) and val.strip():",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "get_premises_from_extra",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def get_premises_from_extra(extra_info: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra_info, dict):\n        return []\n    for key in [\"premises_nl\", \"premises\", \"premise\", \"context\", \"rules\"]:\n        val = extra_info.get(key)\n        if isinstance(val, list):\n            return [str(v) for v in val if str(v).strip()]\n        if isinstance(val, str) and val.strip():\n            try:\n                parsed = json.loads(val)",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "split_mcq_options",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def split_mcq_options(question: str) -> Dict[str, str]:\n    q = str(question or \"\")\n    # A. text B. text\n    pattern = r\"(?:^|\\n|\\s)\\b([A-D])\\.\\s*(.*?)(?=(?:\\n|\\s)\\b[A-D]\\.\\s*|$)\"\n    matches = re.findall(pattern, q, flags=re.S)\n    options = {}\n    for label, text in matches:\n        cleaned = \" \".join(str(text).strip().split())\n        if cleaned:\n            options[label.upper()] = cleaned",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "extract_query_without_options",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def extract_query_without_options(question: str) -> str:\n    q = str(question or \"\")\n    q = re.split(r\"(?:^|\\n|\\s)\\bA[\\.\\)]\\s*\", q)[0]\n    return q.strip()\n# ============================================================\n# 3. Light logical verification\n# ============================================================\ndef keyword_overlap_score(candidate: str, premises: List[str]) -> float:\n    cand = token_set(candidate)\n    prem = token_set(\" \".join(premises))",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "keyword_overlap_score",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def keyword_overlap_score(candidate: str, premises: List[str]) -> float:\n    cand = token_set(candidate)\n    prem = token_set(\" \".join(premises))\n    if not cand:\n        return 0.0\n    return len(cand & prem) / max(1, len(cand))\ndef phrase_support_score(candidate: str, premises: List[str]) -> float:\n    \"\"\"\n    Scores whether important candidate phrases are directly supported by premises.\n    \"\"\"",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "phrase_support_score",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def phrase_support_score(candidate: str, premises: List[str]) -> float:\n    \"\"\"\n    Scores whether important candidate phrases are directly supported by premises.\n    \"\"\"\n    c_norm = normalize_text(candidate)\n    p_norm = normalize_text(\" \".join(premises))\n    if not c_norm:\n        return 0.0\n    # Exact candidate appears in premises\n    if c_norm in p_norm:",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "all_items_supported",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def all_items_supported(candidate: str, premises: List[str]) -> bool:\n    return phrase_support_score(candidate, premises) >= 0.999\ndef has_negation(x: str) -> bool:\n    x_norm = normalize_text(x)\n    return any(w in x_norm for w in NEGATION_WORDS)\ndef contradiction_score(statement: str, premises: List[str]) -> float:\n    s_neg = has_negation(statement)\n    p_text = \" \".join(premises)\n    p_neg = has_negation(p_text)\n    # weak heuristic only",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "has_negation",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def has_negation(x: str) -> bool:\n    x_norm = normalize_text(x)\n    return any(w in x_norm for w in NEGATION_WORDS)\ndef contradiction_score(statement: str, premises: List[str]) -> float:\n    s_neg = has_negation(statement)\n    p_text = \" \".join(premises)\n    p_neg = has_negation(p_text)\n    # weak heuristic only\n    if s_neg and not p_neg:\n        return 0.20",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "contradiction_score",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def contradiction_score(statement: str, premises: List[str]) -> float:\n    s_neg = has_negation(statement)\n    p_text = \" \".join(premises)\n    p_neg = has_negation(p_text)\n    # weak heuristic only\n    if s_neg and not p_neg:\n        return 0.20\n    if p_neg and not s_neg:\n        st = token_set(statement)\n        pt = token_set(p_text)",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "support_entailment_score",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def support_entailment_score(claim: str, premises: List[str]) -> float:\n    overlap = keyword_overlap_score(claim, premises)\n    phrase = phrase_support_score(claim, premises)\n    contra = contradiction_score(claim, premises)\n    score = 0.60 * overlap + 0.40 * phrase - contra\n    return max(0.0, min(1.0, score))\n# ============================================================\n# 4. Optional FOL/Z3-lite backend\n# ============================================================\ndef _atom_name(text: str) -> str:",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "parse_simple_rules_to_z3",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def parse_simple_rules_to_z3(premises: List[str]):\n    \"\"\"\n    Very light FOL/Z3 parser.\n    Handles:\n    - if X then Y\n    - X implies Y\n    - all X are Y\n    - X is Y / X has Y\n    This is intentionally safe and partial; it returns None if parsing is uncertain.\n    \"\"\"",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "z3_lite_check_claim",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def z3_lite_check_claim(question: str, premises: List[str]) -> Optional[Dict[str, Any]]:\n    \"\"\"\n    Conservative Z3-lite check. Returns None unless enough simple rules parsed.\n    \"\"\"\n    solver, atoms, rules = parse_simple_rules_to_z3(premises)\n    if solver is None:\n        return None\n    claim_name = _atom_name(question)\n    if claim_name not in atoms:\n        # Try matching claim to existing atom by token overlap",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_logic_mcq",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def solve_logic_mcq(question: str, premises: List[str]) -> Optional[Dict[str, Any]]:\n    options = split_mcq_options(question)\n    if not options:\n        return None\n    query = extract_query_without_options(question)\n    scored = []\n    for label, option_text in options.items():\n        overlap = keyword_overlap_score(option_text, premises)\n        phrase = phrase_support_score(option_text, premises)\n        all_supported = all_items_supported(option_text, premises)",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_logic_yes_no_unknown",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def solve_logic_yes_no_unknown(question: str, premises: List[str]) -> Optional[Dict[str, Any]]:\n    if not premises:\n        return {\n            \"answer\": \"Unknown\",\n            \"explanation\": \"No premises are provided, so the answer cannot be determined.\",\n            \"fol\": \"NoPremises -> Unknown\",\n            \"cot\": [\n                \"Problem formalization: Identify the claim in the question.\",\n                \"Evidence generation: Check whether premises are available.\",\n                \"Evidence evaluation: No supporting or contradicting premise is available.\",",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_logic",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def solve_logic(question: str, premises: Optional[List[str]] = None, extra_info: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:\n    \"\"\"\n    Main logic solver used by:\n    - SFT distillation\n    - RL symbolic reward\n    - inference/evaluation/API override\n    Priority:\n    1. MCQ option-wise verifier\n    2. Z3-lite / rule verifier for Yes-No-Unknown\n    3. lexical support verifier",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "STOPWORDS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "STOPWORDS = {\n    \"a\", \"an\", \"the\", \"is\", \"are\", \"was\", \"were\", \"be\", \"being\", \"been\",\n    \"do\", \"does\", \"did\", \"can\", \"could\", \"should\", \"would\", \"will\", \"shall\",\n    \"has\", \"have\", \"had\", \"all\", \"any\", \"some\", \"each\", \"every\", \"everyone\",\n    \"student\", \"students\", \"person\", \"people\", \"which\", \"what\", \"when\",\n    \"where\", \"why\", \"how\", \"following\", \"answer\", \"option\", \"true\", \"false\",\n    \"yes\", \"no\", \"unknown\", \"whether\", \"if\", \"then\", \"and\", \"or\", \"of\",\n    \"to\", \"in\", \"on\", \"for\", \"with\", \"by\", \"from\", \"as\", \"that\", \"this\",\n}\nNEGATION_WORDS = [",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "NEGATION_WORDS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "NEGATION_WORDS = [\n    \"not\", \"no\", \"never\", \"cannot\", \"can't\", \"does not\", \"do not\",\n    \"did not\", \"is not\", \"are not\", \"without\", \"fails to\", \"lack\", \"lacks\"\n]\ndef safe_parse_obj(x):\n    if isinstance(x, dict):\n        return x\n    if isinstance(x, list):\n        return x\n    if hasattr(x, \"tolist\"):",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
         "label": "base_organizer",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.organizer",
@@ -14001,6 +14526,24 @@
         "description": "One-Shot-RLVR.exact_modules.verifier",
         "peekOfCode": "def exact_reward_components(obj, raw_text, pred_answer, gold, task_type, question, extra_info):\n    gold_valid = bool(extra_info.get(\"gold_valid\", not is_nan_like(gold)))\n    if gold_valid:\n        r_answer = answer_score(pred_answer, gold, task_type)\n    else:\n        r_answer = 0.0\n    r_format = format_score(obj, raw_text)\n    r_expl = explanation_score(obj, raw_text)\n    r_reason = reasoning_score(obj)\n    r_symbolic = symbolic_light_score(obj or {}, extra_info, task_type)",
         "detail": "One-Shot-RLVR.exact_modules.verifier",
+        "documentation": {}
+    },
+    {
+        "label": "ExactSFTDataset",
+        "kind": 6,
+        "importPath": "One-Shot-RLVR.scripts.train.train_sft_exact",
+        "description": "One-Shot-RLVR.scripts.train.train_sft_exact",
+        "peekOfCode": "class ExactSFTDataset(Dataset):\n    def __init__(self, jsonl_path, tokenizer, max_length=2048):\n        self.rows = []\n        self.tokenizer = tokenizer\n        self.max_length = max_length\n        with open(jsonl_path, \"r\", encoding=\"utf-8\") as f:\n            for line in f:\n                if line.strip():\n                    self.rows.append(json.loads(line))\n    def __len__(self):",
+        "detail": "One-Shot-RLVR.scripts.train.train_sft_exact",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.scripts.train.train_sft_exact",
+        "description": "One-Shot-RLVR.scripts.train.train_sft_exact",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--base_model\", type=str, default=\"Qwen/Qwen2.5-0.5B-Instruct\")\n    parser.add_argument(\"--train_jsonl\", type=str, required=True)\n    parser.add_argument(\"--output_dir\", type=str, required=True)\n    parser.add_argument(\"--merged_output_dir\", type=str, required=True)\n    parser.add_argument(\"--max_length\", type=int, default=2048)\n    parser.add_argument(\"--epochs\", type=float, default=1.0)\n    parser.add_argument(\"--lr\", type=float, default=2e-5)\n    parser.add_argument(\"--batch_size\", type=int, default=1)",
+        "detail": "One-Shot-RLVR.scripts.train.train_sft_exact",
         "documentation": {}
     },
     {
@@ -20466,11 +21009,200 @@
         "documentation": {}
     },
     {
-        "label": "build_prompt",
+        "label": "safe_parse_obj",
         "kind": 2,
         "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
-        "peekOfCode": "def build_prompt(row):\n    prompt = row[\"prompt\"]\n    if hasattr(prompt, \"tolist\"):\n        prompt = prompt.tolist()\n    if isinstance(prompt, list) and len(prompt) > 0:\n        if isinstance(prompt[0], dict):\n            return str(prompt[0].get(\"content\", \"\"))\n        return str(prompt[0])\n    return str(prompt)\ndef generate_one(model, tokenizer, prompt, max_new_tokens=512):",
+        "peekOfCode": "def safe_parse_obj(x):\n    if isinstance(x, dict):\n        return x\n    if hasattr(x, \"tolist\"):\n        x = x.tolist()\n    if isinstance(x, str):\n        s = x.strip()\n        if not s:\n            return {}\n        try:",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "safe_parse_prompt",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def safe_parse_prompt(prompt):\n    if hasattr(prompt, \"tolist\"):\n        prompt = prompt.tolist()\n    if isinstance(prompt, str):\n        s = prompt.strip()\n        if s.startswith(\"[\") or s.startswith(\"{\"):\n            try:\n                prompt = ast.literal_eval(s)\n            except Exception:\n                return s",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "safe_extract_json",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def safe_extract_json(text):\n    if text is None:\n        return None\n    if extract_json is not None:\n        try:\n            obj = extract_json(text)\n            if isinstance(obj, dict):\n                return obj\n        except Exception:\n            pass",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_text",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def normalize_text(x):\n    if x is None:\n        return \"\"\n    x = str(x).strip().lower()\n    x = x.replace(\"−\", \"-\")\n    x = x.replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    x = re.sub(r\"\\s+\", \" \", x)\n    return x\ndef normalize_superscript(s):\n    table = str.maketrans({",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_superscript",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def normalize_superscript(s):\n    table = str.maketrans({\n        \"⁰\": \"0\",\n        \"¹\": \"1\",\n        \"²\": \"2\",\n        \"³\": \"3\",\n        \"⁴\": \"4\",\n        \"⁵\": \"5\",\n        \"⁶\": \"6\",\n        \"⁷\": \"7\",",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "extract_first_number",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def extract_first_number(x):\n    if x is None:\n        return None\n    s = normalize_superscript(str(x))\n    s = s.replace(\"\\\\times\", \"x\")\n    s = s.replace(\"×\", \"x\")\n    s = s.replace(\"−\", \"-\")\n    s = s.replace(\"{\", \"\").replace(\"}\", \"\")\n    # scientific notation: 1.22 x 10^-3 / 4.725*10^7 / 22.29 × 10^6\n    sci = re.search(",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "extract_all_numbers",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def extract_all_numbers(x):\n    if x is None:\n        return []\n    s = normalize_superscript(str(x))\n    s = s.replace(\"\\\\times\", \"x\")\n    s = s.replace(\"×\", \"x\")\n    s = s.replace(\"−\", \"-\")\n    s = s.replace(\"{\", \"\").replace(\"}\", \"\")\n    out = []\n    for m in re.finditer(",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "format_number",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def format_number(x):\n    try:\n        x = float(x)\n        if abs(x) >= 1e5 or (abs(x) > 0 and abs(x) < 1e-3):\n            return f\"{x:.6g}\"\n        return f\"{x:.6f}\".rstrip(\"0\").rstrip(\".\")\n    except Exception:\n        return str(x)\ndef question_has_options(question):\n    q = str(question or \"\")",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "question_has_options",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def question_has_options(question):\n    q = str(question or \"\")\n    return bool(re.search(r\"\\bA\\.\\s*\", q) and re.search(r\"\\bB\\.\\s*\", q))\ndef extract_physics_answer_from_raw(raw):\n    raw = str(raw or \"\").strip()\n    if not raw:\n        return \"\"\n    patterns = [\n        r\"(?:final answer|answer|result|therefore|thus|hence|so)\\s*(?:is|=|:|≈)?\\s*(-?\\d+(?:\\.\\d+)?(?:e-?\\d+)?(?:\\s*(?:x|×|\\*|\\.)\\s*10\\s*\\^?\\s*-?\\d+)?)\",\n        r\"(?:f|F|V|I|R|C|E|W|P|Q)\\s*(?:=|≈)\\s*(-?\\d+(?:\\.\\d+)?(?:e-?\\d+)?(?:\\s*(?:x|×|\\*|\\.)\\s*10\\s*\\^?\\s*-?\\d+)?)\",",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "extract_physics_answer_from_raw",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def extract_physics_answer_from_raw(raw):\n    raw = str(raw or \"\").strip()\n    if not raw:\n        return \"\"\n    patterns = [\n        r\"(?:final answer|answer|result|therefore|thus|hence|so)\\s*(?:is|=|:|≈)?\\s*(-?\\d+(?:\\.\\d+)?(?:e-?\\d+)?(?:\\s*(?:x|×|\\*|\\.)\\s*10\\s*\\^?\\s*-?\\d+)?)\",\n        r\"(?:f|F|V|I|R|C|E|W|P|Q)\\s*(?:=|≈)\\s*(-?\\d+(?:\\.\\d+)?(?:e-?\\d+)?(?:\\s*(?:x|×|\\*|\\.)\\s*10\\s*\\^?\\s*-?\\d+)?)\",\n        r\"≈\\s*(-?\\d+(?:\\.\\d+)?(?:e-?\\d+)?)\",\n    ]\n    candidates = []",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "extract_logic_answer_from_raw",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def extract_logic_answer_from_raw(raw, question=\"\"):\n    raw = str(raw or \"\").strip()\n    if not raw:\n        return \"Unknown\"\n    if question_has_options(question):\n        patterns = [\n            r\"(?:correct answer|answer|option|choice)\\s*(?:is|=|:)?\\s*\\(?([A-D])\\)?\\b\",\n            r\"\\b([A-D])\\s*(?:is|:)\\s*(?:the\\s*)?(?:correct|valid|true|answer)\",\n            r\"\\boption\\s+([A-D])\\b\",\n        ]",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "build_forced_prompt",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def build_forced_prompt(row, task_type, extra_info):\n    question = extra_info.get(\"question\", \"\")\n    if not question:\n        question = safe_parse_prompt(row.get(\"prompt\", \"\"))\n    premises = extra_info.get(\"premises_nl\", []) or extra_info.get(\"premises\", [])\n    task_type = str(task_type or \"\").lower()\n    if task_type == \"physics\":\n        return f\"\"\"You are an explainable physics QA system.\nSolve the problem using this scientific-logicality pipeline:\n1. Problem formalization: identify the target quantity.",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "fallback_output",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def fallback_output(raw, task_type, question, premises=None):\n    raw = str(raw or \"\").strip()\n    task_type = str(task_type or \"\").lower()\n    if task_type == \"physics\":\n        answer = extract_physics_answer_from_raw(raw)\n        return {\n            \"answer\": answer,\n            \"unit\": \"\",\n            \"explanation\": raw if len(raw.split()) >= 8 else (\n                \"The answer is derived by formalizing the physics problem, \"",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "repair_answer",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def repair_answer(obj, raw, task_type, question):\n    if obj is None or not isinstance(obj, dict):\n        obj = {}\n    task_type = str(task_type or \"\").lower()\n    answer = str(obj.get(\"answer\", \"\")).strip()\n    bad = [\"\", \"nan\", \"none\", \"null\", \"unknown.\", \"not specified\"]\n    if answer.lower() in bad:\n        if task_type == \"physics\":\n            answer = extract_physics_answer_from_raw(raw)\n        else:",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "build_final_obj",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def build_final_obj(obj, raw, task_type, question, extra_info, json_valid_original):\n    if obj is None:\n        premises = extra_info.get(\"premises_nl\", []) or extra_info.get(\"premises\", [])\n        obj = fallback_output(raw, task_type, question, premises)\n    if build_final_output is not None:\n        try:\n            final_obj = build_final_output(\n                model_obj=obj,\n                raw_output=raw,\n                task_type=task_type,",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "apply_physics_override",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def apply_physics_override(obj, question):\n    if solve_physics is None:\n        return obj, False\n    try:\n        sol = solve_physics(question)\n        if sol is not None and sol.get(\"answer\") not in [None, \"\"]:\n            obj[\"answer\"] = str(sol.get(\"answer\", \"\"))\n            obj[\"explanation\"] = sol.get(\"explanation\", obj.get(\"explanation\", \"\"))\n            obj[\"fol\"] = sol.get(\"fol\", obj.get(\"fol\", \"\"))\n            obj[\"cot\"] = sol.get(\"cot\", obj.get(\"cot\", []))",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "apply_logic_override",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def apply_logic_override(obj, question, extra_info):\n    if solve_logic is None:\n        return obj, False\n    try:\n        premises = extra_info.get(\"premises_nl\", []) or extra_info.get(\"premises\", [])\n        logic_sol = solve_logic(question, premises)\n        if logic_sol is not None and logic_sol.get(\"answer\") not in [None, \"\"]:\n            confidence = float(logic_sol.get(\"confidence\", 0.0))\n            if confidence >= 0.65:\n                obj[\"answer\"] = str(logic_sol.get(\"answer\", \"\"))",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "metric_format",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def metric_format(obj, json_valid_original):\n    if not isinstance(obj, dict):\n        return 0.0\n    keys = [\"answer\", \"explanation\", \"fol\", \"cot\", \"premises\", \"confidence\"]\n    present = sum(1 for k in keys if k in obj) / len(keys)\n    non_empty = 0\n    for k in keys:\n        v = obj.get(k)\n        if isinstance(v, list):\n            non_empty += int(len(v) > 0)",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "local_p1",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def local_p1(pred, gold, task_type):\n    if is_nan_like(gold):\n        return 0.0\n    if p1_correctness_continuous is not None:\n        try:\n            return p1_correctness_continuous(pred, gold, task_type)\n        except Exception:\n            pass\n    task_type = str(task_type).lower()\n    if task_type == \"physics\":",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "local_p2",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def local_p2(obj, p1, json_valid_original):\n    if p2_explanation_logicality is not None:\n        try:\n            return p2_explanation_logicality(obj, p1, json_valid_original)\n        except Exception:\n            pass\n    exp = str(obj.get(\"explanation\", \"\") or \"\")\n    fol = str(obj.get(\"fol\", \"\") or \"\")\n    cot = obj.get(\"cot\", [])\n    premises = obj.get(\"premises\", [])",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "local_p3",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def local_p3(obj, p1, json_valid_original):\n    if p3_reasoning_depth_logicality is not None:\n        try:\n            return p3_reasoning_depth_logicality(obj, p1, json_valid_original)\n        except Exception:\n            pass\n    cot = obj.get(\"cot\", [])\n    premises = obj.get(\"premises\", [])\n    fol = str(obj.get(\"fol\", \"\") or \"\")\n    if not isinstance(cot, list):",
+        "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "local_final_score",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "peekOfCode": "def local_final_score(p1, p2, p3):\n    if final_proxy_score is not None:\n        try:\n            return final_proxy_score(p1, p2, p3)\n        except Exception:\n            pass\n    return round(0.60 * p1 + 0.20 * p2 + 0.20 * p3, 4)\n# ============================================================\n# Generation / revision\n# ============================================================",
         "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "documentation": {}
     },
@@ -20479,7 +21211,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
-        "peekOfCode": "def generate_one(model, tokenizer, prompt, max_new_tokens=512):\n    messages = [{\"role\": \"user\", \"content\": prompt}]\n    text = tokenizer.apply_chat_template(\n        messages,\n        tokenize=False,\n        add_generation_prompt=True,\n    )\n    inputs = tokenizer(text, return_tensors=\"pt\").to(model.device)\n    input_len = inputs[\"input_ids\"].shape[-1]\n    with torch.no_grad():",
+        "peekOfCode": "def generate_one(model, tokenizer, prompt, max_new_tokens=512):\n    messages = [{\"role\": \"user\", \"content\": prompt}]\n    if hasattr(tokenizer, \"apply_chat_template\"):\n        text = tokenizer.apply_chat_template(\n            messages,\n            tokenize=False,\n            add_generation_prompt=True,\n        )\n    else:\n        text = prompt",
         "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "documentation": {}
     },
@@ -20488,7 +21220,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
-        "peekOfCode": "def maybe_revise(model, tokenizer, question, final_obj, task_type, gold_answer, max_new_tokens=512):\n    if not EXACT_CONFIG.get(\"use_self_revision_inference\", True):\n        return final_obj, \"\"\n    from exact_modules.revision.self_revision import build_revision_prompt, build_verifier_feedback\n    feedback = build_verifier_feedback(task_type, final_obj, gold_answer=gold_answer)\n    revision_prompt = build_revision_prompt(question, final_obj, feedback)\n    raw_revision = generate_one(\n        model=model,\n        tokenizer=tokenizer,\n        prompt=revision_prompt,",
+        "peekOfCode": "def maybe_revise(model, tokenizer, question, final_obj, task_type, gold_answer, max_new_tokens=512):\n    if not EXACT_CONFIG.get(\"use_self_revision_inference\", False):\n        return final_obj, \"\"\n    try:\n        from exact_modules.revision.self_revision import build_revision_prompt, build_verifier_feedback\n        feedback = build_verifier_feedback(task_type, final_obj, gold_answer=gold_answer)\n        revision_prompt = build_revision_prompt(question, final_obj, feedback)\n        raw_revision = generate_one(\n            model=model,\n            tokenizer=tokenizer,",
         "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "documentation": {}
     },
@@ -20497,7 +21229,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
-        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--model_path\", type=str, required=True)\n    parser.add_argument(\"--eval_file\", type=str, default=\"data/val/exact_rlvr/exact_val_router.parquet\")\n    parser.add_argument(\n        \"--output_file\",\n        type=str,\n        default=\"/content/drive/MyDrive/Explainable_AI/Results/exact_symbolic_moe_predictions.jsonl\",\n    )\n    parser.add_argument(\"--max_new_tokens\", type=int, default=512)",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--model_path\", type=str, required=True)\n    parser.add_argument(\"--tokenizer_path\", type=str, default=None)\n    parser.add_argument(\"--eval_file\", type=str, default=\"data/val/exact_rlvr/exact_val_router.parquet\")\n    parser.add_argument(\n        \"--output_file\",\n        type=str,\n        default=\"/content/drive/MyDrive/Explainable_AI/Results/exact_symbolic_moe_predictions.jsonl\",\n    )",
         "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "documentation": {}
     },
@@ -20506,7 +21238,7 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
-        "peekOfCode": "ROOT = Path(__file__).resolve().parent\nif str(ROOT) not in sys.path:\n    sys.path.append(str(ROOT))\nfrom exact_modules.common import answer_score, extract_json, is_nan_like, parse_obj\nfrom exact_modules.config import EXACT_CONFIG\nfrom exact_modules.organizer import build_final_output\nfrom exact_modules.verifier import explanation_score, format_score, reasoning_score\ndef build_prompt(row):\n    prompt = row[\"prompt\"]\n    if hasattr(prompt, \"tolist\"):",
+        "peekOfCode": "ROOT = Path(__file__).resolve().parent\nif str(ROOT) not in sys.path:\n    sys.path.append(str(ROOT))\n# ============================================================\n# Optional project modules\n# ============================================================\ntry:\n    from exact_modules.common import extract_json, is_nan_like, parse_obj\nexcept Exception:\n    extract_json = None",
         "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "documentation": {}
     },
