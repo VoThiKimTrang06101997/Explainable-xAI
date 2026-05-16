@@ -21,7 +21,14 @@ from typing import Dict, Type, Optional
 import numpy as np
 import torch
 from torch import nn
-from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, GenerationConfig
+
+try:
+    from transformers import MistralForSequenceClassification
+except Exception as e:
+    MistralForSequenceClassification = None
+    print(f"[WARN] MistralForSequenceClassification is unavailable and will be skipped: {e}")
+
 from verl.models.registry import ModelRegistry
 
 
@@ -356,3 +363,4 @@ def pad_packed_inputs(unpad_tokens: torch.Tensor, cu_seqlens, max_seqlen_in_batc
         max_seqlen_in_batch = max(max_seqlen_in_batch, pad_size)
 
     return unpad_tokens, cu_seqlens, max_seqlen_in_batch
+

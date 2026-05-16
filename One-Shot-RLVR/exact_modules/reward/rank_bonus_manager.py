@@ -76,29 +76,65 @@ def _last_reward_position(reward_tensor, row_idx):
     return reward_tensor.shape[-1] - 1
 
 
+def _split_reward_output(base_output):
+    """
+    Some VERL reward managers return reward_tensor.
+    Some return tuple like (reward_tensor, reward_extra_info).
+    This helper normalizes both forms.
+    """
+    if isinstance(base_output, tuple):
+        reward_tensor = base_output[0]
+        rest = base_output[1:]
+        return reward_tensor, rest, True
+
+    return base_output, (), False
+
+
+def _restore_reward_output(reward_tensor, rest, was_tuple):
+    if was_tuple:
+        return (reward_tensor, *rest)
+    return reward_tensor
+
+
 class ExactRankBonusRewardManager(NaiveRewardManager):
     """
     Adds verifier-ranked GRPO bonus after normal reward computation.
 
     For candidates in the same prompt group:
         best candidate gets +alpha reward bonus.
-    This strengthens contrastive learning signal.
+
+    This class is robust to both:
+        reward_tensor
+    and:
+        (reward_tensor, extra_info, ...)
+    returned by the parent reward manager.
     """
 
     def __call__(self, data):
-        reward_tensor = super().__call__(data)
+        base_output = super().__call__(data)
+
+        reward_tensor, rest, was_tuple = _split_reward_output(base_output)
 
         if not EXACT_CONFIG.get("use_contrastive_rank_bonus", True):
-            return reward_tensor
+            return _restore_reward_output(reward_tensor, rest, was_tuple)
 
         alpha = float(EXACT_CONFIG.get("rank_bonus_alpha", 0.12))
 
         if alpha <= 0:
-            return reward_tensor
+            return _restore_reward_output(reward_tensor, rest, was_tuple)
+
+        if not isinstance(reward_tensor, torch.Tensor):
+            print(f"[WARN] ExactRankBonusRewardManager skipped: reward_tensor is {type(reward_tensor)}")
+            return _restore_reward_output(reward_tensor, rest, was_tuple)
 
         try:
-            batch_size = reward_tensor.shape[0]
-            row_rewards = reward_tensor.sum(dim=-1).detach().cpu().tolist()
+            if reward_tensor.ndim == 1:
+                batch_size = reward_tensor.shape[0]
+                row_rewards = reward_tensor.detach().cpu().tolist()
+            else:
+                batch_size = reward_tensor.shape[0]
+                row_rewards = reward_tensor.sum(dim=-1).detach().cpu().tolist()
+
             keys = _get_group_keys(data, batch_size)
 
             groups = defaultdict(list)
@@ -113,11 +149,14 @@ class ExactRankBonusRewardManager(NaiveRewardManager):
                 best_idxs = [i for i in idxs if row_rewards[i] == best_reward]
 
                 for i in best_idxs:
-                    pos = _last_reward_position(reward_tensor, i)
-                    reward_tensor[i, pos] += alpha
+                    if reward_tensor.ndim == 1:
+                        reward_tensor[i] += alpha
+                    else:
+                        pos = _last_reward_position(reward_tensor, i)
+                        reward_tensor[i, pos] += alpha
 
         except Exception as e:
             print(f"[WARN] ExactRankBonusRewardManager failed: {e}")
 
-        return reward_tensor
-    
+        return _restore_reward_output(reward_tensor, rest, was_tuple)
+

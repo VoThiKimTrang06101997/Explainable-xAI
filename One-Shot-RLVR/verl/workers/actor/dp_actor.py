@@ -31,7 +31,27 @@ from verl.utils.ulysses import ulysses_pad_and_slice_inputs, gather_outpus_and_u
 from verl.utils.seqlen_balancing import rearrange_micro_batches, get_reverse_idx
 import verl.utils.torch_functional as verl_F
 
-from flash_attn.bert_padding import pad_input, unpad_input, rearrange, index_first_axis
+try:
+    from flash_attn.bert_padding import pad_input, unpad_input, rearrange, index_first_axis
+    FLASH_ATTN_AVAILABLE = True
+except Exception as e:
+    from einops import rearrange
+    FLASH_ATTN_AVAILABLE = False
+    print(f"[WARN] flash_attn is unavailable or broken: {e}. Falling back without remove_padding.")
+
+    def pad_input(*args, **kwargs):
+        raise RuntimeError(
+            "flash_attn is unavailable. Set actor_rollout_ref.model.use_remove_padding=False."
+        )
+
+    def unpad_input(*args, **kwargs):
+        raise RuntimeError(
+            "flash_attn is unavailable. Set actor_rollout_ref.model.use_remove_padding=False."
+        )
+
+    def index_first_axis(x, indices):
+        return x[indices]
+
 
 __all__ = ['DataParallelPPOActor']
 
@@ -292,3 +312,4 @@ class DataParallelPPOActor(BasePPOActor):
             append_to_dict(metrics, data)
         self.actor_optimizer.zero_grad()
         return metrics
+

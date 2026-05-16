@@ -9,21 +9,19 @@ from sklearn.model_selection import train_test_split
 
 
 DEFAULT_LOGIC_PATHS = [
-    "Logic_Based_Educational_Queries(1).json",
     "Logic_Based_Educational_Queries.json",
-    "/content/Logic_Based_Educational_Queries(1).json",
-    "/content/drive/MyDrive/Explainable_AI/Dataset/Logic_Based_Educational_Queries(1).json",
+    "/content/Explainable-xAI/One-Shot-RLVR/data/exact/raw/Logic_Based_Educational_Queries.json",
+    "/content/drive/MyDrive/Explainable_AI/Dataset/Logic_Based_Educational_Queries_Text_Only/Logic_Based_Educational_Queries.json",
 ]
 
 DEFAULT_PHYSICS_PATHS = [
-    "Physics_Problems_Text_Only(1).csv",
     "Physics_Problems_Text_Only.csv",
-    "/content/Physics_Problems_Text_Only(1).csv",
-    "/content/drive/MyDrive/Explainable_AI/Dataset/Physics_Problems_Text_Only(1).csv",
+    "/content/Explainable-xAI/One-Shot-RLVR/data/exact/raw/Physics_Problems_Text_Only.csv",
+    "/content/drive/MyDrive/Explainable_AI/Dataset/Physics_Problems_Text_Only/Physics_Problems_Text_Only.csv",
 ]
 
-OUT_TRAIN = Path("data/train/exact_rlvr")
-OUT_VAL = Path("data/val/exact_rlvr")
+OUT_TRAIN = Path("/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr")
+OUT_VAL = Path("/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr")
 
 
 def find_existing_path(candidates):

@@ -1,3 +1,4 @@
+# %%writefile /content/Explainable-xAI/One-Shot-RLVR/exact_modules/reward/curriculum.py
 from exact_modules.config import EXACT_CONFIG
 
 _CALL_COUNTER = 0
@@ -29,36 +30,48 @@ def get_reward_weights(task_type):
 
     if stage == "phase1_format":
         return {
-            "answer": 0.15,
+            "answer": 0.25,
             "sol": 0.10 if task_type == "physics" else 0.00,
-            "format": 0.30,
-            "explanation": 0.20,
-            "reasoning": 0.20,
+            "format": 0.20,
+            "explanation": 0.15,
+            "reasoning": 0.15,
             "symbolic": 0.10 if task_type == "logic" else 0.00,
-            "revision": 0.00,
-            "floor": 0.05,
+            "revision": 0.02,
+            "floor": 0.03,
         }
 
     if stage == "phase2_reasoning":
         return {
-            "answer": 0.25,
-            "sol": 0.15 if task_type == "physics" else 0.00,
-            "format": 0.15,
-            "explanation": 0.15,
-            "reasoning": 0.20,
+            "answer": 0.45,
+            "sol": 0.20 if task_type == "physics" else 0.00,
+            "format": 0.08,
+            "explanation": 0.08,
+            "reasoning": 0.10,
             "symbolic": 0.15 if task_type == "logic" else 0.00,
-            "revision": 0.05,
-            "floor": 0.05,
+            "revision": 0.04,
+            "floor": 0.02,
+        }
+
+    if task_type == "physics":
+        return {
+            "answer": 0.65,
+            "sol": 0.20,
+            "format": 0.02,
+            "explanation": 0.04,
+            "reasoning": 0.04,
+            "symbolic": 0.00,
+            "revision": 0.03,
+            "floor": 0.02,
         }
 
     return {
-        "answer": 0.40,
-        "sol": 0.20 if task_type == "physics" else 0.00,
-        "format": 0.05,
-        "explanation": 0.10,
-        "reasoning": 0.15,
-        "symbolic": 0.20 if task_type == "logic" else 0.00,
-        "revision": 0.05,
-        "floor": 0.05,
+        "answer": 0.65,
+        "sol": 0.00,
+        "format": 0.02,
+        "explanation": 0.04,
+        "reasoning": 0.04,
+        "symbolic": 0.20,
+        "revision": 0.03,
+        "floor": 0.02,
     }
     

@@ -4,11 +4,11 @@ from pathlib import Path
 import pandas as pd
 
 
-TRAIN_IN = Path("data/train/exact_rlvr/exact_train.parquet")
-VAL_IN = Path("data/val/exact_rlvr/exact_val.parquet")
+TRAIN_IN = Path("/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr/exact_train.parquet")
+VAL_IN = Path("/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr/exact_val.parquet")
 
-TRAIN_OUT = Path("data/train/exact_rlvr/exact_train_router.parquet")
-VAL_OUT = Path("data/val/exact_rlvr/exact_val_router.parquet")
+TRAIN_OUT = Path("/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr/exact_train_router.parquet")
+VAL_OUT = Path("/content/Explainable-xAI/One-Shot-RLVR/data/val/exact_rlvr/exact_val_router.parquet")
 
 
 def parse_extra(x):
@@ -126,4 +126,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
     
