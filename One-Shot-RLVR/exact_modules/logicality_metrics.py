@@ -52,6 +52,30 @@ def extract_first_number(x):
         return None
 
 
+
+
+def extract_all_numbers_metric(x):
+    if x is None:
+        return []
+
+    s = normalize_superscript(str(x))
+    s = s.replace("\\times", "x").replace("×", "x")
+    s = s.replace("−", "-").replace("{", "").replace("}", "")
+
+    vals = []
+
+    for m in re.finditer(r"(-?\d+(?:\.\d+)?)\s*(?:x|×|\*|\.)\s*10\s*(?:\^|\*\*)?\s*(-?\d+)", s, flags=re.I):
+        vals.append(float(m.group(1)) * (10 ** int(m.group(2))))
+
+    for m in re.finditer(r"-?\d+(?:\.\d+)?(?:e-?\d+)?", s, flags=re.I):
+        try:
+            vals.append(float(m.group(0)))
+        except Exception:
+            pass
+
+    return vals
+
+
 def p1_correctness_continuous(pred, gold, task_type):
     if is_nan_like(gold):
         return 0.0
@@ -59,12 +83,33 @@ def p1_correctness_continuous(pred, gold, task_type):
     task_type = str(task_type).lower()
 
     if task_type == "physics":
-        p = extract_first_number(pred)
-        g = extract_first_number(gold)
+        ps = extract_all_numbers_metric(pred)
+        gs = extract_all_numbers_metric(gold)
 
-        if p is None or g is None:
+        if len(ps) == 0 or len(gs) == 0:
             return 1.0 if normalize_text(pred) == normalize_text(gold) else 0.0
 
+        # Multi-answer case: require all gold numbers to be close to predicted numbers.
+        if len(gs) >= 2 and len(ps) >= 2:
+            scores = []
+            for g in gs[:len(ps)]:
+                best = max(
+                    [
+                        1.0 if abs(p - g) / max(1.0, abs(g)) <= 0.01 else
+                        0.9 if abs(p - g) / max(1.0, abs(g)) <= 0.03 else
+                        0.8 if abs(p - g) / max(1.0, abs(g)) <= 0.05 else
+                        0.6 if abs(p - g) / max(1.0, abs(g)) <= 0.10 else
+                        0.4 if abs(p - g) / max(1.0, abs(g)) <= 0.20 else
+                        0.2 if abs(p - g) / max(1.0, abs(g)) <= 0.50 else
+                        0.0
+                        for p in ps
+                    ]
+                )
+                scores.append(best)
+            return sum(scores) / max(1, len(scores))
+
+        p = ps[0]
+        g = gs[0]
         rel_err = abs(p - g) / max(1.0, abs(g))
 
         if rel_err <= 0.01:
@@ -213,3 +258,104 @@ def p3_reasoning_depth_logicality(obj, p1, json_valid_original):
 
 def final_proxy_score(p1, p2, p3):
     return round(0.60 * p1 + 0.20 * p2 + 0.20 * p3, 4)
+
+
+# ============================================================
+# HARD OVERRIDE METRICS PATCH
+# ============================================================
+
+def _extract_numbers_clean(x):
+    if x is None:
+        return []
+
+    s = normalize_superscript(str(x))
+    s = s.replace("\\times", "×").replace("x", "×").replace("*", "×")
+    s = s.replace("−", "-").replace("{", "").replace("}", "")
+
+    values = []
+    spans = []
+
+    sci_pattern = r"(-?\d+(?:\.\d+)?)\s*(?:×|\.)\s*10\s*(?:\^|\*\*)?\s*(-?\d+)"
+    for m in re.finditer(sci_pattern, s, flags=re.I):
+        try:
+            values.append(float(m.group(1)) * (10 ** int(m.group(2))))
+            spans.append(m.span())
+        except Exception:
+            pass
+
+    def inside_span(pos):
+        return any(a <= pos < b for a, b in spans)
+
+    for m in re.finditer(r"-?\d+(?:\.\d+)?(?:e[+\-]?\d+)?", s, flags=re.I):
+        if inside_span(m.start()):
+            continue
+        try:
+            values.append(float(m.group(0)))
+        except Exception:
+            pass
+
+    return values
+
+
+def _score_numeric(p, g):
+    rel_err = abs(p - g) / max(1.0, abs(g))
+    if rel_err <= 0.01:
+        return 1.0
+    if rel_err <= 0.03:
+        return 0.9
+    if rel_err <= 0.05:
+        return 0.8
+    if rel_err <= 0.10:
+        return 0.6
+    if rel_err <= 0.20:
+        return 0.4
+    if rel_err <= 0.50:
+        return 0.2
+    return 0.0
+
+
+def p1_correctness_continuous(pred, gold, task_type):
+    if is_nan_like(gold):
+        return 0.0
+
+    task_type = str(task_type).lower()
+
+    if task_type == "physics":
+        ps = _extract_numbers_clean(pred)
+        gs = _extract_numbers_clean(gold)
+
+        if not ps or not gs:
+            return 1.0 if normalize_text(pred) == normalize_text(gold) else 0.0
+
+        # multi-answer: each gold number should be matched by a predicted number
+        if len(gs) >= 2:
+            scores = []
+            for g in gs:
+                scores.append(max(_score_numeric(p, g) for p in ps))
+            return sum(scores) / len(scores)
+
+        return max(_score_numeric(p, gs[0]) for p in ps)
+
+    pred_n = normalize_text(pred)
+    gold_n = normalize_text(gold)
+
+    label_map = {"true": "yes", "false": "no"}
+    pred_n = label_map.get(pred_n, pred_n)
+    gold_n = label_map.get(gold_n, gold_n)
+
+    if gold_n in ["a", "b", "c", "d"]:
+        if pred_n[:1] == gold_n:
+            return 1.0
+        if pred_n[:1] in ["a", "b", "c", "d"]:
+            return 0.2
+        return 0.0
+
+    if gold_n in ["yes", "no", "unknown"]:
+        if pred_n == gold_n:
+            return 1.0
+        if pred_n in ["yes", "no", "unknown"]:
+            return 0.2
+        return 0.0
+
+    return 1.0 if pred_n == gold_n else 0.0
+

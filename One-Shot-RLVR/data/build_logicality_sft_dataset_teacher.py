@@ -1,10 +1,7 @@
-# Đây là bước distillation. Nó dùng SOL/logic verifier làm teacher nhẹ. Nếu solver/verifier trả đúng gold thì giữ. Nếu chưa match, vẫn tạo target bằng gold nhưng ghi source là gold_guided_fallback.
-
-# %%writefile /content/Explainable-xAI/One-Shot-RLVR/data/build_logicality_sft.py
+# %%writefile /content/Explainable-xAI/One-Shot-RLVR/data/build_logicality_sft_dataset_teacher.py
 import argparse
 import ast
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -15,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
+from exact_modules.dataset_teacher import ExactDatasetTeacher
 from exact_modules.logic_solver import solve_logic
 from exact_modules.sol.physics_solver import solve_physics
 from exact_modules.logicality_metrics import p1_correctness_continuous
@@ -40,7 +38,8 @@ def prompt_to_text(prompt):
 
     if isinstance(prompt, str):
         try:
-            prompt = ast.literal_eval(prompt)
+            parsed = ast.literal_eval(prompt)
+            prompt = parsed
         except Exception:
             return prompt
 
@@ -70,55 +69,51 @@ def get_gold_explanation(extra):
         "The answer is derived by formalizing the problem, extracting the relevant evidence, "
         "evaluating the evidence, performing the calculation or inference, and drawing the final conclusion."
     )
-    
 
 
 def build_physics_gold_target(question, gold, extra=None):
     extra = extra or {}
-    gold_explanation = get_gold_explanation(extra)
     gold_unit = str(extra.get("gold_unit", "") or "")
 
     return {
         "answer": str(gold),
         "unit": gold_unit,
-        "explanation": gold_explanation,
-        "fol": "Known quantities + relevant physics formula -> final answer",
+        "explanation": get_gold_explanation(extra),
+        "fol": "Official gold annotation: physics problem -> answer",
         "cot": [
             "Problem formalization: Identify the target physical quantity.",
             "Evidence generation: Extract the known values and units from the problem.",
             "Evidence evaluation: Select the relevant formula and check unit consistency.",
-            "Calculation: Substitute the values carefully into the formula.",
-            f"Conclusion: The final answer is {gold} {gold_unit}."
+            "Calculation: Apply the formula or official derivation.",
+            f"Conclusion: The final answer is {gold} {gold_unit}.".strip()
         ],
         "premises": [
-            "The known quantities are extracted from the question.",
-            "The relevant physics formula is selected according to the target quantity."
+            "Official physics problem statement.",
+            "Official gold answer from the dataset."
         ],
-        "confidence": 0.85,
+        "confidence": 0.95,
         "source": "gold_guided_physics_fallback"
     }
 
 
 def build_logic_gold_target(question, gold, premises, extra=None):
     extra = extra or {}
-    gold_explanation = get_gold_explanation(extra)
 
     return {
         "answer": str(gold),
-        "explanation": gold_explanation,
-        "fol": "Premises -> supported/contradicted/unknown answer",
+        "explanation": get_gold_explanation(extra),
+        "fol": "Official gold annotation: premises -> answer",
         "cot": [
             "Problem formalization: Identify the claim or answer options in the question.",
             "Evidence generation: Extract the relevant premises.",
             "Evidence evaluation: Check whether the candidate answer is supported, contradicted, or undetermined.",
-            "Inference: Choose the answer that is best supported by the evidence.",
+            "Inference: Choose the official supported answer.",
             f"Conclusion: The final answer is {gold}."
         ],
         "premises": premises or [],
-        "confidence": 0.85,
+        "confidence": 0.95,
         "source": "gold_guided_logic_fallback"
     }
-
 
 
 def build_training_prompt(question, task_type, premises=None):
@@ -140,6 +135,7 @@ Problem:
 """
 
     premise_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(premises or [])])
+
     return f"""You are an explainable logic QA system.
 
 Use the premises to answer the question using this logicality pipeline:
@@ -163,15 +159,23 @@ Question:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_parquet", type=str, required=True)
+    parser.add_argument("--logic_raw_file", type=str, default=None)
+    parser.add_argument("--physics_raw_file", type=str, default=None)
     parser.add_argument("--output_jsonl", type=str, required=True)
     parser.add_argument("--output_parquet", type=str, default=None)
     parser.add_argument("--keep_fallback", action="store_true")
     args = parser.parse_args()
 
+    teacher = ExactDatasetTeacher(
+        logic_file=args.logic_raw_file,
+        physics_file=args.physics_raw_file,
+    )
+
     df = pd.read_parquet(args.input_parquet)
 
     rows = []
-    kept_by_teacher = 0
+    kept_by_dataset = 0
+    kept_by_solver = 0
     kept_by_fallback = 0
     skipped = 0
 
@@ -190,37 +194,47 @@ def main():
 
         teacher_obj = None
 
-        if task_type == "physics":
-            try:
-                sol = solve_physics(question)
-                if sol is not None:
-                    p1 = p1_correctness_continuous(sol.get("answer", ""), gold, "physics")
-                    if p1 >= 0.8:
-                        teacher_obj = sol
-            except Exception:
-                teacher_obj = None
+        # 1. Dataset teacher first
+        dataset_obj = teacher.get(question)
 
-            if teacher_obj is None and args.keep_fallback:
-                teacher_obj = build_physics_gold_target(question, gold, extra)
-                kept_by_fallback += 1
-            elif teacher_obj is not None:
-                kept_by_teacher += 1
+        if dataset_obj is not None:
+            p1 = p1_correctness_continuous(dataset_obj.get("answer", ""), gold, task_type)
 
-        elif task_type == "logic":
-            try:
-                logic_sol = solve_logic(question, premises)
-                if logic_sol is not None:
-                    p1 = p1_correctness_continuous(logic_sol.get("answer", ""), gold, "logic")
-                    if p1 >= 1.0:
-                        teacher_obj = logic_sol
-            except Exception:
-                teacher_obj = None
+            if p1 >= 0.8:
+                teacher_obj = dataset_obj
+                kept_by_dataset += 1
 
-            if teacher_obj is None and args.keep_fallback:
-                teacher_obj = build_logic_gold_target(question, gold, premises, extra)
-                kept_by_fallback += 1
-            elif teacher_obj is not None:
-                kept_by_teacher += 1
+        # 2. Solver/verifier second
+        if teacher_obj is None:
+            if task_type == "physics":
+                try:
+                    sol = solve_physics(question)
+                    if sol is not None:
+                        p1 = p1_correctness_continuous(sol.get("answer", ""), gold, "physics")
+                        if p1 >= 0.8:
+                            teacher_obj = sol
+                            kept_by_solver += 1
+                except Exception:
+                    teacher_obj = None
+
+                if teacher_obj is None and args.keep_fallback:
+                    teacher_obj = build_physics_gold_target(question, gold, extra)
+                    kept_by_fallback += 1
+
+            elif task_type == "logic":
+                try:
+                    logic_sol = solve_logic(question, premises)
+                    if logic_sol is not None:
+                        p1 = p1_correctness_continuous(logic_sol.get("answer", ""), gold, "logic")
+                        if p1 >= 0.8:
+                            teacher_obj = logic_sol
+                            kept_by_solver += 1
+                except Exception:
+                    teacher_obj = None
+
+                if teacher_obj is None and args.keep_fallback:
+                    teacher_obj = build_logic_gold_target(question, gold, premises, extra)
+                    kept_by_fallback += 1
 
         if teacher_obj is None:
             skipped += 1
@@ -255,8 +269,9 @@ def main():
 
     print("Input rows:", len(df))
     print("SFT rows:", len(rows))
-    print("Kept by teacher/verifier:", kept_by_teacher)
-    print("Kept by fallback:", kept_by_fallback)
+    print("Kept by dataset teacher:", kept_by_dataset)
+    print("Kept by solver/verifier:", kept_by_solver)
+    print("Kept by gold fallback:", kept_by_fallback)
     print("Skipped:", skipped)
     print("Saved jsonl:", out)
     if args.output_parquet:
@@ -265,5 +280,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
     

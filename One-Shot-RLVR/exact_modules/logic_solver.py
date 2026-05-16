@@ -436,6 +436,41 @@ def solve_logic_mcq(question: str, premises: List[str]) -> Optional[Dict[str, An
 
     confidence = min(0.95, 0.50 + best["score"] * 0.35 + max(0, margin) * 0.20)
 
+    # Conservative guard:
+    # If the question asks what can be inferred / logically inferred, and no option
+    # has strong evidence or margin is weak, return Unknown instead of guessing A/B/C.
+    q_lower = str(question).lower()
+    inferential_question = any(k in q_lower for k in [
+        "can be inferred",
+        "logically inferred",
+        "which statement can be inferred",
+        "which statement is correct",
+        "based on the premises",
+        "based on the above premises",
+    ])
+
+    if inferential_question and (best["score"] < 0.72 or margin < 0.12):
+        explanation = (
+            f"The question asks: {query}. The option-wise verifier did not find a sufficiently "
+            f"strong and unique premise-supported option, so the safest answer is Unknown."
+        )
+        return {
+            "answer": "Unknown",
+            "explanation": explanation,
+            "fol": "InsufficientUniqueSupport(options, premises) -> Unknown",
+            "cot": [
+                "Problem formalization: Extract the question and answer options A/B/C/D.",
+                "Evidence generation: Collect the relevant premises.",
+                "Evidence evaluation: Compare each option against the premise evidence.",
+                "Inference: No option has sufficiently strong and unique support.",
+                "Conclusion: The final answer is Unknown."
+            ],
+            "premises": premises,
+            "confidence": 0.70,
+            "debug_scores": scored,
+            "source": "logic_mcq_conservative_unknown_guard",
+        }
+
     explanation = (
         f"The question asks: {query}. Each option is evaluated against the premises. "
         f"Option {best['label']} receives the strongest evidence support."
@@ -543,3 +578,4 @@ def solve_logic(question: str, premises: Optional[List[str]] = None, extra_info:
         return solve_logic_mcq(question, premises)
 
     return solve_logic_yes_no_unknown(question, premises)
+
