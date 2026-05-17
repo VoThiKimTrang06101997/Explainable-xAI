@@ -10,10 +10,12 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
-from exact_modules.parquet_teacher import ExactParquetTeacher, parse_obj
+from exact_modules.parquet_teacher import ExactParquetTeacher, parse_obj, get_premises_nl, get_premises_fol
 
 
-def build_training_prompt(question, task_type, premises=None):
+def build_training_prompt(question, task_type, premises_nl=None, premises_fol=None):
+    task_type = str(task_type).lower()
+
     if task_type == "physics":
         return f"""You are an explainable physics QA system.
 
@@ -25,17 +27,23 @@ Solve the problem using this scientific-logicality pipeline:
 5. Conclusion
 
 Return valid JSON only with:
-answer, unit, explanation, fol, cot, premises, confidence.
+answer, unit, explanation, fol, cot, premises, premises_nl, premises_fol, confidence.
 
 Problem:
 {question}
 """
 
-    premise_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(premises or [])])
+    premises_nl = premises_nl or []
+    premises_fol = premises_fol or []
+
+    premise_nl_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(premises_nl)])
+    premise_fol_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(premises_fol)])
 
     return f"""You are an explainable logic QA system.
 
-Use the premises to answer the question using this logicality pipeline:
+Use both natural-language premises and FOL premises to answer the question.
+
+Logicality pipeline:
 1. Problem formalization
 2. Evidence generation
 3. Evidence evaluation
@@ -43,10 +51,13 @@ Use the premises to answer the question using this logicality pipeline:
 5. Conclusion
 
 Return valid JSON only with:
-answer, explanation, fol, cot, premises, confidence.
+answer, explanation, fol, cot, premises, premises_nl, premises_fol, confidence.
 
-Premises:
-{premise_text}
+Premises-NL:
+{premise_nl_text}
+
+Premises-FOL:
+{premise_fol_text}
 
 Question:
 {question}
@@ -64,6 +75,7 @@ def main():
     teacher = ExactParquetTeacher(args.input_parquet)
 
     rows = []
+    missing_teacher = 0
 
     for _, row in df.iterrows():
         extra = parse_obj(row.get("extra_info", {}))
@@ -72,14 +84,30 @@ def main():
         task_type = str(extra.get("task_type", row.get("ability", ""))).lower()
         question = extra.get("question", "")
         gold = reward_model.get("ground_truth", extra.get("gold_answer", ""))
-        premises = extra.get("premises_nl", []) or extra.get("premises", [])
+
+        premises_nl = get_premises_nl(extra)
+        premises_fol = get_premises_fol(extra)
 
         obj = teacher.get(question)
 
         if obj is None:
+            missing_teacher += 1
             continue
 
-        prompt = build_training_prompt(question, task_type, premises)
+        # Ensure target always has NL/FOL premise fields.
+        if task_type == "logic":
+            obj["premises"] = premises_nl
+            obj["premises_nl"] = premises_nl
+            obj["premises_fol"] = premises_fol
+            obj["fol"] = "\n".join(premises_fol).strip() or obj.get("fol", "")
+
+        prompt = build_training_prompt(
+            question=question,
+            task_type=task_type,
+            premises_nl=premises_nl,
+            premises_fol=premises_fol,
+        )
+
         target = json.dumps(obj, ensure_ascii=False)
 
         rows.append({
@@ -108,10 +136,13 @@ def main():
 
     print("Input rows:", len(df))
     print("SFT rows:", len(rows))
+    print("Missing teacher:", missing_teacher)
     print("Saved:", out)
+
+    if args.output_parquet:
+        print("Saved parquet:", args.output_parquet)
 
 
 if __name__ == "__main__":
     main()
     
-

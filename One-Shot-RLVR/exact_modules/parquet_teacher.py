@@ -28,6 +28,67 @@ def parse_obj(x):
     return {}
 
 
+def _as_list(x):
+    if x is None:
+        return []
+
+    if isinstance(x, list):
+        return [str(v) for v in x if str(v).strip()]
+
+    if isinstance(x, str):
+        s = x.strip()
+        if not s:
+            return []
+
+        try:
+            obj = json.loads(s)
+            if isinstance(obj, list):
+                return [str(v) for v in obj if str(v).strip()]
+        except Exception:
+            pass
+
+        try:
+            obj = ast.literal_eval(s)
+            if isinstance(obj, list):
+                return [str(v) for v in obj if str(v).strip()]
+        except Exception:
+            pass
+
+        return [s]
+
+    return [str(x)]
+
+
+def get_premises_nl(extra):
+    for key in [
+        "premises-NL",
+        "premises_nl",
+        "premisesNL",
+        "premises",
+        "gold_premises_nl",
+    ]:
+        if key in extra:
+            vals = _as_list(extra.get(key))
+            if vals:
+                return vals
+    return []
+
+
+def get_premises_fol(extra):
+    for key in [
+        "premises-FOL",
+        "premises_fol",
+        "premisesFOL",
+        "fol_premises",
+        "gold_premises_fol",
+    ]:
+        if key in extra:
+            vals = _as_list(extra.get(key))
+            if vals:
+                return vals
+    return []
+
+
 def get_gold_explanation(extra):
     gold_exp = str(extra.get("gold_explanation", "") or "").strip()
     gold_cot = str(extra.get("gold_cot", "") or "").strip()
@@ -54,7 +115,7 @@ def make_teacher(task_type, question, answer, extra):
             "answer": str(answer),
             "unit": unit,
             "explanation": explanation,
-            "fol": "Official parquet gold annotation: physics problem -> answer",
+            "fol": "Official parquet gold annotation: physics problem -> formula -> answer",
             "cot": [
                 "Problem formalization: Identify the target physical quantity.",
                 "Evidence generation: Extract the known values and units from the problem.",
@@ -66,24 +127,36 @@ def make_teacher(task_type, question, answer, extra):
                 "Official physics problem statement.",
                 "Official parquet gold answer."
             ],
+            "premises_nl": [
+                "Official physics problem statement.",
+                "Official parquet gold answer."
+            ],
+            "premises_fol": [],
             "confidence": 0.99,
             "source": "parquet_physics_teacher",
         }
 
-    premises = extra.get("premises_nl", []) or extra.get("premises", [])
+    premises_nl = get_premises_nl(extra)
+    premises_fol = get_premises_fol(extra)
+
+    fol_text = "\n".join(premises_fol).strip()
+    if not fol_text:
+        fol_text = "Official parquet gold annotation: premises -> answer"
 
     return {
         "answer": str(answer),
         "explanation": explanation,
-        "fol": "Official parquet gold annotation: premises -> answer",
+        "fol": fol_text,
         "cot": [
             "Problem formalization: Identify the logical claim or answer options.",
-            "Evidence generation: Extract the relevant premises.",
-            "Evidence evaluation: Compare the claim or options against the premises.",
+            "Evidence generation: Extract the relevant natural-language and FOL premises.",
+            "Evidence evaluation: Compare the claim or options against the NL/FOL premises.",
             "Inference: Select the official supported answer.",
             f"Conclusion: The final answer is {answer}."
         ],
-        "premises": premises,
+        "premises": premises_nl,
+        "premises_nl": premises_nl,
+        "premises_fol": premises_fol,
         "confidence": 0.99,
         "source": "parquet_logic_teacher",
     }
@@ -110,4 +183,3 @@ class ExactParquetTeacher:
     def get(self, question):
         return self.lookup.get(normalize_question(question))
         
-
