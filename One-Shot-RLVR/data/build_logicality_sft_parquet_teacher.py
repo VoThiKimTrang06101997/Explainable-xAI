@@ -10,7 +10,43 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
-from exact_modules.parquet_teacher import ExactParquetTeacher, parse_obj, get_premises_nl, get_premises_fol
+from exact_modules.parquet_teacher import (
+    ExactParquetTeacher,
+    parse_obj,
+    get_premises_nl,
+    get_premises_fol,
+)
+
+
+REQUIRED_TARGET_KEYS = [
+    "answer",
+    "explanation",
+    "fol",
+    "cot",
+    "premises",
+    "premises_nl",
+    "premises_fol",
+    "confidence",
+]
+
+
+def as_list(x):
+    if x is None:
+        return []
+    if isinstance(x, list):
+        return [str(v) for v in x if str(v).strip()]
+    if isinstance(x, str):
+        s = x.strip()
+        if not s:
+            return []
+        try:
+            obj = json.loads(s)
+            if isinstance(obj, list):
+                return [str(v) for v in obj if str(v).strip()]
+        except Exception:
+            pass
+        return [s]
+    return [str(x)]
 
 
 def build_training_prompt(question, task_type, premises_nl=None, premises_fol=None):
@@ -26,7 +62,7 @@ Solve the problem using this scientific-logicality pipeline:
 4. Calculation
 5. Conclusion
 
-Return valid JSON only with:
+Return valid JSON only with exactly these keys:
 answer, unit, explanation, fol, cot, premises, premises_nl, premises_fol, confidence.
 
 Problem:
@@ -41,7 +77,7 @@ Problem:
 
     return f"""You are an explainable logic QA system.
 
-Use both natural-language premises and FOL premises to answer the question.
+Use both natural-language premises and FOL/rule premises to answer the question.
 
 Logicality pipeline:
 1. Problem formalization
@@ -50,7 +86,7 @@ Logicality pipeline:
 4. Inference
 5. Conclusion
 
-Return valid JSON only with:
+Return valid JSON only with exactly these keys:
 answer, explanation, fol, cot, premises, premises_nl, premises_fol, confidence.
 
 Premises-NL:
@@ -62,6 +98,113 @@ Premises-FOL:
 Question:
 {question}
 """
+
+
+def compact_list(xs, max_items=20, max_chars_each=280):
+    out = []
+    for x in as_list(xs)[:max_items]:
+        x = str(x).strip()
+        if len(x) > max_chars_each:
+            x = x[:max_chars_each].rstrip() + " ..."
+        out.append(x)
+    return out
+
+
+def compact_text(x, max_chars=2200):
+    x = str(x or "").strip()
+    if len(x) > max_chars:
+        return x[:max_chars].rstrip() + " ..."
+    return x
+
+
+def normalize_target_schema(obj, task_type, question, gold, extra):
+    obj = dict(obj or {})
+    task_type = str(task_type).lower()
+
+    premises_nl = get_premises_nl(extra)
+    premises_fol = get_premises_fol(extra)
+    old_premises = as_list(obj.get("premises", []))
+
+    if task_type == "logic":
+        if not premises_nl:
+            premises_nl = old_premises
+
+        premises_nl = compact_list(premises_nl, max_items=20, max_chars_each=260)
+        premises_fol = compact_list(premises_fol, max_items=20, max_chars_each=260)
+
+        obj["premises"] = premises_nl
+        obj["premises_nl"] = premises_nl
+        obj["premises_fol"] = premises_fol
+
+        if premises_fol:
+            obj["fol"] = compact_text("\n".join(premises_fol), max_chars=2500)
+        else:
+            obj["fol"] = compact_text(obj.get("fol", "") or "Premises -> answer", max_chars=1200)
+
+    else:
+        physics_premises = old_premises if old_premises else [
+            "Official physics problem statement.",
+            "Official physics dataset answer."
+        ]
+
+        physics_premises = compact_list(physics_premises, max_items=8, max_chars_each=260)
+
+        obj["premises"] = physics_premises
+        obj["premises_nl"] = physics_premises
+        obj["premises_fol"] = []
+        obj["fol"] = compact_text(obj.get("fol", "") or "Physics formula/rule -> answer", max_chars=1200)
+
+        if "unit" not in obj:
+            obj["unit"] = str(extra.get("gold_unit", "") or "")
+
+    obj["answer"] = str(obj.get("answer", gold)).strip()
+    obj["explanation"] = compact_text(
+        obj.get("explanation", "")
+        or extra.get("gold_explanation", "")
+        or extra.get("gold_cot", "")
+        or "The answer is derived by formalizing the problem, extracting evidence, evaluating the rule or formula, and drawing the final conclusion.",
+        max_chars=1600,
+    )
+
+    cot = obj.get("cot", [])
+    if not isinstance(cot, list) or len(cot) == 0:
+        if task_type == "physics":
+            cot = [
+                "Problem formalization: Identify the target physical quantity.",
+                "Evidence generation: Extract known quantities and units.",
+                "Evidence evaluation: Select the relevant formula.",
+                "Calculation: Apply the formula or official derivation.",
+                f"Conclusion: The final answer is {obj['answer']}."
+            ]
+        else:
+            cot = [
+                "Problem formalization: Identify the logical claim or answer options.",
+                "Evidence generation: Extract the relevant NL/FOL premises.",
+                "Evidence evaluation: Compare the claim or options against the premises.",
+                "Inference: Select the supported answer.",
+                f"Conclusion: The final answer is {obj['answer']}."
+            ]
+
+    obj["cot"] = compact_list(cot, max_items=6, max_chars_each=260)
+
+    try:
+        obj["confidence"] = float(obj.get("confidence", 0.99))
+    except Exception:
+        obj["confidence"] = 0.99
+
+    if "source" not in obj:
+        obj["source"] = "normalized_sft_target"
+
+    for key in REQUIRED_TARGET_KEYS:
+        if key not in obj:
+            if key in ["premises", "premises_nl", "premises_fol", "cot"]:
+                obj[key] = []
+            elif key == "confidence":
+                obj[key] = 0.99
+            else:
+                obj[key] = ""
+
+    return obj
 
 
 def main():
@@ -94,12 +237,13 @@ def main():
             missing_teacher += 1
             continue
 
-        # Ensure target always has NL/FOL premise fields.
-        if task_type == "logic":
-            obj["premises"] = premises_nl
-            obj["premises_nl"] = premises_nl
-            obj["premises_fol"] = premises_fol
-            obj["fol"] = "\n".join(premises_fol).strip() or obj.get("fol", "")
+        obj = normalize_target_schema(
+            obj=obj,
+            task_type=task_type,
+            question=question,
+            gold=gold,
+            extra=extra,
+        )
 
         prompt = build_training_prompt(
             question=question,
@@ -146,3 +290,4 @@ def main():
 if __name__ == "__main__":
     main()
     
+

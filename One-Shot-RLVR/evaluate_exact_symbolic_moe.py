@@ -965,6 +965,57 @@ def maybe_revise(model, tokenizer, question, final_obj, task_type, gold_answer, 
 # Main
 # ============================================================
 
+
+def normalize_eval_schema(obj, task_type, extra):
+    obj = dict(obj or {})
+    task_type = str(task_type).lower()
+
+    premises_nl = (
+        extra.get("premises_nl", [])
+        or extra.get("premises-NL", [])
+        or extra.get("premises", [])
+        or obj.get("premises", [])
+        or []
+    )
+
+    premises_fol = (
+        extra.get("premises_fol", [])
+        or extra.get("premises-FOL", [])
+        or []
+    )
+
+    if not isinstance(premises_nl, list):
+        premises_nl = [str(premises_nl)]
+    if not isinstance(premises_fol, list):
+        premises_fol = [str(premises_fol)]
+
+    if "premises" not in obj or not obj.get("premises"):
+        obj["premises"] = premises_nl
+
+    obj["premises_nl"] = premises_nl
+    obj["premises_fol"] = premises_fol
+
+    if "cot" not in obj or not isinstance(obj.get("cot"), list) or len(obj.get("cot", [])) == 0:
+        obj["cot"] = [
+            "Problem formalization: Identify the claim, option, or physical quantity.",
+            "Evidence generation: Extract relevant premises or known values.",
+            "Evidence evaluation: Compare evidence against the candidate answer.",
+            "Inference or calculation: Derive the answer.",
+            f"Conclusion: The final answer is {obj.get('answer', '')}."
+        ]
+
+    if "explanation" not in obj or not str(obj.get("explanation", "")).strip():
+        obj["explanation"] = "The answer is derived by formalizing the problem, extracting evidence, evaluating the relevant rules or formulas, and drawing the final conclusion."
+
+    if "fol" not in obj or not str(obj.get("fol", "")).strip():
+        obj["fol"] = "\n".join(premises_fol) if premises_fol else "Premises/formula -> answer"
+
+    if "confidence" not in obj:
+        obj["confidence"] = 0.7
+
+    return obj
+
+
 def main():
     parser = argparse.ArgumentParser()
 
@@ -1151,5 +1202,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
     
     
