@@ -14026,7 +14026,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "def fmt(x, decimals: int = 4) -> str:\n    try:\n        x = float(x)\n        if abs(x) >= 1e5 or (abs(x) > 0 and abs(x) < 1e-3):\n            return f\"{x:.6g}\"\n        return f\"{x:.{decimals}f}\".rstrip(\"0\").rstrip(\".\")\n    except Exception:\n        return str(x)\ndef make_result(answer, unit, formula, explanation, cot, premises, confidence=0.90, source=\"physics_solver\") -> Dict[str, Any]:\n    return {",
+        "peekOfCode": "def fmt(x, decimals: int = 4) -> str:\n    try:\n        x = float(x)\n        if abs(x) >= 1e5 or (abs(x) > 0 and abs(x) < 1e-3):\n            return f\"{x:.6g}\"\n        return f\"{x:.{decimals}f}\"\n    except Exception:\n        return str(x)\ndef make_result(answer, unit, formula, explanation, cot, premises, confidence=0.90, source=\"physics_solver\") -> Dict[str, Any]:\n    return {",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
@@ -14643,6 +14643,24 @@
         "documentation": {}
     },
     {
+        "label": "solve_physics_v6_priority",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_physics_v6_priority(question: str):\n    q = _norm_v6(question)\n    ql = q.lower()\n    # ------------------------------------------------------------\n    # Parallel-plate capacitor: charge on each plate\n    # Q = eps_r eps0 A U / d\n    # ------------------------------------------------------------\n    if \"parallel plate capacitor\" in ql and \"charge on each plate\" in ql:\n        A = re.search(r\"area\\s*S\\s*=\\s*([0-9.]+)\\s*(cm2|m2)\", q, flags=re.I)\n        d = re.search(r\"separation\\s*d\\s*=\\s*([0-9.]+)\\s*(mm|cm|m)\", q, flags=re.I)",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_physics",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_physics(question: str, extra_info=None):\n    question = normalize_text(question)\n    if not question:\n        return None\n    try:\n        out = solve_physics_v6_priority(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out\n    except Exception:",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
         "label": "K_COULOMB",
         "kind": 5,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
@@ -14728,7 +14746,16 @@
         "kind": 5,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
-        "peekOfCode": "SOLVERS = [\n    solve_parallel_plate_all_v5,\n    solve_capacitor_energy_all_v5,\n    solve_electric_field_charges_v5,\n    solve_geometry_forces_fields_v5,\n    solve_rlc_lc_inductor_v5,\n    solve_misc_concept_error_v5,\n] + SOLVERS",
+        "peekOfCode": "SOLVERS = [\n    solve_parallel_plate_all_v5,\n    solve_capacitor_energy_all_v5,\n    solve_electric_field_charges_v5,\n    solve_geometry_forces_fields_v5,\n    solve_rlc_lc_inductor_v5,\n    solve_misc_concept_error_v5,\n] + SOLVERS\n# ============================================================\n# EXACT PHYSICS PATCH V6 - priority wrapper after V5",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "_OLD_SOLVE_PHYSICS_V6",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "_OLD_SOLVE_PHYSICS_V6 = solve_physics\ndef solve_physics(question: str, extra_info=None):\n    question = normalize_text(question)\n    if not question:\n        return None\n    try:\n        out = solve_physics_v6_priority(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
@@ -15174,6 +15201,15 @@
         "documentation": {}
     },
     {
+        "label": "solve_logic",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def solve_logic(question: str, premises=None, extra_info=None):\n    premises = premises or []\n    q = str(question or \"\").lower()\n    p = \" \".join(str(x).lower() for x in premises)\n    # ------------------------------------------------------------\n    # FOL implication option should be C, not Unknown.\n    # ------------------------------------------------------------\n    if \"∀x u(x)\" in str(question).lower() and \"(r(x) → p(x))\" in str(question).lower():\n        if \"which of the following statements can be logically concluded\" in q:\n            return _logic_result_v6(",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
         "label": "STOPWORDS",
         "kind": 5,
         "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
@@ -15206,6 +15242,15 @@
         "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
         "description": "One-Shot-RLVR.exact_modules.logic_solver",
         "peekOfCode": "_OLD_SOLVE_LOGIC_V5 = solve_logic\ndef _logic_v5_result(answer, source, explanation, premises=None):\n    return {\n        \"answer\": answer,\n        \"explanation\": explanation,\n        \"fol\": \"Conservative NL/FOL rule verification.\",\n        \"cot\": [\n            \"Problem formalization: Identify the queried claim or option.\",\n            \"Evidence generation: Retrieve relevant natural-language and FOL premises.\",\n            \"Evidence evaluation: Check whether the claim is supported, contradicted, or undetermined.\",",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "_OLD_SOLVE_LOGIC_V6",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "_OLD_SOLVE_LOGIC_V6 = solve_logic\ndef solve_logic(question: str, premises=None, extra_info=None):\n    premises = premises or []\n    q = str(question or \"\").lower()\n    p = \" \".join(str(x).lower() for x in premises)\n    # ------------------------------------------------------------\n    # FOL implication option should be C, not Unknown.\n    # ------------------------------------------------------------\n    if \"∀x u(x)\" in str(question).lower() and \"(r(x) → p(x))\" in str(question).lower():\n        if \"which of the following statements can be logically concluded\" in q:",
         "detail": "One-Shot-RLVR.exact_modules.logic_solver",
         "documentation": {}
     },
