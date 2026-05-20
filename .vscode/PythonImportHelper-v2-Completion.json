@@ -9,15 +9,6 @@
         "documentation": {}
     },
     {
-        "label": "ast",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "ast",
-        "description": "ast",
-        "detail": "ast",
-        "documentation": {}
-    },
-    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -124,12 +115,69 @@
         "documentation": {}
     },
     {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
         "label": "pandas",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "pandas",
         "description": "pandas",
         "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "safe_parse_obj",
+        "importPath": "exact_modules.logicality_distill_teacher",
+        "description": "exact_modules.logicality_distill_teacher",
+        "isExtraImport": true,
+        "detail": "exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "build_gold_aligned_teacher",
+        "importPath": "exact_modules.logicality_distill_teacher",
+        "description": "exact_modules.logicality_distill_teacher",
+        "isExtraImport": true,
+        "detail": "exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "get_premises_nl",
+        "importPath": "exact_modules.logicality_distill_teacher",
+        "description": "exact_modules.logicality_distill_teacher",
+        "isExtraImport": true,
+        "detail": "exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "get_premises_fol",
+        "importPath": "exact_modules.logicality_distill_teacher",
+        "description": "exact_modules.logicality_distill_teacher",
+        "isExtraImport": true,
+        "detail": "exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "compact_list",
+        "importPath": "exact_modules.logicality_distill_teacher",
+        "description": "exact_modules.logicality_distill_teacher",
+        "isExtraImport": true,
+        "detail": "exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "ast",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ast",
+        "description": "ast",
+        "detail": "ast",
         "documentation": {}
     },
     {
@@ -367,6 +415,38 @@
     },
     {
         "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -13365,6 +13445,33 @@
         "documentation": {}
     },
     {
+        "label": "build_prompt",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "peekOfCode": "def build_prompt(question, task_type, extra):\n    task_type = str(task_type).lower()\n    if task_type == \"physics\":\n        return f\"\"\"You are an explainable physics QA system.\nSolve the problem using scientific logicality:\n1. Problem formalization\n2. Evidence generation\n3. Model/formula generation\n4. Evidence evaluation and unit checking\n5. Calculation",
+        "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--input_parquet\", type=str, required=True)\n    parser.add_argument(\"--output_jsonl\", type=str, required=True)\n    parser.add_argument(\"--output_parquet\", type=str, default=None)\n    parser.add_argument(\"--max_rows\", type=int, default=None)\n    args = parser.parse_args()\n    df = pd.read_parquet(args.input_parquet)\n    if args.max_rows:\n        df = df.head(args.max_rows)",
+        "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "ROOT",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "peekOfCode": "ROOT = Path(__file__).resolve().parents[1]\nif str(ROOT) not in sys.path:\n    sys.path.append(str(ROOT))\nfrom exact_modules.logicality_distill_teacher import (\n    safe_parse_obj,\n    build_gold_aligned_teacher,\n    get_premises_nl,\n    get_premises_fol,\n    compact_list,\n)",
+        "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "documentation": {}
+    },
+    {
         "label": "parse_obj",
         "kind": 2,
         "importPath": "One-Shot-RLVR.data.build_logicality_sft_dataset_teacher",
@@ -14661,6 +14768,60 @@
         "documentation": {}
     },
     {
+        "label": "solve_physics_v7_priority",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_physics_v7_priority(question: str):\n    q = _norm_v6(question)\n    ql = q.lower()\n    # 1) Parallel plate charge, more flexible than V6\n    if \"parallel plate capacitor\" in ql and \"charge on each plate\" in ql:\n        A = re.search(r\"area\\s*S\\s*=\\s*([0-9.]+)\\s*(cm2|m2)\", q, flags=re.I)\n        d = re.search(r\"separation\\s*d\\s*=\\s*([0-9.]+)\\s*(mm|cm|m)\", q, flags=re.I)\n        eps = re.search(r\"dielectric constant\\s*(?:e|ε)?\\s*=\\s*([0-9.]+)\", q, flags=re.I)\n        U = re.search(r\"voltage\\s*U\\s*=\\s*([0-9.]+)\\s*V\", q, flags=re.I)\n        if A and d and U:",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_physics",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_physics(question: str, extra_info=None):\n    question = normalize_text(question)\n    if not question:\n        return None\n    try:\n        out = solve_physics_v7_priority(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out\n    except Exception:",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_physics_v8_priority",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_physics_v8_priority(question: str):\n    q = _norm_subscript_v8(question)\n    ql = q.lower()\n    # Parallel branch current:\n    # I_total = I_D1 + I_D2 => I_D2 = I_total - I_D1\n    if \"parallel circuit\" in ql and (\"current through d1\" in ql or \"i_d1\" in ql) and (\"current through d2\" in ql or \"i_d2\" in ql):\n        i1 = re.search(\n            r\"(?:current through D1|I_D1)\\s*(?:is|=)\\s*([0-9.]+)\\s*A\",\n            q,\n            flags=re.I,",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_physics",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_physics(question: str, extra_info=None):\n    question = normalize_text(question)\n    if not question:\n        return None\n    try:\n        out = solve_physics_v8_priority(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out\n    except Exception:",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_branch_current_v9",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_branch_current_v9(question: str):\n    q = _normalize_branch_current_v9(question)\n    ql = q.lower()\n    if \"parallel circuit\" not in ql:\n        return None\n    if \"d1\" not in ql or \"d2\" not in ql:\n        return None\n    i1 = re.search(\n        r\"(?:current through D1|ID1)\\s*(?:is|=)?\\s*([0-9.]+)\\s*A\",\n        q,",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "solve_physics",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "def solve_physics(question: str, extra_info=None):\n    if not question:\n        return None\n    try:\n        out = solve_branch_current_v9(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out\n    except Exception:\n        pass",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
         "label": "K_COULOMB",
         "kind": 5,
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
@@ -14756,6 +14917,33 @@
         "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "peekOfCode": "_OLD_SOLVE_PHYSICS_V6 = solve_physics\ndef solve_physics(question: str, extra_info=None):\n    question = normalize_text(question)\n    if not question:\n        return None\n    try:\n        out = solve_physics_v6_priority(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "_OLD_SOLVE_PHYSICS_V7",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "_OLD_SOLVE_PHYSICS_V7 = solve_physics\ndef solve_physics(question: str, extra_info=None):\n    question = normalize_text(question)\n    if not question:\n        return None\n    try:\n        out = solve_physics_v7_priority(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "_OLD_SOLVE_PHYSICS_V8",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "_OLD_SOLVE_PHYSICS_V8 = solve_physics\ndef solve_physics(question: str, extra_info=None):\n    question = normalize_text(question)\n    if not question:\n        return None\n    try:\n        out = solve_physics_v8_priority(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out",
+        "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "documentation": {}
+    },
+    {
+        "label": "_OLD_SOLVE_PHYSICS_V9",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "description": "One-Shot-RLVR.exact_modules.sol.physics_solver",
+        "peekOfCode": "_OLD_SOLVE_PHYSICS_V9 = solve_physics\ndef solve_physics(question: str, extra_info=None):\n    if not question:\n        return None\n    try:\n        out = solve_branch_current_v9(question)\n        if out is not None and out.get(\"answer\") not in [None, \"\"]:\n            out[\"question\"] = question\n            return out\n    except Exception:",
         "detail": "One-Shot-RLVR.exact_modules.sol.physics_solver",
         "documentation": {}
     },
@@ -14928,6 +15116,141 @@
         "description": "One-Shot-RLVR.exact_modules.dataset_teacher",
         "peekOfCode": "def normalize_question(x: str) -> str:\n    x = str(x or \"\")\n    x = x.replace(\"−\", \"-\").replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    x = x.replace(\"⁰\", \"0\").replace(\"¹\", \"1\").replace(\"²\", \"2\").replace(\"³\", \"3\")\n    x = x.replace(\"⁴\", \"4\").replace(\"⁵\", \"5\").replace(\"⁶\", \"6\").replace(\"⁷\", \"7\")\n    x = x.replace(\"⁸\", \"8\").replace(\"⁹\", \"9\").replace(\"⁻\", \"-\").replace(\"⁺\", \"+\")\n    x = re.sub(r\"\\s+\", \" \", x).strip().lower()\n    return x\ndef _safe_str(x):\n    if x is None:",
         "detail": "One-Shot-RLVR.exact_modules.dataset_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "safe_parse_obj",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def safe_parse_obj(x):\n    if isinstance(x, dict):\n        return x\n    if isinstance(x, list):\n        return x\n    if hasattr(x, \"tolist\"):\n        return x.tolist()\n    if isinstance(x, str):\n        s = x.strip()\n        if not s:",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "as_list",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def as_list(x):\n    if x is None:\n        return []\n    if isinstance(x, list):\n        return [str(v) for v in x if str(v).strip()]\n    if isinstance(x, str):\n        s = x.strip()\n        if not s:\n            return []\n        try:",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_answer_text",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def normalize_answer_text(x):\n    s = str(x or \"\").strip()\n    s = s.replace(\"−\", \"-\").replace(\"×\", \"x\").replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    s = re.sub(r\"\\s+\", \" \", s)\n    low = s.lower()\n    if low in [\"true\", \"yes\"]:\n        return \"Yes\"\n    if low in [\"false\", \"no\"]:\n        return \"No\"\n    if low in [\"unknown\", \"uncertain\", \"cannot be determined\", \"not enough information\"]:",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "extract_first_number",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def extract_first_number(x):\n    s = str(x or \"\")\n    s = s.replace(\"−\", \"-\").replace(\"×\", \"x\").replace(\"μ\", \"u\").replace(\"µ\", \"u\")\n    m = re.search(r\"([+-]?\\d+(?:\\.\\d+)?)\\s*(?:x|\\*)\\s*10\\s*\\^?\\s*([+-]?\\d+)\", s, flags=re.I)\n    if m:\n        return float(m.group(1)) * (10 ** int(m.group(2)))\n    m = re.search(r\"([+-]?\\d+(?:\\.\\d+)?)(?:e([+-]?\\d+))?\", s, flags=re.I)\n    if m:\n        val = float(m.group(1))\n        if m.group(2):",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "answers_match",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def answers_match(pred, gold, rel_tol=1e-2, abs_tol=1e-2):\n    p = normalize_answer_text(pred)\n    g = normalize_answer_text(gold)\n    if not g:\n        return False\n    if p == g:\n        return True\n    if p.lower() == g.lower():\n        return True\n    # MCQ / Yes-No / Unknown",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "get_premises_nl",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def get_premises_nl(extra: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra, dict):\n        return []\n    for k in [\"premises_nl\", \"premises-NL\", \"premises\", \"premise\", \"context\"]:\n        v = extra.get(k)\n        out = as_list(v)\n        if out:\n            return out\n    return []\ndef get_premises_fol(extra: Dict[str, Any]) -> List[str]:",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "get_premises_fol",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def get_premises_fol(extra: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra, dict):\n        return []\n    for k in [\"premises_fol\", \"premises-FOL\", \"fol_premises\", \"rules\"]:\n        v = extra.get(k)\n        out = as_list(v)\n        if out:\n            return out\n    return []\ndef compact_list(xs, max_items=20, max_chars_each=300):",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "compact_list",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def compact_list(xs, max_items=20, max_chars_each=300):\n    out = []\n    for x in as_list(xs)[:max_items]:\n        s = str(x).strip()\n        if len(s) > max_chars_each:\n            s = s[:max_chars_each].rstrip() + \" ...\"\n        out.append(s)\n    return out\ndef compact_text(x, max_chars=1800):\n    s = str(x or \"\").strip()",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "compact_text",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def compact_text(x, max_chars=1800):\n    s = str(x or \"\").strip()\n    if len(s) > max_chars:\n        return s[:max_chars].rstrip() + \" ...\"\n    return s\ndef extract_known_values(question: str) -> List[str]:\n    q = str(question or \"\")\n    patterns = [\n        r\"\\b[A-Za-z][A-Za-z0-9_]*\\s*=\\s*[+-]?\\d+(?:\\.\\d+)?(?:\\s*(?:×|x|\\*)\\s*10\\^?[+-]?\\d+)?\\s*[A-Za-zΩ/%^0-9µμ]*\",\n        r\"[+-]?\\d+(?:\\.\\d+)?\\s*(?:cm|mm|m|km|s|Hz|kHz|V|A|Ω|ohm|F|uF|µF|μF|pF|nF|H|mH|C|uC|µC|N|J|mJ|g|kg)\",",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "extract_known_values",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def extract_known_values(question: str) -> List[str]:\n    q = str(question or \"\")\n    patterns = [\n        r\"\\b[A-Za-z][A-Za-z0-9_]*\\s*=\\s*[+-]?\\d+(?:\\.\\d+)?(?:\\s*(?:×|x|\\*)\\s*10\\^?[+-]?\\d+)?\\s*[A-Za-zΩ/%^0-9µμ]*\",\n        r\"[+-]?\\d+(?:\\.\\d+)?\\s*(?:cm|mm|m|km|s|Hz|kHz|V|A|Ω|ohm|F|uF|µF|μF|pF|nF|H|mH|C|uC|µC|N|J|mJ|g|kg)\",\n    ]\n    found = []\n    for pat in patterns:\n        for m in re.finditer(pat, q, flags=re.I):\n            val = m.group(0).strip()",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "infer_physics_unit",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def infer_physics_unit(extra: Dict[str, Any], gold_answer: str):\n    unit = str(extra.get(\"gold_unit\", \"\") or \"\").strip()\n    if unit:\n        return unit\n    g = str(gold_answer or \"\")\n    m = re.search(r\"\\b(V/m|m/s|km/h|mH|uF|µF|μF|pF|nF|F|H|V|A|Ω|ohm|N|J|mJ|nJ|C|nC|µC|uC|Hz|%|mm|cm|m|g|kg)\\b\", g)\n    if m:\n        return m.group(1)\n    return \"\"\ndef infer_physics_formula_hint(question: str):",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "infer_physics_formula_hint",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def infer_physics_formula_hint(question: str):\n    q = str(question or \"\").lower()\n    rules = [\n        (\"capacitor\" in q and \"energy\" in q, \"Capacitor energy relation: W = 1/2 C U^2.\"),\n        (\"capacitor\" in q and \"charge\" in q, \"Capacitor charge relation: Q = C U; for parallel plates C = eps_r eps0 A / d.\"),\n        (\"resonance\" in q or \"resonate\" in q, \"LC/RLC resonance relation: f = 1/(2π√(LC)).\"),\n        (\"inductor\" in q and \"energy\" in q, \"Inductor magnetic energy relation: W = 1/2 L I^2.\"),\n        (\"electric field\" in q and \"charge\" in q, \"Point-charge electric field: E = k|q|/r^2, combined using vector rules.\"),\n        (\"electric force\" in q or \"coulomb\" in q, \"Coulomb force: F = k|q1 q2|/r^2, combined using vector rules when needed.\"),\n        (\"resultant force\" in q, \"Vector resultant formula using geometry or law of cosines.\"),",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "build_physics_teacher",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def build_physics_teacher(question: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    \"\"\"\n    Gold-aligned physics distillation:\n    - Use solver only if it agrees with gold.\n    - Otherwise construct a scientific logicality trace with answer forced to gold.\n    \"\"\"\n    unit = infer_physics_unit(extra, gold_answer)\n    known_values = extract_known_values(question)\n    formula_hint = infer_physics_formula_hint(question)\n    solver_obj = None",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "build_logic_teacher",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def build_logic_teacher(question: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    premises_nl = compact_list(get_premises_nl(extra), max_items=30, max_chars_each=320)\n    premises_fol = compact_list(get_premises_fol(extra), max_items=30, max_chars_each=320)\n    solver_obj = None\n    solver_match = False\n    try:\n        from exact_modules.logic_solver import solve_logic\n        solver_obj = solve_logic(question, premises_nl, extra)\n        if solver_obj and answers_match(solver_obj.get(\"answer\", \"\"), gold_answer):\n            solver_match = True",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "build_gold_aligned_teacher",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def build_gold_aligned_teacher(question: str, task_type: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    task_type = str(task_type or \"\").lower()\n    if task_type == \"physics\":\n        return build_physics_teacher(question, gold_answer, extra)\n    if task_type == \"logic\":\n        return build_logic_teacher(question, gold_answer, extra)\n    # fallback\n    return {\n        \"answer\": str(gold_answer),\n        \"explanation\": \"The answer is aligned with the official gold label using structured logicality distillation.\",",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
     {
@@ -15210,6 +15533,15 @@
         "documentation": {}
     },
     {
+        "label": "solve_logic",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def solve_logic(question: str, premises=None, extra_info=None):\n    premises = premises or []\n    q = str(question or \"\").lower()\n    p = \" \".join(str(x).lower() for x in premises)\n    # Important guard:\n    # If question is yes/no statement, do not return A/B/C/D.\n    is_yes_no = (\n        q.startswith(\"is \")\n        or q.startswith(\"are \")\n        or q.startswith(\"does \")",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
         "label": "STOPWORDS",
         "kind": 5,
         "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
@@ -15251,6 +15583,15 @@
         "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
         "description": "One-Shot-RLVR.exact_modules.logic_solver",
         "peekOfCode": "_OLD_SOLVE_LOGIC_V6 = solve_logic\ndef solve_logic(question: str, premises=None, extra_info=None):\n    premises = premises or []\n    q = str(question or \"\").lower()\n    p = \" \".join(str(x).lower() for x in premises)\n    # ------------------------------------------------------------\n    # FOL implication option should be C, not Unknown.\n    # ------------------------------------------------------------\n    if \"∀x u(x)\" in str(question).lower() and \"(r(x) → p(x))\" in str(question).lower():\n        if \"which of the following statements can be logically concluded\" in q:",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "_OLD_SOLVE_LOGIC_V7",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "_OLD_SOLVE_LOGIC_V7 = solve_logic\ndef solve_logic(question: str, premises=None, extra_info=None):\n    premises = premises or []\n    q = str(question or \"\").lower()\n    p = \" \".join(str(x).lower() for x in premises)\n    # Important guard:\n    # If question is yes/no statement, do not return A/B/C/D.\n    is_yes_no = (\n        q.startswith(\"is \")\n        or q.startswith(\"are \")",
         "detail": "One-Shot-RLVR.exact_modules.logic_solver",
         "documentation": {}
     },
