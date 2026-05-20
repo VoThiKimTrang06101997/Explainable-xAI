@@ -1,7 +1,7 @@
-# %%writefile /content/Explainable-xAI/One-Shot-RLVR/data/build_gold_aligned_logicality_sft.py
 import argparse
 import json
 import sys
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -19,6 +19,122 @@ from exact_modules.logicality_distill_teacher import (
 )
 
 
+# ============================================================
+# Logic source JSON utilities
+# ============================================================
+
+def normalize_text_for_match(x):
+    s = str(x or "")
+    s = s.replace("’", "'").replace("“", '"').replace("”", '"')
+    s = s.replace("−", "-").replace("×", "x")
+    s = re.sub(r"\s+", " ", s).strip().lower()
+    return s
+
+
+def as_list_local(x):
+    if x is None:
+        return []
+    if isinstance(x, list):
+        return [str(v) for v in x if str(v).strip()]
+    if isinstance(x, tuple):
+        return [str(v) for v in x if str(v).strip()]
+    if isinstance(x, str):
+        s = x.strip()
+        if not s:
+            return []
+        try:
+            obj = json.loads(s)
+            if isinstance(obj, list):
+                return [str(v) for v in obj if str(v).strip()]
+        except Exception:
+            pass
+        return [s]
+    return [str(x)]
+
+
+def load_logic_json(path):
+    if not path:
+        return []
+
+    p = Path(path)
+    if not p.exists():
+        print("[WARN] logic_json not found:", p)
+        return []
+
+    with p.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    if isinstance(data, dict):
+        data = [data]
+
+    assert isinstance(data, list), "logic_json must be list[dict] or dict"
+
+    print("Loaded logic_json:", p)
+    print("Logic groups:", len(data))
+    return data
+
+
+def build_logic_question_map(logic_data):
+    qmap = {}
+
+    for group_idx, item in enumerate(logic_data):
+        if not isinstance(item, dict):
+            continue
+
+        premises_fol = as_list_local(
+            item.get("premises-FOL")
+            or item.get("premises_fol")
+            or item.get("premises_FOL")
+            or []
+        )
+
+        premises_nl = as_list_local(
+            item.get("premises-NL")
+            or item.get("premises_nl")
+            or item.get("premises_NL")
+            or []
+        )
+
+        questions = as_list_local(item.get("questions", []))
+        answers = as_list_local(item.get("answers", []))
+        explanations = as_list_local(item.get("explanation", []))
+
+        for q_idx, q in enumerate(questions):
+            q_key = normalize_text_for_match(q)
+
+            qmap[q_key] = {
+                "premises-NL": premises_nl,
+                "premises-FOL": premises_fol,
+                "answer": answers[q_idx] if q_idx < len(answers) else "",
+                "explanation": explanations[q_idx] if q_idx < len(explanations) else "",
+                "group_idx": group_idx,
+                "question_idx": q_idx,
+            }
+
+    print("Logic question map size:", len(qmap))
+    return qmap
+
+
+def lookup_logic_source(question, qmap):
+    if not qmap:
+        return None
+
+    key = normalize_text_for_match(question)
+
+    if key in qmap:
+        return qmap[key]
+
+    for q_key, val in qmap.items():
+        if key and (key in q_key or q_key in key):
+            return val
+
+    return None
+
+
+# ============================================================
+# Prompt builder
+# ============================================================
+
 def build_prompt(question, task_type, extra):
     task_type = str(task_type).lower()
 
@@ -34,14 +150,14 @@ Solve the problem using scientific logicality:
 6. Conclusion
 
 Return valid JSON only with exactly these keys:
-answer, unit, explanation, fol, cot, premises, premises_nl, premises_fol, confidence.
+answer, unit, explanation, fol, cot, premises, premises_nl, premises_fol, premises-NL, premises-FOL, confidence.
 
 Problem:
 {question}
 """
 
-    premises_nl = compact_list(get_premises_nl(extra), max_items=30, max_chars_each=320)
-    premises_fol = compact_list(get_premises_fol(extra), max_items=30, max_chars_each=320)
+    premises_nl = compact_list(get_premises_nl(extra), max_items=80, max_chars_each=1000)
+    premises_fol = compact_list(get_premises_fol(extra), max_items=80, max_chars_each=1000)
 
     nl_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(premises_nl)])
     fol_text = "\n".join([f"{i+1}. {p}" for i, p in enumerate(premises_fol)])
@@ -58,7 +174,7 @@ Logicality pipeline:
 5. Conclusion
 
 Return valid JSON only with exactly these keys:
-answer, explanation, fol, cot, premises, premises_nl, premises_fol, confidence.
+answer, explanation, fol, cot, premises, premises_nl, premises_fol, premises-NL, premises-FOL, confidence.
 
 Premises-NL:
 {nl_text}
@@ -71,13 +187,21 @@ Question:
 """
 
 
+# ============================================================
+# Main
+# ============================================================
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_parquet", type=str, required=True)
     parser.add_argument("--output_jsonl", type=str, required=True)
     parser.add_argument("--output_parquet", type=str, default=None)
+    parser.add_argument("--logic_json", type=str, default=None)
     parser.add_argument("--max_rows", type=int, default=None)
     args = parser.parse_args()
+
+    logic_data = load_logic_json(args.logic_json)
+    logic_qmap = build_logic_question_map(logic_data)
 
     df = pd.read_parquet(args.input_parquet)
     if args.max_rows:
@@ -88,6 +212,9 @@ def main():
         "total": 0,
         "physics": 0,
         "logic": 0,
+        "logic_matched_json": 0,
+        "logic_empty_premises_nl": 0,
+        "logic_empty_premises_fol": 0,
         "solver_used": 0,
         "solver_verified": 0,
         "gold_guided": 0,
@@ -116,6 +243,24 @@ def main():
         if not question or str(gold).strip() == "":
             continue
 
+        # --------------------------------------------------------
+        # Critical fix:
+        # Inject exact dataset premises-NL/FOL from original logic JSON.
+        # These keys are then used by both prompt and teacher target.
+        # --------------------------------------------------------
+        if task_type == "logic":
+            source = lookup_logic_source(question, logic_qmap)
+            if source is not None:
+                extra["premises-NL"] = source["premises-NL"]
+                extra["premises-FOL"] = source["premises-FOL"]
+                extra["premises_nl"] = source["premises-NL"]
+                extra["premises_fol"] = source["premises-FOL"]
+                extra["_source_premises_nl"] = source["premises-NL"]
+                extra["_source_premises_fol"] = source["premises-FOL"]
+                extra["_source_logic_answer"] = source.get("answer", "")
+                extra["_source_logic_explanation"] = source.get("explanation", "")
+                stats["logic_matched_json"] += 1
+
         target_obj = build_gold_aligned_teacher(
             question=question,
             task_type=task_type,
@@ -125,6 +270,12 @@ def main():
 
         prompt = build_prompt(question, task_type, extra)
         target = json.dumps(target_obj, ensure_ascii=False)
+
+        if task_type == "logic":
+            if len(target_obj.get("premises_nl", [])) == 0:
+                stats["logic_empty_premises_nl"] += 1
+            if len(target_obj.get("premises_fol", [])) == 0:
+                stats["logic_empty_premises_fol"] += 1
 
         rows.append({
             "messages": [
@@ -174,5 +325,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
     

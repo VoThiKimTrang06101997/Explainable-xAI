@@ -27,6 +27,15 @@
         "documentation": {}
     },
     {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
         "label": "Path",
         "importPath": "pathlib",
         "description": "pathlib",
@@ -261,15 +270,6 @@
         "documentation": {}
     },
     {
-        "label": "re",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "re",
-        "description": "re",
-        "detail": "re",
-        "documentation": {}
-    },
-    {
         "label": "train_test_split",
         "importPath": "sklearn.model_selection",
         "description": "sklearn.model_selection",
@@ -439,14 +439,6 @@
     },
     {
         "label": "List",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Optional",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -13445,6 +13437,51 @@
         "documentation": {}
     },
     {
+        "label": "normalize_text_for_match",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "peekOfCode": "def normalize_text_for_match(x):\n    s = str(x or \"\")\n    s = s.replace(\"’\", \"'\").replace(\"“\", '\"').replace(\"”\", '\"')\n    s = s.replace(\"−\", \"-\").replace(\"×\", \"x\")\n    s = re.sub(r\"\\s+\", \" \", s).strip().lower()\n    return s\ndef as_list_local(x):\n    if x is None:\n        return []\n    if isinstance(x, list):",
+        "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "as_list_local",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "peekOfCode": "def as_list_local(x):\n    if x is None:\n        return []\n    if isinstance(x, list):\n        return [str(v) for v in x if str(v).strip()]\n    if isinstance(x, tuple):\n        return [str(v) for v in x if str(v).strip()]\n    if isinstance(x, str):\n        s = x.strip()\n        if not s:",
+        "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "load_logic_json",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "peekOfCode": "def load_logic_json(path):\n    if not path:\n        return []\n    p = Path(path)\n    if not p.exists():\n        print(\"[WARN] logic_json not found:\", p)\n        return []\n    with p.open(\"r\", encoding=\"utf-8\") as f:\n        data = json.load(f)\n    if isinstance(data, dict):",
+        "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "build_logic_question_map",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "peekOfCode": "def build_logic_question_map(logic_data):\n    qmap = {}\n    for group_idx, item in enumerate(logic_data):\n        if not isinstance(item, dict):\n            continue\n        premises_fol = as_list_local(\n            item.get(\"premises-FOL\")\n            or item.get(\"premises_fol\")\n            or item.get(\"premises_FOL\")\n            or []",
+        "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "documentation": {}
+    },
+    {
+        "label": "lookup_logic_source",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "peekOfCode": "def lookup_logic_source(question, qmap):\n    if not qmap:\n        return None\n    key = normalize_text_for_match(question)\n    if key in qmap:\n        return qmap[key]\n    for q_key, val in qmap.items():\n        if key and (key in q_key or q_key in key):\n            return val\n    return None",
+        "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
+        "documentation": {}
+    },
+    {
         "label": "build_prompt",
         "kind": 2,
         "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
@@ -13458,7 +13495,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
         "description": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
-        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--input_parquet\", type=str, required=True)\n    parser.add_argument(\"--output_jsonl\", type=str, required=True)\n    parser.add_argument(\"--output_parquet\", type=str, default=None)\n    parser.add_argument(\"--max_rows\", type=int, default=None)\n    args = parser.parse_args()\n    df = pd.read_parquet(args.input_parquet)\n    if args.max_rows:\n        df = df.head(args.max_rows)",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--input_parquet\", type=str, required=True)\n    parser.add_argument(\"--output_jsonl\", type=str, required=True)\n    parser.add_argument(\"--output_parquet\", type=str, default=None)\n    parser.add_argument(\"--logic_json\", type=str, default=None)\n    parser.add_argument(\"--max_rows\", type=int, default=None)\n    args = parser.parse_args()\n    logic_data = load_logic_json(args.logic_json)\n    logic_qmap = build_logic_question_map(logic_data)",
         "detail": "One-Shot-RLVR.data.build_gold_aligned_logicality_sft",
         "documentation": {}
     },
@@ -15132,7 +15169,25 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def as_list(x):\n    if x is None:\n        return []\n    if isinstance(x, list):\n        return [str(v) for v in x if str(v).strip()]\n    if isinstance(x, str):\n        s = x.strip()\n        if not s:\n            return []\n        try:",
+        "peekOfCode": "def as_list(x):\n    if x is None:\n        return []\n    if isinstance(x, list):\n        return [str(v) for v in x if str(v).strip()]\n    if isinstance(x, tuple):\n        return [str(v) for v in x if str(v).strip()]\n    if isinstance(x, str):\n        s = x.strip()\n        if not s:",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "compact_list",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def compact_list(xs, max_items=80, max_chars_each=1000):\n    out = []\n    for x in as_list(xs)[:max_items]:\n        s = str(x).strip()\n        if len(s) > max_chars_each:\n            s = s[:max_chars_each].rstrip() + \" ...\"\n        if s:\n            out.append(s)\n    return out\ndef compact_text(x, max_chars=4000):",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "compact_text",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def compact_text(x, max_chars=4000):\n    s = str(x or \"\").strip()\n    if len(s) > max_chars:\n        return s[:max_chars].rstrip() + \" ...\"\n    return s\n# ============================================================\n# Answer matching\n# ============================================================\ndef normalize_answer_text(x):\n    s = str(x or \"\").strip()",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
@@ -15159,7 +15214,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def answers_match(pred, gold, rel_tol=1e-2, abs_tol=1e-2):\n    p = normalize_answer_text(pred)\n    g = normalize_answer_text(gold)\n    if not g:\n        return False\n    if p == g:\n        return True\n    if p.lower() == g.lower():\n        return True\n    # MCQ / Yes-No / Unknown",
+        "peekOfCode": "def answers_match(pred, gold, rel_tol=1e-2, abs_tol=1e-2):\n    p = normalize_answer_text(pred)\n    g = normalize_answer_text(gold)\n    if not g:\n        return False\n    if p == g or p.lower() == g.lower():\n        return True\n    if p.upper() in [\"A\", \"B\", \"C\", \"D\"] and g.upper() in [\"A\", \"B\", \"C\", \"D\"]:\n        return p.upper() == g.upper()\n    if p in [\"Yes\", \"No\", \"Unknown\"] or g in [\"Yes\", \"No\", \"Unknown\"]:",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
@@ -15168,7 +15223,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def get_premises_nl(extra: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra, dict):\n        return []\n    for k in [\"premises_nl\", \"premises-NL\", \"premises\", \"premise\", \"context\"]:\n        v = extra.get(k)\n        out = as_list(v)\n        if out:\n            return out\n    return []\ndef get_premises_fol(extra: Dict[str, Any]) -> List[str]:",
+        "peekOfCode": "def get_premises_nl(extra: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra, dict):\n        return []\n    for k in SOURCE_NL_KEYS:\n        if k in extra:\n            out = as_list(extra.get(k))\n            if out:\n                return out\n    return []\ndef get_premises_fol(extra: Dict[str, Any]) -> List[str]:",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
@@ -15177,25 +15232,34 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def get_premises_fol(extra: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra, dict):\n        return []\n    for k in [\"premises_fol\", \"premises-FOL\", \"fol_premises\", \"rules\"]:\n        v = extra.get(k)\n        out = as_list(v)\n        if out:\n            return out\n    return []\ndef compact_list(xs, max_items=20, max_chars_each=300):",
+        "peekOfCode": "def get_premises_fol(extra: Dict[str, Any]) -> List[str]:\n    if not isinstance(extra, dict):\n        return []\n    for k in SOURCE_FOL_KEYS:\n        if k in extra:\n            out = as_list(extra.get(k))\n            if out:\n                return out\n    return []\ndef is_bad_fol_placeholder(x):",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
     {
-        "label": "compact_list",
+        "label": "is_bad_fol_placeholder",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def compact_list(xs, max_items=20, max_chars_each=300):\n    out = []\n    for x in as_list(xs)[:max_items]:\n        s = str(x).strip()\n        if len(s) > max_chars_each:\n            s = s[:max_chars_each].rstrip() + \" ...\"\n        out.append(s)\n    return out\ndef compact_text(x, max_chars=1800):\n    s = str(x or \"\").strip()",
+        "peekOfCode": "def is_bad_fol_placeholder(x):\n    xs = as_list(x)\n    if not xs:\n        return True\n    joined = \" \".join(str(v) for v in xs).lower()\n    bad = [\n        \"priority dataset-compatible\",\n        \"conservative nl/fol\",\n        \"verifier\",\n        \"premises -> logical conclusion\",",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
     {
-        "label": "compact_text",
+        "label": "nl_premise_to_fol",
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def compact_text(x, max_chars=1800):\n    s = str(x or \"\").strip()\n    if len(s) > max_chars:\n        return s[:max_chars].rstrip() + \" ...\"\n    return s\ndef extract_known_values(question: str) -> List[str]:\n    q = str(question or \"\")\n    patterns = [\n        r\"\\b[A-Za-z][A-Za-z0-9_]*\\s*=\\s*[+-]?\\d+(?:\\.\\d+)?(?:\\s*(?:×|x|\\*)\\s*10\\^?[+-]?\\d+)?\\s*[A-Za-zΩ/%^0-9µμ]*\",\n        r\"[+-]?\\d+(?:\\.\\d+)?\\s*(?:cm|mm|m|km|s|Hz|kHz|V|A|Ω|ohm|F|uF|µF|μF|pF|nF|H|mH|C|uC|µC|N|J|mJ|g|kg)\",",
+        "peekOfCode": "def nl_premise_to_fol(premise):\n    s = _strip_prefix(premise)\n    if not s:\n        return \"\"\n    # property dataset patterns\n    m = re.search(r\"there exists at least one object x that has property ([A-Z])\", s, flags=re.I)\n    if m:\n        a = m.group(1).upper()\n        return f\"Exists(x, {a}(x))\"\n    m = re.search(r\"every object x has property ([A-Z])\", s, flags=re.I)",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "convert_premises_nl_to_fol",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def convert_premises_nl_to_fol(premises_nl):\n    out = []\n    for p in as_list(premises_nl):\n        f = nl_premise_to_fol(p)\n        if f and f not in out:\n            out.append(f)\n    return out\n# ============================================================\n# Physics helpers\n# ============================================================",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
@@ -15213,7 +15277,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def infer_physics_unit(extra: Dict[str, Any], gold_answer: str):\n    unit = str(extra.get(\"gold_unit\", \"\") or \"\").strip()\n    if unit:\n        return unit\n    g = str(gold_answer or \"\")\n    m = re.search(r\"\\b(V/m|m/s|km/h|mH|uF|µF|μF|pF|nF|F|H|V|A|Ω|ohm|N|J|mJ|nJ|C|nC|µC|uC|Hz|%|mm|cm|m|g|kg)\\b\", g)\n    if m:\n        return m.group(1)\n    return \"\"\ndef infer_physics_formula_hint(question: str):",
+        "peekOfCode": "def infer_physics_unit(extra: Dict[str, Any], gold_answer: str):\n    unit = str(extra.get(\"gold_unit\", \"\") or \"\").strip()\n    if unit:\n        return unit\n    g = str(gold_answer or \"\")\n    m = re.search(\n        r\"\\b(V/m|m/s|km/h|mH|uF|µF|μF|pF|nF|F|H|V|A|Ω|ohm|N|J|mJ|nJ|C|nC|µC|uC|Hz|%|mm|cm|m|g|kg)\\b\",\n        g,\n    )\n    if m:",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
@@ -15222,7 +15286,16 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def infer_physics_formula_hint(question: str):\n    q = str(question or \"\").lower()\n    rules = [\n        (\"capacitor\" in q and \"energy\" in q, \"Capacitor energy relation: W = 1/2 C U^2.\"),\n        (\"capacitor\" in q and \"charge\" in q, \"Capacitor charge relation: Q = C U; for parallel plates C = eps_r eps0 A / d.\"),\n        (\"resonance\" in q or \"resonate\" in q, \"LC/RLC resonance relation: f = 1/(2π√(LC)).\"),\n        (\"inductor\" in q and \"energy\" in q, \"Inductor magnetic energy relation: W = 1/2 L I^2.\"),\n        (\"electric field\" in q and \"charge\" in q, \"Point-charge electric field: E = k|q|/r^2, combined using vector rules.\"),\n        (\"electric force\" in q or \"coulomb\" in q, \"Coulomb force: F = k|q1 q2|/r^2, combined using vector rules when needed.\"),\n        (\"resultant force\" in q, \"Vector resultant formula using geometry or law of cosines.\"),",
+        "peekOfCode": "def infer_physics_formula_hint(question: str):\n    q = str(question or \"\").lower()\n    if \"capacitor\" in q and \"energy\" in q:\n        return \"Capacitor energy relation: W = 1/2 C U^2.\"\n    if \"capacitor\" in q and \"charge\" in q:\n        return \"Capacitor charge relation: Q = C U; for parallel plates C = eps_r eps0 A / d.\"\n    if \"resonance\" in q or \"resonate\" in q:\n        return \"LC/RLC resonance relation: f = 1/(2π√(LC)).\"\n    if \"inductor\" in q and \"energy\" in q:\n        return \"Inductor magnetic energy relation: W = 1/2 L I^2.\"",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "answer_aligned_logic_explanation",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "def answer_aligned_logic_explanation(answer, question, premises_nl, premises_fol):\n    answer = str(answer).strip()\n    if answer in [\"A\", \"B\", \"C\", \"D\"]:\n        return (\n            f\"Option {answer} is the official gold-aligned answer. \"\n            \"The reasoning compares each candidate option against the natural-language premises and FOL premises.\"\n        )\n    if answer == \"Yes\":\n        return (\n            \"The queried statement is treated as true under the official annotation. \"",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
@@ -15231,7 +15304,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def build_physics_teacher(question: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    \"\"\"\n    Gold-aligned physics distillation:\n    - Use solver only if it agrees with gold.\n    - Otherwise construct a scientific logicality trace with answer forced to gold.\n    \"\"\"\n    unit = infer_physics_unit(extra, gold_answer)\n    known_values = extract_known_values(question)\n    formula_hint = infer_physics_formula_hint(question)\n    solver_obj = None",
+        "peekOfCode": "def build_physics_teacher(question: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    unit = infer_physics_unit(extra, gold_answer)\n    known_values = extract_known_values(question)\n    formula_hint = infer_physics_formula_hint(question)\n    solver_obj = None\n    solver_match = False\n    try:\n        from exact_modules.sol.physics_solver import solve_physics\n        solver_obj = solve_physics(question, extra)\n        if solver_obj and answers_match(solver_obj.get(\"answer\", \"\"), gold_answer):",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
@@ -15240,7 +15313,7 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def build_logic_teacher(question: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    premises_nl = compact_list(get_premises_nl(extra), max_items=30, max_chars_each=320)\n    premises_fol = compact_list(get_premises_fol(extra), max_items=30, max_chars_each=320)\n    solver_obj = None\n    solver_match = False\n    try:\n        from exact_modules.logic_solver import solve_logic\n        solver_obj = solve_logic(question, premises_nl, extra)\n        if solver_obj and answers_match(solver_obj.get(\"answer\", \"\"), gold_answer):\n            solver_match = True",
+        "peekOfCode": "def build_logic_teacher(question: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    # Source dataset premises are authoritative.\n    premises_nl = compact_list(get_premises_nl(extra), max_items=80, max_chars_each=1000)\n    premises_fol = compact_list(get_premises_fol(extra), max_items=80, max_chars_each=1000)\n    # If original FOL is missing, fallback to conversion from NL.\n    if is_bad_fol_placeholder(premises_fol):\n        converted = convert_premises_nl_to_fol(premises_nl)\n        if converted:\n            premises_fol = converted\n    solver_obj = None",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
@@ -15249,7 +15322,25 @@
         "kind": 2,
         "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
-        "peekOfCode": "def build_gold_aligned_teacher(question: str, task_type: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    task_type = str(task_type or \"\").lower()\n    if task_type == \"physics\":\n        return build_physics_teacher(question, gold_answer, extra)\n    if task_type == \"logic\":\n        return build_logic_teacher(question, gold_answer, extra)\n    # fallback\n    return {\n        \"answer\": str(gold_answer),\n        \"explanation\": \"The answer is aligned with the official gold label using structured logicality distillation.\",",
+        "peekOfCode": "def build_gold_aligned_teacher(question: str, task_type: str, gold_answer: str, extra: Dict[str, Any]) -> Dict[str, Any]:\n    task_type = str(task_type or \"\").lower()\n    if task_type == \"physics\":\n        return build_physics_teacher(question, gold_answer, extra)\n    if task_type == \"logic\":\n        return build_logic_teacher(question, gold_answer, extra)\n    return {\n        \"answer\": str(gold_answer),\n        \"explanation\": \"The answer is aligned with the official gold label using structured logicality distillation.\",\n        \"fol\": \"Input -> reasoning -> gold-aligned answer\",",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "SOURCE_NL_KEYS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "SOURCE_NL_KEYS = [\n    \"_source_premises_nl\",\n    \"source_premises_nl\",\n    \"premises-NL\",\n    \"premises_nl\",\n    \"premises_NL\",\n    \"premise-NL\",\n    \"premise_nl\",\n    \"premises\",\n    \"premise\",",
+        "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "documentation": {}
+    },
+    {
+        "label": "SOURCE_FOL_KEYS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "description": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
+        "peekOfCode": "SOURCE_FOL_KEYS = [\n    \"_source_premises_fol\",\n    \"source_premises_fol\",\n    \"premises-FOL\",\n    \"premises_fol\",\n    \"premises_FOL\",\n    \"premise-FOL\",\n    \"premise_fol\",\n    \"fol_premises\",\n    \"rules\",",
         "detail": "One-Shot-RLVR.exact_modules.logicality_distill_teacher",
         "documentation": {}
     },
