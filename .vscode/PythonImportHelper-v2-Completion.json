@@ -132,6 +132,14 @@
         "documentation": {}
     },
     {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
         "label": "pandas",
         "kind": 6,
         "isExtraImport": true,
@@ -2999,6 +3007,46 @@
     },
     {
         "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -15633,6 +15681,15 @@
         "documentation": {}
     },
     {
+        "label": "solve_logic",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "def solve_logic(question: str, premises=None, extra_info=None):\n    \"\"\"\n    Final schema-safe solve_logic.\n    This wrapper keeps all old V3/V5/V6/V7 answer behavior, but fixes output schema:\n      - premises-NL\n      - premises-FOL\n      - premises_nl\n      - premises_fol\n      - premises\n    \"\"\"",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
         "label": "STOPWORDS",
         "kind": 5,
         "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
@@ -15683,6 +15740,33 @@
         "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
         "description": "One-Shot-RLVR.exact_modules.logic_solver",
         "peekOfCode": "_OLD_SOLVE_LOGIC_V7 = solve_logic\ndef solve_logic(question: str, premises=None, extra_info=None):\n    premises = premises or []\n    q = str(question or \"\").lower()\n    p = \" \".join(str(x).lower() for x in premises)\n    # Important guard:\n    # If question is yes/no statement, do not return A/B/C/D.\n    is_yes_no = (\n        q.startswith(\"is \")\n        or q.startswith(\"are \")",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "_FINAL_OLD_SOLVE_LOGIC",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "_FINAL_OLD_SOLVE_LOGIC = solve_logic\nFINAL_BAD_FOL_SIGNALS = [\n    \"priority dataset-compatible\",\n    \"conservative nl/fol rule verification\",\n    \"dataset-specific logic rule/premise verification\",\n    \"dataset-compatible nl/fol\",\n    \"parsed simple rules into z3-lite\",\n    \"premises entail claim\",\n    \"for each option o\",\n    \"supportedbypremises\",",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "FINAL_BAD_FOL_SIGNALS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "FINAL_BAD_FOL_SIGNALS = [\n    \"priority dataset-compatible\",\n    \"conservative nl/fol rule verification\",\n    \"dataset-specific logic rule/premise verification\",\n    \"dataset-compatible nl/fol\",\n    \"parsed simple rules into z3-lite\",\n    \"premises entail claim\",\n    \"for each option o\",\n    \"supportedbypremises\",\n    \"candidateanswer\",",
+        "detail": "One-Shot-RLVR.exact_modules.logic_solver",
+        "documentation": {}
+    },
+    {
+        "label": "_FINAL_PREDICATE_MAP",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.exact_modules.logic_solver",
+        "description": "One-Shot-RLVR.exact_modules.logic_solver",
+        "peekOfCode": "_FINAL_PREDICATE_MAP = {\n    \"problem solving\": \"ProblemSolving\",\n    \"problem solving ability\": \"ProblemSolving\",\n    \"communication\": \"Communication\",\n    \"communication skills\": \"Communication\",\n    \"critical thinking\": \"CriticalThinking\",\n    \"critical thinking skills\": \"CriticalThinking\",\n    \"teamwork\": \"Teamwork\",\n    \"teamwork skills\": \"Teamwork\",\n    \"research skills\": \"ResearchSkills\",",
         "detail": "One-Shot-RLVR.exact_modules.logic_solver",
         "documentation": {}
     },
@@ -22569,6 +22653,456 @@
         "description": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
         "peekOfCode": "ROOT = Path(__file__).resolve().parent\nif str(ROOT) not in sys.path:\n    sys.path.append(str(ROOT))\n# ============================================================\n# Optional project modules\n# ============================================================\ntry:\n    from exact_modules.common import extract_json, is_nan_like, parse_obj\nexcept Exception:\n    extract_json = None",
         "detail": "One-Shot-RLVR.evaluate_exact_symbolic_moe",
+        "documentation": {}
+    },
+    {
+        "label": "safe_parse_json",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def safe_parse_json(x: Any) -> Any:\n    if isinstance(x, (dict, list)):\n        return x\n    if x is None:\n        return {}\n    try:\n        if pd.isna(x):\n            return {}\n    except Exception:\n        pass",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_text_for_match",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def normalize_text_for_match(x: Any) -> str:\n    s = str(x or \"\")\n    s = s.replace(\"’\", \"'\").replace(\"‘\", \"'\")\n    s = s.replace(\"“\", '\"').replace(\"”\", '\"')\n    s = s.replace(\"−\", \"-\").replace(\"×\", \"x\")\n    s = re.sub(r\"\\s+\", \" \", s).strip().lower()\n    return s\ndef normalize_list(value: Any) -> List[Any]:\n    if value is None:\n        return []",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_list",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def normalize_list(value: Any) -> List[Any]:\n    if value is None:\n        return []\n    try:\n        if pd.isna(value):\n            return []\n    except Exception:\n        pass\n    if isinstance(value, list):\n        return value",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "clean_list_str",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def clean_list_str(value: Any) -> List[str]:\n    out = []\n    for item in normalize_list(value):\n        s = str(item).strip()\n        if s:\n            out.append(s)\n    return out\ndef get_nested(obj: Any, keys: List[str], default=None):\n    if not isinstance(obj, dict):\n        return default",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "get_nested",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def get_nested(obj: Any, keys: List[str], default=None):\n    if not isinstance(obj, dict):\n        return default\n    for k in keys:\n        if k in obj:\n            return obj[k]\n    return default\ndef safe_row_get(row: pd.Series, col: str, default=\"\"):\n    if col not in row.index:\n        return default",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "safe_row_get",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def safe_row_get(row: pd.Series, col: str, default=\"\"):\n    if col not in row.index:\n        return default\n    val = row[col]\n    try:\n        if pd.isna(val):\n            return default\n    except Exception:\n        pass\n    return val",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "get_output_obj",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def get_output_obj(row: pd.Series) -> Tuple[Optional[str], Dict[str, Any]]:\n    candidate_cols = [\n        \"parsed_output\",\n        \"organizer_output\",\n        \"final_output\",\n        \"model_output\",\n        \"raw_output\",\n        \"output\",\n        \"response\",\n        \"parsed_output_enriched\",",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "get_extra_info_from_row",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def get_extra_info_from_row(row: pd.Series) -> Dict[str, Any]:\n    for col in [\"extra_info\", \"extra\", \"metadata\", \"meta\"]:\n        if col in row.index:\n            extra = safe_parse_json(row[col])\n            if isinstance(extra, dict) and extra:\n                return extra\n    return {}\n# ============================================================\n# PLACEHOLDER DETECTION\n# ============================================================",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "is_bad_fol_placeholder",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def is_bad_fol_placeholder(value: Any) -> bool:\n    fol = clean_list_str(value)\n    if not fol:\n        return True\n    joined = \" \".join(fol).lower()\n    return any(sig in joined for sig in BAD_FOL_SIGNALS)\ndef has_real_fol(value: Any) -> bool:\n    fol = clean_list_str(value)\n    if not fol:\n        return False",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "has_real_fol",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def has_real_fol(value: Any) -> bool:\n    fol = clean_list_str(value)\n    if not fol:\n        return False\n    if is_bad_fol_placeholder(fol):\n        return False\n    joined = \" \".join(fol)\n    markers = [\"ForAll\", \"Exists\", \"∀\", \"∃\", \"→\", \"¬\", \"(\", \")\"]\n    return any(m in joined for m in markers)\n# ============================================================",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_unit",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def normalize_unit(unit: Any) -> str:\n    unit = str(unit or \"\").strip()\n    if not unit or unit.lower() in [\"nan\", \"none\", \"n/a\", \"na\"]:\n        return \"\"\n    replacements = {\n        \"μ\": \"µ\",\n        \"uF\": \"µF\",\n        \"uC\": \"µC\",\n        \"uH\": \"µH\",\n        \"uJ\": \"µJ\",",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "extract_unit_from_text",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def extract_unit_from_text(text: Any) -> str:\n    s = str(text or \"\").strip()\n    if not s:\n        return \"\"\n    s = s.replace(\"μ\", \"µ\")\n    s = s.replace(\"ohms\", \"Ω\").replace(\"ohm\", \"Ω\")\n    for unit in sorted(PHYSICS_UNITS, key=len, reverse=True):\n        pattern = r\"(?<![A-Za-z])\" + re.escape(unit) + r\"(?![A-Za-z])\"\n        if re.search(pattern, s):\n            return normalize_unit(unit)",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "infer_unit_from_question",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def infer_unit_from_question(question: Any) -> str:\n    q = str(question or \"\").lower().replace(\"μ\", \"µ\")\n    if \"electric field\" in q or \"field strength\" in q:\n        return \"V/m\"\n    if \"force\" in q or \"resultant force\" in q or \"coulomb\" in q:\n        return \"N\"\n    if \"capacitance\" in q:\n        if \"pf\" in q:\n            return \"pF\"\n        if \"nf\" in q:",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "get_physics_units",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def get_physics_units(row: pd.Series, obj: Dict[str, Any]) -> Tuple[str, str]:\n    question = str(safe_row_get(row, \"question\", \"\"))\n    gold_answer = str(safe_row_get(row, \"gold_answer\", \"\"))\n    pred_answer = str(safe_row_get(row, \"pred_answer\", \"\"))\n    csv_gold_unit = normalize_unit(safe_row_get(row, \"gold_unit\", \"\"))\n    csv_pred_unit = normalize_unit(safe_row_get(row, \"pred_unit\", \"\"))\n    obj_unit = \"\"\n    if isinstance(obj, dict):\n        obj_unit = normalize_unit(get_nested(obj, [\"unit\", \"gold_unit\", \"pred_unit\"], \"\"))\n    gold_unit = csv_gold_unit or extract_unit_from_text(gold_answer) or obj_unit or infer_unit_from_question(question)",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "find_logic_json_path",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def find_logic_json_path() -> Optional[Path]:\n    for p in LOGIC_JSON_PATH_CANDIDATES:\n        if p.exists():\n            return p\n    return None\ndef load_logic_source_json() -> List[Dict[str, Any]]:\n    path = find_logic_json_path()\n    if path is None:\n        print(\"[WARN] Logic source JSON not found in candidates:\")\n        for p in LOGIC_JSON_PATH_CANDIDATES:",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "load_logic_source_json",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def load_logic_source_json() -> List[Dict[str, Any]]:\n    path = find_logic_json_path()\n    if path is None:\n        print(\"[WARN] Logic source JSON not found in candidates:\")\n        for p in LOGIC_JSON_PATH_CANDIDATES:\n            print(\" -\", p)\n        return []\n    with path.open(\"r\", encoding=\"utf-8\") as f:\n        data = json.load(f)\n    if isinstance(data, dict):",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_record_schema",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def normalize_record_schema(item: Dict[str, Any]) -> Dict[str, Any]:\n    premises_fol = clean_list_str(\n        item.get(\"premises-FOL\")\n        or item.get(\"premises_fol\")\n        or item.get(\"premises_FOL\")\n        or item.get(\"premisesFOL\")\n        or []\n    )\n    premises_nl = clean_list_str(\n        item.get(\"premises-NL\")",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "build_logic_question_map",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def build_logic_question_map(logic_data: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:\n    qmap = {}\n    for group_idx, item in enumerate(logic_data):\n        if not isinstance(item, dict):\n            continue\n        rec = normalize_record_schema(item)\n        questions = rec[\"questions\"]\n        answers = rec[\"answers\"]\n        explanations = rec[\"explanation\"]\n        idx_all = rec[\"idx\"]",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "token_jaccard",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def token_jaccard(a: str, b: str) -> float:\n    aa = set(normalize_text_for_match(a).split())\n    bb = set(normalize_text_for_match(b).split())\n    if not aa or not bb:\n        return 0.0\n    return len(aa & bb) / max(1, len(aa | bb))\ndef lookup_logic_source_by_question(question: Any, qmap: Dict[str, Dict[str, Any]]) -> Optional[Dict[str, Any]]:\n    key = normalize_text_for_match(question)\n    if key in qmap:\n        return qmap[key]",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "lookup_logic_source_by_question",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def lookup_logic_source_by_question(question: Any, qmap: Dict[str, Dict[str, Any]]) -> Optional[Dict[str, Any]]:\n    key = normalize_text_for_match(question)\n    if key in qmap:\n        return qmap[key]\n    # substring exact-ish\n    for q_key, val in qmap.items():\n        if key and (key in q_key or q_key in key):\n            return val\n    # token overlap fallback\n    best_val = None",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "get_field_from_obj",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def get_field_from_obj(obj: Dict[str, Any], keys: List[str]) -> List[str]:\n    if not isinstance(obj, dict):\n        return []\n    for k in keys:\n        if k in obj:\n            items = clean_list_str(obj[k])\n            if items:\n                return items\n    return []\ndef get_field_from_row_columns(row: pd.Series, keys: List[str]) -> List[str]:",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "get_field_from_row_columns",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def get_field_from_row_columns(row: pd.Series, keys: List[str]) -> List[str]:\n    for col in keys:\n        if col in row.index:\n            items = clean_list_str(row[col])\n            if items:\n                return items\n    return []\ndef get_field_from_extra(extra: Dict[str, Any], keys: List[str], fallback_general: bool = False) -> List[str]:\n    if not isinstance(extra, dict):\n        return []",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "get_field_from_extra",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def get_field_from_extra(extra: Dict[str, Any], keys: List[str], fallback_general: bool = False) -> List[str]:\n    if not isinstance(extra, dict):\n        return []\n    for k in keys:\n        if k in extra:\n            items = clean_list_str(extra[k])\n            if items:\n                return items\n    if fallback_general:\n        for k in GENERAL_PREMISE_KEYS:",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "get_evidence_by_idx",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def get_evidence_by_idx(premises_nl: List[str], premises_fol: List[str], evidence_idx: List[int]) -> Tuple[List[str], List[str]]:\n    ev_nl = []\n    ev_fol = []\n    for k in evidence_idx:\n        try:\n            pos = int(k) - 1\n        except Exception:\n            continue\n        if 0 <= pos < len(premises_nl):\n            ev_nl.append(f\"Premise {k}: {premises_nl[pos]}\")",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "nl_premise_to_fol",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def nl_premise_to_fol(premise: Any) -> str:\n    \"\"\"\n    Converts common educational logic premises to readable FOL.\n    Handles examples:\n    - If a student completes the capstone project, then they gain teamwork skills.\n    - All students possess problem-solving ability.\n    - If a student does not have teamwork skills, then they do not have critical thinking skills.\n    - There exists at least one student who has property A.\n    - Every object x has property A.\n    - John has completed a thesis.",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "convert_premises_nl_to_fol",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def convert_premises_nl_to_fol(premises_nl: List[str]) -> List[str]:\n    \"\"\"\n    Convert every NL premise into a FOL-like statement.\n    This function NEVER returns [] when premises_nl is non-empty.\n    \"\"\"\n    fol = []\n    for i, p in enumerate(clean_list_str(premises_nl), start=1):\n        f = nl_premise_to_fol(p)\n        if not f:\n            # Last-resort readable predicate, still avoids empty premises-FOL.",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "call_logic_solver_with_source",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def call_logic_solver_with_source(row: pd.Series, source_logic: Dict[str, Any]) -> Dict[str, Any]:\n    if not LOGIC_SOLVER_AVAILABLE or solve_logic is None:\n        return {}\n    question = str(row.get(\"question\", \"\") or \"\")\n    raw_group = source_logic.get(\"raw_group\") or {}\n    question_idx = source_logic.get(\"question_idx\", None)\n    # Try full newer signature first.\n    try:\n        out = solve_logic(\n            question=question,",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "enrich_output_with_premises_and_units",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def enrich_output_with_premises_and_units(\n    row: pd.Series,\n    obj: Dict[str, Any],\n    logic_qmap: Dict[str, Dict[str, Any]],\n) -> Dict[str, Any]:\n    if not isinstance(obj, dict):\n        obj = {}\n    obj = dict(obj)\n    task_type = str(row.get(\"task_type\", \"\") or \"\").lower()\n    question = str(row.get(\"question\", \"\") or \"\")",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "print_text_block",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def print_text_block(title: str, value: Any, max_chars: int = MAX_TEXT_CHARS):\n    print(f\"\\n----- {title} -----\")\n    if value is None:\n        print(\"MISSING\")\n        return\n    s = str(value)\n    if not s.strip():\n        print(\"EMPTY\")\n        return\n    print(s[:max_chars])",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "print_list_field",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def print_list_field(title: str, value: Any, max_items: int = 20):\n    print(f\"\\n----- {title} -----\")\n    items = normalize_list(value)\n    if not items:\n        print(\"EMPTY []\")\n        return\n    for i, item in enumerate(items[:max_items], start=1):\n        if isinstance(item, (dict, list)):\n            item_str = json.dumps(item, ensure_ascii=False)\n        else:",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "print_json_block",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def print_json_block(title: str, obj: Any, max_chars: int = MAX_TEXT_CHARS):\n    print(f\"\\n----- {title} -----\")\n    try:\n        s = json.dumps(obj, ensure_ascii=False, indent=2)\n    except Exception:\n        s = str(obj)\n    print(s[:max_chars])\n    if len(s) > max_chars:\n        print(f\"... ({len(s) - max_chars} more chars)\")\ndef inspect_row(row: pd.Series, logic_qmap: Dict[str, Dict[str, Any]], display_idx=None, enrich=True) -> Dict[str, Any]:",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "inspect_row",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def inspect_row(row: pd.Series, logic_qmap: Dict[str, Dict[str, Any]], display_idx=None, enrich=True) -> Dict[str, Any]:\n    output_col, obj = get_output_obj(row)\n    if enrich:\n        obj = enrich_output_with_premises_and_units(row, obj, logic_qmap)\n    task_type = str(row.get(\"task_type\", \"N/A\")).lower()\n    print(\"=\" * 120)\n    if display_idx is not None:\n        print(\"display_idx:\", display_idx)\n    print(\"row_index:\", row.name)\n    print(\"task_type:\", row.get(\"task_type\", \"N/A\"))",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "def main():\n    assert CSV_PATH.exists(), f\"File not found: {CSV_PATH}\"\n    df = pd.read_csv(CSV_PATH)\n    print(\"=\" * 120)\n    print(\"CSV:\", CSV_PATH)\n    print(\"Shape:\", df.shape)\n    print(\"Columns:\")\n    for c in df.columns:\n        print(\" -\", c)\n    logic_data = load_logic_source_json()",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "CSV_PATH",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "CSV_PATH = Path(\"/content/drive/MyDrive/Explainable_AI/Results/exact_eval_predictions.csv\")\nLOGIC_JSON_PATH_CANDIDATES = [\n    Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/exact/raw/Logic_Based_Educational_Queries.json\"),\n    Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/Logic_Based_Educational_Queries.json\"),\n    Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr/Logic_Based_Educational_Queries.json\"),\n    Path(\"/content/drive/MyDrive/Explainable_AI/Data/Logic_Based_Educational_Queries.json\"),\n    Path(\"/content/drive/MyDrive/Explainable_AI/Logic_Based_Educational_Queries.json\"),\n]\nLOGIC_SOLVER_MODULE_DIR = Path(\"/content/Explainable-xAI/One-Shot-RLVR/exact_modules\")\nMAX_ROWS_PER_SECTION = 20",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "LOGIC_JSON_PATH_CANDIDATES",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "LOGIC_JSON_PATH_CANDIDATES = [\n    Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/exact/raw/Logic_Based_Educational_Queries.json\"),\n    Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/Logic_Based_Educational_Queries.json\"),\n    Path(\"/content/Explainable-xAI/One-Shot-RLVR/data/train/exact_rlvr/Logic_Based_Educational_Queries.json\"),\n    Path(\"/content/drive/MyDrive/Explainable_AI/Data/Logic_Based_Educational_Queries.json\"),\n    Path(\"/content/drive/MyDrive/Explainable_AI/Logic_Based_Educational_Queries.json\"),\n]\nLOGIC_SOLVER_MODULE_DIR = Path(\"/content/Explainable-xAI/One-Shot-RLVR/exact_modules\")\nMAX_ROWS_PER_SECTION = 20\nMAX_ITEMS_PREMISES = 50",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "LOGIC_SOLVER_MODULE_DIR",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "LOGIC_SOLVER_MODULE_DIR = Path(\"/content/Explainable-xAI/One-Shot-RLVR/exact_modules\")\nMAX_ROWS_PER_SECTION = 20\nMAX_ITEMS_PREMISES = 50\nMAX_ITEMS_COT = 12\nMAX_TEXT_CHARS = 6000\nSAVE_ENRICHED_CSV = True\nSAVE_ENRICHED_JSONL = True\nSAVE_ENRICHED_JSON = True\nPRINT_SAMPLES = True\n# ============================================================",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_ROWS_PER_SECTION",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "MAX_ROWS_PER_SECTION = 20\nMAX_ITEMS_PREMISES = 50\nMAX_ITEMS_COT = 12\nMAX_TEXT_CHARS = 6000\nSAVE_ENRICHED_CSV = True\nSAVE_ENRICHED_JSONL = True\nSAVE_ENRICHED_JSON = True\nPRINT_SAMPLES = True\n# ============================================================\n# IMPORT LOGIC SOLVER",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_ITEMS_PREMISES",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "MAX_ITEMS_PREMISES = 50\nMAX_ITEMS_COT = 12\nMAX_TEXT_CHARS = 6000\nSAVE_ENRICHED_CSV = True\nSAVE_ENRICHED_JSONL = True\nSAVE_ENRICHED_JSON = True\nPRINT_SAMPLES = True\n# ============================================================\n# IMPORT LOGIC SOLVER\n# ============================================================",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_ITEMS_COT",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "MAX_ITEMS_COT = 12\nMAX_TEXT_CHARS = 6000\nSAVE_ENRICHED_CSV = True\nSAVE_ENRICHED_JSONL = True\nSAVE_ENRICHED_JSON = True\nPRINT_SAMPLES = True\n# ============================================================\n# IMPORT LOGIC SOLVER\n# ============================================================\nif LOGIC_SOLVER_MODULE_DIR.exists():",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_TEXT_CHARS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "MAX_TEXT_CHARS = 6000\nSAVE_ENRICHED_CSV = True\nSAVE_ENRICHED_JSONL = True\nSAVE_ENRICHED_JSON = True\nPRINT_SAMPLES = True\n# ============================================================\n# IMPORT LOGIC SOLVER\n# ============================================================\nif LOGIC_SOLVER_MODULE_DIR.exists():\n    sys.path.insert(0, str(LOGIC_SOLVER_MODULE_DIR))",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "SAVE_ENRICHED_CSV",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "SAVE_ENRICHED_CSV = True\nSAVE_ENRICHED_JSONL = True\nSAVE_ENRICHED_JSON = True\nPRINT_SAMPLES = True\n# ============================================================\n# IMPORT LOGIC SOLVER\n# ============================================================\nif LOGIC_SOLVER_MODULE_DIR.exists():\n    sys.path.insert(0, str(LOGIC_SOLVER_MODULE_DIR))\ntry:",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "SAVE_ENRICHED_JSONL",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "SAVE_ENRICHED_JSONL = True\nSAVE_ENRICHED_JSON = True\nPRINT_SAMPLES = True\n# ============================================================\n# IMPORT LOGIC SOLVER\n# ============================================================\nif LOGIC_SOLVER_MODULE_DIR.exists():\n    sys.path.insert(0, str(LOGIC_SOLVER_MODULE_DIR))\ntry:\n    from logic_solver import solve_logic",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "SAVE_ENRICHED_JSON",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "SAVE_ENRICHED_JSON = True\nPRINT_SAMPLES = True\n# ============================================================\n# IMPORT LOGIC SOLVER\n# ============================================================\nif LOGIC_SOLVER_MODULE_DIR.exists():\n    sys.path.insert(0, str(LOGIC_SOLVER_MODULE_DIR))\ntry:\n    from logic_solver import solve_logic\n    LOGIC_SOLVER_AVAILABLE = True",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "PRINT_SAMPLES",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "PRINT_SAMPLES = True\n# ============================================================\n# IMPORT LOGIC SOLVER\n# ============================================================\nif LOGIC_SOLVER_MODULE_DIR.exists():\n    sys.path.insert(0, str(LOGIC_SOLVER_MODULE_DIR))\ntry:\n    from logic_solver import solve_logic\n    LOGIC_SOLVER_AVAILABLE = True\n    print(\"[OK] Imported logic_solver.solve_logic\")",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "BAD_FOL_SIGNALS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "BAD_FOL_SIGNALS = [\n    \"priority dataset-compatible\",\n    \"conservative nl/fol rule verification\",\n    \"dataset-specific logic rule/premise verification\",\n    \"dataset-compatible nl/fol\",\n    \"parsed simple rules into z3-lite\",\n    \"premises entail claim\",\n    \"for each option o\",\n    \"supportedbypremises\",\n    \"candidateanswer\",",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "PHYSICS_UNITS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "PHYSICS_UNITS = [\n    \"V/m\", \"N/C\", \"km/h\", \"m/s\", \"m/s^2\",\n    \"mH\", \"µH\", \"μH\", \"uH\", \"H\",\n    \"µF\", \"μF\", \"uF\", \"pF\", \"nF\", \"mF\", \"F\",\n    \"nC\", \"µC\", \"μC\", \"uC\", \"C\",\n    \"mJ\", \"µJ\", \"μJ\", \"uJ\", \"nJ\", \"J\",\n    \"kW\", \"W\",\n    \"kHz\", \"Hz\",\n    \"mA\", \"A\",\n    \"kΩ\", \"Ω\", \"ohm\",",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "PREMISES_NL_KEYS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "PREMISES_NL_KEYS = [\n    \"premises-NL\",\n    \"premises_nl\",\n    \"premises_NL\",\n    \"premise-NL\",\n    \"premise_nl\",\n    \"premise_NL\",\n    \"premisesNL\",\n]\nPREMISES_FOL_KEYS = [",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "PREMISES_FOL_KEYS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "PREMISES_FOL_KEYS = [\n    \"premises-FOL\",\n    \"premises_fol\",\n    \"premises_FOL\",\n    \"premise-FOL\",\n    \"premise_fol\",\n    \"premise_FOL\",\n    \"premisesFOL\",\n]\nGENERAL_PREMISE_KEYS = [\"premises\", \"premise\", \"context\"]",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "GENERAL_PREMISE_KEYS",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "GENERAL_PREMISE_KEYS = [\"premises\", \"premise\", \"context\"]\ndef get_field_from_obj(obj: Dict[str, Any], keys: List[str]) -> List[str]:\n    if not isinstance(obj, dict):\n        return []\n    for k in keys:\n        if k in obj:\n            items = clean_list_str(obj[k])\n            if items:\n                return items\n    return []",
+        "detail": "One-Shot-RLVR.inference_result",
+        "documentation": {}
+    },
+    {
+        "label": "PREDICATE_SPECIAL_MAP",
+        "kind": 5,
+        "importPath": "One-Shot-RLVR.inference_result",
+        "description": "One-Shot-RLVR.inference_result",
+        "peekOfCode": "PREDICATE_SPECIAL_MAP = {\n    \"problem solving\": \"ProblemSolving\",\n    \"problem-solving\": \"ProblemSolving\",\n    \"problem solving ability\": \"ProblemSolving\",\n    \"problem-solving ability\": \"ProblemSolving\",\n    \"communication\": \"Communication\",\n    \"communication skills\": \"Communication\",\n    \"critical thinking\": \"CriticalThinking\",\n    \"critical thinking skills\": \"CriticalThinking\",\n    \"teamwork\": \"Teamwork\",",
+        "detail": "One-Shot-RLVR.inference_result",
         "documentation": {}
     },
     {
