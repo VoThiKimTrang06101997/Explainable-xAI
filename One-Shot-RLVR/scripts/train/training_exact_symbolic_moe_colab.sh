@@ -153,10 +153,11 @@ echo "============================================================="
 # ============================================================
 # 5. Train
 # ============================================================
-
 python3 -m verl.trainer.main_ppo \
   algorithm.adv_estimator=grpo \
-  data.train_files=data/train/exact_rlvr/exact_train_router.parquet \
+  --train_jsonl "$TRAIN_JSONL" \
+  data.train_files="$TRAIN_JSONL" \
+  # data.train_files=data/train/exact_rlvr/exact_train_router.parquet \
   data.val_files=data/val/exact_rlvr/exact_val_router.parquet \
   data.train_batch_size=1 \
   data.val_batch_size=1 \
